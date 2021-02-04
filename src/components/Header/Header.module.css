@@ -1,0 +1,14 @@
+.header {
+    grid-area: header;
+    background-color: forestgreen;
+    border-bottom: 4px solid orange;
+
+}
+
+.header img {
+    width: 55px;
+    height: 55px;
+    background-color: forestgreen;
+    margin-left: 5px;
+}
+

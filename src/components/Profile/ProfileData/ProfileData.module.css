@@ -1,0 +1,19 @@
+.profileData {
+    display: flex;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.avatarImg {
+    height: 100px;
+    width: 100px;
+    border: 4px solid orange;
+    border-radius: 100%;
+}
+
+.data {
+    color: white;
+    margin-top: -10px;
+    margin-left: 20px;
+    padding-bottom: 3px;
+}

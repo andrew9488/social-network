@@ -1,0 +1,20 @@
+.dialog {
+    color: white;
+    text-decoration: none;
+    padding: 3px;
+}
+
+.dialog a {
+    color: white;
+    text-decoration: none;
+    padding: 5px;
+}
+
+.dialog a:hover {
+    color: orange;
+}
+
+.dialog a.activeLink {
+    color: orange;
+    font-weight: bold;
+}

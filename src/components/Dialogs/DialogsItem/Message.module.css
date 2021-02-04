@@ -1,0 +1,13 @@
+.message {
+    border-left: 2px solid orange;
+    padding-left: 10px;
+}
+
+.messageText {
+    color: white;
+    padding: 5px;
+}
+
+.sendMessageButton {
+
+}

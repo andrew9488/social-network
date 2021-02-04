@@ -1,0 +1,10 @@
+.profileAvatar{
+    display: flex;
+
+}
+.profileAvatar img{
+    width: 345px;
+    height: 230px;
+    border: 1px solid orange;
+    margin: 5px;
+}

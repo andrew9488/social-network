@@ -1,3 +1,18 @@
+const ADD_POST = "ADD-POST";
+const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const SEND_MESSAGE = "SEND-MESSAGE";
+const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT";
+
+export const addPostActionCreator = ()=> ({type: ADD_POST})
+
+export const updateNewPostTextActionCreator = (newText: string)=>
+    ({type: UPDATE_NEW_POST_TEXT, newPostText: newText})
+
+export const sendMessageActionCreator = () => ({type: SEND_MESSAGE})
+
+export const updateNewMessageTextActionCreator = (newText: string) =>
+    ({type: UPDATE_NEW_MESSAGE_TEXT, newMessageText: newText})
+
 export type MessageType = {
     id: number
     message: string
@@ -24,24 +39,22 @@ export type ProfilePageType = {
 
 export  type SidebarType = {}
 
-export type RootStateType = {
+export type StateType = {
     dialogsPage: DialogPageType
     profilePage: ProfilePageType
     sidebar: SidebarType
 };
 
 export type RootStoreType = {
-    _state: RootStateType
-    addPost: (postText: string) => void
-    updateNewPostText: (newPostText: string) => void
-    sendMessage: (messageText: string) => void
-    updateNewMessageText: (newMessageText: string) => void
-    _callSubscriber: (_state: RootStateType) => void
-    subscribe: (observer: any) => void
-    getState:()=> void
+    _state: StateType
+    _callSubscriber: () => void
+    subscribe: (observer: () => void) => void
+    getState: () => StateType
+    dispatch: (action: any) => void
+
 }
 
-export let store: RootStoreType = {
+export const store: RootStoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -70,40 +83,46 @@ export let store: RootStoreType = {
         },
         sidebar: {}
     },
-    getState(){
+    _callSubscriber() {
+        console.log("state changed")
+    },
+    getState() {
         return this._state
     },
-    _callSubscriber(_state: RootStateType) {},
-    subscribe(observer: any) {
+    subscribe(observer: () => void) {
         this._callSubscriber = observer;
     },
-    addPost(postText: string) {
-        const newPost: PostType = {
-            id: new Date().getTime(),
-            post: postText,
-            likesCounter: 0
-        };
-        this._state.profilePage.posts.push(newPost);
-        store.updateNewPostText("");
-        this._callSubscriber(this._state);
-    },
-    updateNewPostText(newPostText: string) {
-        this._state.profilePage.newPostText = (newPostText);
-        this._callSubscriber(this._state);
-    },
-    sendMessage(messageText: string) {
-        const newMessage: MessageType = {
-            id: new Date().getTime(),
-            message: messageText,
-        };
-        this._state.dialogsPage.messages.push(newMessage);
-        store.updateNewMessageText("");
-        this._callSubscriber(this._state);
-    },
-    updateNewMessageText(newMessageText: string) {
-        this._state.dialogsPage.newMessageText = (newMessageText);
-        this._callSubscriber(this._state);
-    },
-
+    dispatch(action){
+        if (action.type === ADD_POST) {
+            const newPost: PostType = {
+                id: new Date().getTime(),
+                post: this._state.profilePage.newPostText,
+                likesCounter: 0,
+            };
+            this._state.profilePage.posts.push(newPost);
+            this._state.profilePage.newPostText = "";
+            this._callSubscriber();
+        }
+        if (action.type === UPDATE_NEW_POST_TEXT){
+            this._state.profilePage.newPostText = action.newPostText;
+            this._callSubscriber();
+        }
+        if (action.type === SEND_MESSAGE) {
+            const newMessage: MessageType = {
+                id: new Date().getTime(),
+                message: this._state.dialogsPage.newMessageText,
+            };
+            this._state.dialogsPage.messages.push(newMessage);
+            this._state.dialogsPage.newMessageText = "";
+            this._callSubscriber();
+        }
+        if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
+            this._state.dialogsPage.newMessageText = action.newMessageText;
+            this._callSubscriber();
+        }
+    }
 }
+
+
+
 

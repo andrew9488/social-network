@@ -6,8 +6,7 @@ import {DialogPageType} from "../../redux/state";
 
 type DialogsPropsType = {
     stateDialogs: DialogPageType
-    sendMessage: (messageText: string) => void
-    updateNewMessageText: (newMessageText: string) => void
+    dispatch: (action: any) => void
 }
 
 export function Dialogs(props: DialogsPropsType) {
@@ -19,9 +18,8 @@ export function Dialogs(props: DialogsPropsType) {
             </div>
             <div className={style.messages}>
                 <Message messages={props.stateDialogs.messages}
-                         sendMessage={props.sendMessage}
                          newMessageText={props.stateDialogs.newMessageText}
-                         updateNewMessageText={props.updateNewMessageText}
+                         dispatch={props.dispatch}
                 />
             </div>
         </div>

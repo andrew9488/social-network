@@ -6,17 +6,14 @@ import {Profile} from "./components/Profile/Profile";
 import {Footer} from "./components/Footer/Footer";
 import {Dialogs} from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
-import {RootStoreType} from "./redux/state";
+import {StateType} from "./redux/state";
 
 type AppPropsType = {
-    store: RootStoreType
-    addPost: (postText: string) => void
-    updateNewPostText: (newPostText: string) => void
-    sendMessage: (messageText: string) => void
-    updateNewMessageText: (newMessageText: string) => void
+    state: StateType
+    dispatch: (action: any) => void
 }
 
-function App(props: AppPropsType) {
+const App: React.FC<AppPropsType> = (props) => {
 
     return (
         <BrowserRouter>
@@ -25,14 +22,12 @@ function App(props: AppPropsType) {
                 <Navbar/>
                 <div className="content">
                     <Route path={"/profile"} render={() => <Profile
-                        stateProfile={props.store._state.profilePage}
-                        addPost={props.store.addPost}
-                        updateNewPostText={props.store.updateNewPostText}
+                        stateProfile={props.state.profilePage}
+                        dispatch={props.dispatch}
                     />}/>
                     <Route path={"/dialogs"} render={() => <Dialogs
-                        stateDialogs={props.store._state.dialogsPage}
-                        sendMessage={props.store.sendMessage}
-                        updateNewMessageText={props.store.updateNewMessageText}
+                        stateDialogs={props.state.dialogsPage}
+                        dispatch={props.dispatch}
                     />}/>
                 </div>
                 <Footer/>

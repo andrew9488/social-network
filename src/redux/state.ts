@@ -3,15 +3,18 @@ const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const SEND_MESSAGE = "SEND-MESSAGE";
 const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT";
 
-export const addPostActionCreator = ()=> ({type: ADD_POST})
+type ActionType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator> |
+    ReturnType<typeof sendMessageActionCreator>| ReturnType<typeof updateNewMessageTextActionCreator>
 
-export const updateNewPostTextActionCreator = (newText: string)=>
-    ({type: UPDATE_NEW_POST_TEXT, newPostText: newText})
+export const addPostActionCreator = () => ({type: ADD_POST}) as const
 
-export const sendMessageActionCreator = () => ({type: SEND_MESSAGE})
+export const updateNewPostTextActionCreator = (newText: string) =>
+    ({type: UPDATE_NEW_POST_TEXT, newPostText: newText}) as const
+
+export const sendMessageActionCreator = () => ({type: SEND_MESSAGE}) as const
 
 export const updateNewMessageTextActionCreator = (newText: string) =>
-    ({type: UPDATE_NEW_MESSAGE_TEXT, newMessageText: newText})
+    ({type: UPDATE_NEW_MESSAGE_TEXT, newMessageText: newText}) as const
 
 export type MessageType = {
     id: number
@@ -50,8 +53,7 @@ export type RootStoreType = {
     _callSubscriber: () => void
     subscribe: (observer: () => void) => void
     getState: () => StateType
-    dispatch: (action: any) => void
-
+    dispatch: (action: ActionType) => void
 }
 
 export const store: RootStoreType = {
@@ -92,7 +94,7 @@ export const store: RootStoreType = {
     subscribe(observer: () => void) {
         this._callSubscriber = observer;
     },
-    dispatch(action){
+    dispatch(action) {
         if (action.type === ADD_POST) {
             const newPost: PostType = {
                 id: new Date().getTime(),
@@ -103,7 +105,7 @@ export const store: RootStoreType = {
             this._state.profilePage.newPostText = "";
             this._callSubscriber();
         }
-        if (action.type === UPDATE_NEW_POST_TEXT){
+        if (action.type === UPDATE_NEW_POST_TEXT) {
             this._state.profilePage.newPostText = action.newPostText;
             this._callSubscriber();
         }

@@ -13,6 +13,9 @@ export function Navbar() {
                 <NavLink to="/dialogs" activeClassName={style.activeLink}>Messages</NavLink>
             </div>
             <div className={style.item}>
+                <NavLink to="/music" activeClassName={style.activeLink}>Music</NavLink>
+            </div>
+            <div className={style.item}>
                 <NavLink to="/news" activeClassName={style.activeLink}>News</NavLink>
             </div>
             <div className={style.item}>

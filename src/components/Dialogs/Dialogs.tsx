@@ -2,11 +2,11 @@ import React from "react";
 import style from './Dialogs.module.css'
 import {Dialog} from "./DialogsItem/Dialog";
 import {Message} from "./DialogsItem/Message";
-import {DialogPageType} from "../../redux/state";
+import {ActionType, DialogPageType} from "../../redux/store";
 
 type DialogsPropsType = {
     stateDialogs: DialogPageType
-    dispatch: (action: any) => void
+    dispatch: (action: ActionType) => void
 }
 
 export function Dialogs(props: DialogsPropsType) {

@@ -1,20 +1,9 @@
-const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
-const SEND_MESSAGE = "SEND-MESSAGE";
-const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT";
+import profilePageReducer, {addPostActionCreator, updateNewPostTextActionCreator} from "./ProfilePageReducer";
+import dialogsPageReducer, {sendMessageActionCreator, updateNewMessageTextActionCreator} from "./DialogsPageReducer";
+import sidebarReducer from "./SidebarReducer";
 
-type ActionType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator> |
-    ReturnType<typeof sendMessageActionCreator>| ReturnType<typeof updateNewMessageTextActionCreator>
-
-export const addPostActionCreator = () => ({type: ADD_POST}) as const
-
-export const updateNewPostTextActionCreator = (newText: string) =>
-    ({type: UPDATE_NEW_POST_TEXT, newPostText: newText}) as const
-
-export const sendMessageActionCreator = () => ({type: SEND_MESSAGE}) as const
-
-export const updateNewMessageTextActionCreator = (newText: string) =>
-    ({type: UPDATE_NEW_MESSAGE_TEXT, newMessageText: newText}) as const
+export type ActionType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator> |
+    ReturnType<typeof sendMessageActionCreator> | ReturnType<typeof updateNewMessageTextActionCreator>
 
 export type MessageType = {
     id: number
@@ -40,7 +29,7 @@ export type ProfilePageType = {
     newPostText: string
 };
 
-export  type SidebarType = {}
+export type SidebarType = {}
 
 export type StateType = {
     dialogsPage: DialogPageType
@@ -95,33 +84,11 @@ export const store: RootStoreType = {
         this._callSubscriber = observer;
     },
     dispatch(action) {
-        if (action.type === ADD_POST) {
-            const newPost: PostType = {
-                id: new Date().getTime(),
-                post: this._state.profilePage.newPostText,
-                likesCounter: 0,
-            };
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = "";
-            this._callSubscriber();
-        }
-        if (action.type === UPDATE_NEW_POST_TEXT) {
-            this._state.profilePage.newPostText = action.newPostText;
-            this._callSubscriber();
-        }
-        if (action.type === SEND_MESSAGE) {
-            const newMessage: MessageType = {
-                id: new Date().getTime(),
-                message: this._state.dialogsPage.newMessageText,
-            };
-            this._state.dialogsPage.messages.push(newMessage);
-            this._state.dialogsPage.newMessageText = "";
-            this._callSubscriber();
-        }
-        if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
-            this._state.dialogsPage.newMessageText = action.newMessageText;
-            this._callSubscriber();
-        }
+        profilePageReducer(this._state.profilePage, action)
+        dialogsPageReducer(this._state.dialogsPage, action)
+        sidebarReducer(this._state.sidebar, action)
+
+        this._callSubscriber();
     }
 }
 

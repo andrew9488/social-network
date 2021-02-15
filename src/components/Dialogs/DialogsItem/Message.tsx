@@ -1,11 +1,12 @@
 import style from "./Message.module.css";
 import React, {ChangeEvent} from "react";
-import {MessageType, sendMessageActionCreator, updateNewMessageTextActionCreator} from "../../../redux/state";
+import {ActionType, MessageType} from "../../../redux/store";
+import {sendMessageActionCreator, updateNewMessageTextActionCreator} from "../../../redux/DialogsPageReducer";
 
 type MessagePropsType = {
     messages: Array<MessageType>
     newMessageText: string
-    dispatch: (action: any) => void
+    dispatch: (action: ActionType) => void
 }
 
 export function Message(props: MessagePropsType) {

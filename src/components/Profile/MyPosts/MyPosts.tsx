@@ -1,12 +1,13 @@
 import React, {ChangeEvent} from "react";
 import style from './MyPosts.module.css';
 import {Posts} from "./Post/Posts";
-import {addPostActionCreator, PostType, updateNewPostTextActionCreator} from "../../../redux/state";
+import {ActionType,PostType} from "../../../redux/store";
+import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/ProfilePageReducer";
 
 type MyPostsPropsType = {
     myPosts: Array<PostType>
     newPostText: string
-    dispatch: (acton: any) => void
+    dispatch: (acton: ActionType) => void
 }
 
 export function MyPosts(props: MyPostsPropsType) {

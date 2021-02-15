@@ -6,11 +6,11 @@ import {Profile} from "./components/Profile/Profile";
 import {Footer} from "./components/Footer/Footer";
 import {Dialogs} from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
-import {StateType} from "./redux/state";
+import {ActionType, StateType} from "./redux/store";
 
 type AppPropsType = {
     state: StateType
-    dispatch: (action: any) => void
+    dispatch: (action: ActionType) => void
 }
 
 const App: React.FC<AppPropsType> = (props) => {

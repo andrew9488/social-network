@@ -1,13 +1,13 @@
 import React from "react";
-import style from './Posts.module.css';
-import {PostType} from "../../../../redux/store";
+import style from './Post.module.css';
+import {PostType} from "../../../../redux/ProfilePageReducer";
 
 
 type PostsPropsType = {
     posts: Array<PostType>
 }
 
-export function Posts(props: PostsPropsType) {
+export function Post(props: PostsPropsType) {
 
     const postsElement =
         <div className={style.postMessage}>

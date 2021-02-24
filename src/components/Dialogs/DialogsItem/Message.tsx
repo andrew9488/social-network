@@ -1,22 +1,23 @@
 import style from "./Message.module.css";
 import React, {ChangeEvent} from "react";
-import {ActionType, MessageType} from "../../../redux/store";
-import {sendMessageActionCreator, updateNewMessageTextActionCreator} from "../../../redux/DialogsPageReducer";
+import {MessageType} from "../../../redux/DialogsPageReducer";
 
 type MessagePropsType = {
     messages: Array<MessageType>
     newMessageText: string
-    dispatch: (action: ActionType) => void
+    sendMessage: () => void
+    updateNewMessageText: (newText: string) => void
+
 }
 
 export function Message(props: MessagePropsType) {
 
-    const sendMessage = () => {
-        props.dispatch(sendMessageActionCreator())
+    const sendMessageText = () => {
+        props.sendMessage()
     }
 
-    const onChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(updateNewMessageTextActionCreator(e.currentTarget.value))
+    const onChangeMessageText = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        props.updateNewMessageText(e.currentTarget.value)
     }
 
     return (
@@ -26,11 +27,11 @@ export function Message(props: MessagePropsType) {
             </div>
             <div>
                 <textarea value={props.newMessageText}
-                          onChange={onChangeMessageHandler}
+                          onChange={onChangeMessageText}
                 />
             </div>
             <div className={style.sendMessageButton}>
-                <button onClick={sendMessage}>Send</button>
+                <button onClick={sendMessageText}>Send</button>
             </div>
         </div>
     );

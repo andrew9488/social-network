@@ -1,4 +1,4 @@
-import {ActionType, PostType, ProfilePageType} from "./store";
+import {ActionType} from "./store";
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
@@ -8,8 +8,27 @@ export const addPostActionCreator = () => ({type: ADD_POST}) as const
 export const updateNewPostTextActionCreator = (newText: string) =>
     ({type: UPDATE_NEW_POST_TEXT, newPostText: newText}) as const
 
+export type PostType = {
+    id: number
+    post: string
+    likesCounter: number
+};
+export type ProfilePageType = {
+    posts: Array<PostType>
+    newPostText: string
+};
 
-const profilePageReducer = (state: ProfilePageType, action: ActionType) => {
+const initialState: ProfilePageType = {
+    posts: [
+        {id: 1, post: "Hello my dear friends.", likesCounter: 2},
+        {id: 2, post: "My name is Andrew.", likesCounter: 5},
+        {id: 3, post: "This is my first project.", likesCounter: 3},
+        {id: 4, post: "I am going to change my future.", likesCounter: 7},
+    ],
+    newPostText: ""
+}
+
+const profilePageReducer = (state = initialState, action: ActionType) => {
 
     switch (action.type) {
         case ADD_POST:

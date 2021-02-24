@@ -5,39 +5,39 @@ import sidebarReducer from "./SidebarReducer";
 export type ActionType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator> |
     ReturnType<typeof sendMessageActionCreator> | ReturnType<typeof updateNewMessageTextActionCreator>
 
-export type MessageType = {
+type MessageType = {
     id: number
     message: string
 };
-export type DialogType = {
+type DialogType = {
     id: number
     name: string
 };
-export type DialogPageType = {
+type DialogPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
     newMessageText: string
 };
 
-export type PostType = {
+type PostType = {
     id: number
     post: string
     likesCounter: number
 };
-export type ProfilePageType = {
+type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
 };
 
-export type SidebarType = {}
+type SidebarType = {}
 
-export type StateType = {
+type StateType = {
     dialogsPage: DialogPageType
     profilePage: ProfilePageType
     sidebar: SidebarType
 };
 
-export type RootStoreType = {
+type RootStoreType = {
     _state: StateType
     _callSubscriber: () => void
     subscribe: (observer: () => void) => void
@@ -45,7 +45,7 @@ export type RootStoreType = {
     dispatch: (action: ActionType) => void
 }
 
-export const store: RootStoreType = {
+const store: RootStoreType = {
     _state: {
         profilePage: {
             posts: [

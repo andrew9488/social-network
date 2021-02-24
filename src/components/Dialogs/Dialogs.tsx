@@ -1,26 +1,17 @@
 import React from "react";
 import style from './Dialogs.module.css'
-import {Dialog} from "./DialogsItem/Dialog";
-import {Message} from "./DialogsItem/Message";
-import {ActionType, DialogPageType} from "../../redux/store";
+import {MessageContainer} from "./DialogsItem/MessageContainer";
+import {DialogContainer} from "./DialogsItem/DialogContainer";
 
-type DialogsPropsType = {
-    stateDialogs: DialogPageType
-    dispatch: (action: ActionType) => void
-}
-
-export function Dialogs(props: DialogsPropsType) {
+export function Dialogs() {
 
     return (
         <div className={style.dialogs}>
             <div className={style.dialogsItem}>
-                <Dialog dialogs={props.stateDialogs.dialogs}/>
+                <DialogContainer/>
             </div>
             <div className={style.messages}>
-                <Message messages={props.stateDialogs.messages}
-                         newMessageText={props.stateDialogs.newMessageText}
-                         dispatch={props.dispatch}
-                />
+               <MessageContainer/>
             </div>
         </div>
     );

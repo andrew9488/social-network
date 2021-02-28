@@ -1,10 +1,3 @@
-import profilePageReducer, {addPostActionCreator, updateNewPostTextActionCreator} from "./ProfilePageReducer";
-import dialogsPageReducer, {sendMessageActionCreator, updateNewMessageTextActionCreator} from "./DialogsPageReducer";
-import sidebarReducer from "./SidebarReducer";
-
-export type ActionType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator> |
-    ReturnType<typeof sendMessageActionCreator> | ReturnType<typeof updateNewMessageTextActionCreator>
-
 type MessageType = {
     id: number
     message: string
@@ -42,7 +35,7 @@ type RootStoreType = {
     _callSubscriber: () => void
     subscribe: (observer: () => void) => void
     getState: () => StateType
-    dispatch: (action: ActionType) => void
+    dispatch: (action: any) => void
 }
 
 const store: RootStoreType = {
@@ -84,14 +77,15 @@ const store: RootStoreType = {
         this._callSubscriber = observer;
     },
     dispatch(action) {
-        profilePageReducer(this._state.profilePage, action)
-        dialogsPageReducer(this._state.dialogsPage, action)
-        sidebarReducer(this._state.sidebar, action)
+        //profilePageReducer(this._state.profilePage, action)
+        //dialogsPageReducer(this._state.dialogsPage, action)
+        //sidebarReducer(this._state.sidebar, action)
 
         this._callSubscriber();
     }
 }
 
+export default store;
 
 
 

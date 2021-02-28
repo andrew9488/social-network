@@ -4,6 +4,13 @@
     padding: 3px;
 }
 
+.dialog img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: 2px solid orange;
+}
+
 .dialog a {
     color: white;
     text-decoration: none;

@@ -7,10 +7,10 @@ export function Dialogs() {
 
     return (
         <div className={style.dialogs}>
-            <div className={style.dialogsItem}>
+            <div>
                 <DialogContainer/>
             </div>
-            <div className={style.messages}>
+            <div>
                <MessageContainer/>
             </div>
         </div>

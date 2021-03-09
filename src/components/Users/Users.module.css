@@ -1,0 +1,50 @@
+.usersPage {
+    display: inline-block;
+    list-style: none;
+    padding: 2px;
+    margin: 5px;
+}
+
+.user{
+    display: inline-block;
+    width: 120px;
+}
+.userAvatar {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    border: 2px solid orange;
+    border-radius: 100%;
+    margin: 5px;
+}
+
+.user button {
+    margin-left: 20px;
+}
+
+.userData {
+    width: 750px;
+    height: 70px;
+    display: inline-block;
+    margin: 5px;
+    padding: 10px;
+    border: 2px solid orange;
+    border-radius: 15px;
+}
+
+.name {
+    display: inline-block;
+    width: 500px;
+
+}
+
+.status {
+    display: inline-block;
+    width: 500px;
+}
+
+.location {
+    display: inline-block;
+    text-align: right;
+    padding-left: 500px;
+}

@@ -11,7 +11,7 @@ export function Dialog(props: DialogPropsType) {
 
     return (
         <div className={style.dialog}>
-            {props.dialogs.map(d => <div key={d.id}><NavLink to={"/dialogs/" + d.id}><img src={d.img}/>{d.name}</NavLink></div>)}
+            {props.dialogs.map(d => <div key={d.id}><NavLink to={"/dialogs/" + d.id}><img src={d.img} alt="avatar"/>{d.name}</NavLink></div>)}
         </div>
     );
 }

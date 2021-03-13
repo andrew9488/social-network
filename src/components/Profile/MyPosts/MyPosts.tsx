@@ -23,15 +23,15 @@ export function MyPosts(props: MyPostsPropsType) {
 
     return (
         <div className={style.myPosts}>
-            <div>
-                <h4 className={style.title}>My posts</h4>
-                <div>
+            <h2 className={style.title}>My posts</h2>
+            <div className={style.container}>
+                <div className={style.field}>
                     <textarea value={props.newPostText}
                               onChange={onChangePostText}
                     />
-                </div>
-                <div>
-                    <button onClick={addPostText}>Add Post</button>
+                    <div>
+                        <button onClick={addPostText}>Add Post</button>
+                    </div>
                 </div>
                 <Post posts={props.posts}/>
             </div>

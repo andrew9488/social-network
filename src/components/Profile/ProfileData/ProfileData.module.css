@@ -1,19 +1,37 @@
 .profileData {
     display: flex;
-    margin-top: 5px;
-    margin-left: 5px;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    padding-top: 5px;
+    border-left: 2px solid #1056b7;
+}
+
+.avatar {
+    border: 1px #f1f5f8;
 }
 
 .avatarImg {
     height: 100px;
     width: 100px;
-    border: 4px solid orange;
+    border: 2px solid white;
     border-radius: 100%;
 }
 
-.data {
-    color: white;
-    margin-top: -10px;
-    margin-left: 20px;
-    padding-bottom: 3px;
+.data{
 }
+
+.data span{
+    text-align: center;
+}
+
+.data ul {
+    font-weight: bold;
+}
+.data ul li{
+    font-weight: normal;
+    color: #606060;
+}
+
+
+

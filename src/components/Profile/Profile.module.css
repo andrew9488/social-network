@@ -1,3 +1,16 @@
 .profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: #1056b7;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 
+}
+
+.container {
+    margin: 5px;
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: #f1f5f8;
+    border-radius: 5px;
 }

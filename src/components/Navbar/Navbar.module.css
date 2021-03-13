@@ -1,10 +1,16 @@
 .navbar {
     grid-area: navbar;
-    background-color: forestgreen;
-    border-top: 4px solid orange;
-    border-right: 4px solid orange;
-    border-bottom: 4px solid orange;
-    padding: 10px;
+    border-right: 1px solid white;
+    background-color: #1056b7;
+    font-size: 20px;
+}
+
+.items{
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .item {
@@ -22,10 +28,20 @@
 }
 
 .item a:hover {
-    color: orange;
+    color: #1056b7;
+    border: 1px solid #f1f5f8;
+    background-color: #f1f5f8;
+    border-radius: 5px;
 }
 
 .item a.activeLink {
-    color: orange;
-    font-weight: bold;
+    color: white;
+    text-decoration: underline;
+}
+
+.item a.activeLink:hover {
+    color: #1056b7;
+    border: 1px solid #f1f5f8;
+    background-color: #f1f5f8;
+    border-radius: 5px;
 }

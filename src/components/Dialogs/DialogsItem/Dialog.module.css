@@ -1,27 +1,46 @@
 .dialog {
-    color: white;
-    text-decoration: none;
+    width: 300px;
+    height: 100%;
+}
+
+.dialogItem {
+    background-color: white;
+    border-radius: 10px;
+    margin: 3px;
     padding: 3px;
+    display: flex;
+    flex-direction: column;
 }
 
-.dialog img {
-    width: 40px;
-    height: 40px;
+.dialogItem img {
+    width: 50px;
+    height: 50px;
     border-radius: 100%;
-    border: 2px solid orange;
+    border: 2px solid #f1f5f8;
 }
 
-.dialog a {
-    color: white;
+.dialogItem a {
     text-decoration: none;
-    padding: 5px;
+    color: black;
 }
 
-.dialog a:hover {
-    color: orange;
+.dialogItem a:hover {
+    color: white;
+    border: 1px solid #1056b7;
+    background-color: #1056b7;
+    border-radius: 10px;
 }
 
-.dialog a.activeLink {
-    color: orange;
-    font-weight: bold;
+.dialogItem a.activeLink {
+    border: 1px solid #1056b7;
+    background-color: #1056b7;
+    border-radius: 5px;
+    color: white;
+}
+
+.dialogItem a.activeLink:hover {
+    border: 1px solid #1056b7;
+    background-color: #1056b7;
+    border-radius: 5px;
+    color: white;
 }

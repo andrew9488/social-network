@@ -9,8 +9,14 @@ export function Profile() {
     return (
         <div className={style.profile}>
             <ProfileAvatar/>
-            <ProfileData name="Andrew" city="Minsk" age={25}/>
-            <MyPostsContainer/>
+            <div className={style.container}>
+                <ProfileData
+                    status="I am learning React."
+                    name="Andrew Pashkevich"
+                    city="Minsk"
+                    age={25}/>
+                <MyPostsContainer/>
+            </div>
         </div>
     );
 }

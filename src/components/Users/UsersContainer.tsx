@@ -7,6 +7,7 @@ import {
 } from "../../redux/UsersPageReducer";
 import {AppStateType} from "../../redux/redux-store";
 import Users from "./Users";
+import {Dispatch} from "redux";
 
 type MapStateToPropsType = {
     usersPage: Array<UserType>
@@ -16,7 +17,6 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         usersPage: state.usersPage.users
     }
-
 }
 
 type MapDispatchToPropsType = {
@@ -25,7 +25,7 @@ type MapDispatchToPropsType = {
     setUsers: (users: Array<UserType>) => void
 }
 
-const mapDispatchToProps = (dispatch: any): MapDispatchToPropsType => {
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
         follow: (userId: number) => {
             dispatch(followActionCreator(userId))

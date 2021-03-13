@@ -11,6 +11,7 @@ const reducers = combineReducers({
     usersPage: usersPageReducer
 })
 
+
 export type AppStateType = ReturnType<typeof reducers>
 
 export const store = createStore(reducers);

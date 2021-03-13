@@ -1,8 +1,21 @@
 .myPosts {
-    padding: 5px;
-    margin: 3px;
+    width: 749px;
+    border-right: 2px solid #1056b7;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    justify-content: space-around;
+    justify-items: center;
 }
 
 .title {
-    color: white;
+    text-align: center;
+}
+
+.field textarea{
+    width: 250px;
+    min-height: 100px;
 }

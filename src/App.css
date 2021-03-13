@@ -1,25 +1,23 @@
+body, html{
+    margin: 0;
+    background-color: #1056b7;
+}
+
 .app {
     margin: 0 auto;
-    width: 1250px;
-
     display: grid;
+    height: 100vh;
 
     grid-template-areas:
   "header header"
   "navbar content"
   "footer footer";
 
-    grid-template-rows: 60px 1fr;
+    grid-template-rows: 85px 1fr;
     grid-template-columns: 1.5fr 10fr;
-    grid-gap: 10px;
-
-    font-family: Verdana, Geneva, Arial, sans-serif;
 }
 
 .app .content {
     grid-area: content;
-    background-color: forestgreen;
-    border-top: 4px solid orange;
-    border-left: 4px solid orange;
-    border-bottom: 4px solid orange;
+
 }

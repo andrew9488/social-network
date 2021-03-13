@@ -1,14 +1,32 @@
 .header {
     grid-area: header;
-    background-color: forestgreen;
-    border-bottom: 4px solid orange;
-
+    background-color: #1056b7;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid white;
 }
 
-.header img {
-    width: 55px;
-    height: 55px;
-    background-color: forestgreen;
-    margin-left: 5px;
+.logo img {
+    width: 115px;
+    height: 77px;
+    background-color: #1056b7;
+    margin: 2px;
+    padding-left: 10px;
+}
+.headUser{
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.headUser a {
+    color: white;
+    text-decoration: none;
+    padding: 5px;
+}
+
+.headUser a:hover {
+    font-weight: bold;
 }
 

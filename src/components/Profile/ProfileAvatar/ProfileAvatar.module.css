@@ -1,10 +1,14 @@
 .profileAvatar{
     display: flex;
+    justify-content: space-around;
 
 }
 .profileAvatar img{
-    width: 345px;
-    height: 230px;
-    border: 1px solid orange;
-    margin: 5px;
+    width: 250px;
+    height: 167px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid white;
 }
+
+

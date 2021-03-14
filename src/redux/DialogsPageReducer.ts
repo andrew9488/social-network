@@ -6,7 +6,7 @@ export const sendMessageActionCreator = () => ({type: SEND_MESSAGE}) as const
 export const updateNewMessageTextActionCreator = (newText: string) =>
     ({type: UPDATE_NEW_MESSAGE_TEXT, newMessageText: newText}) as const
 
-type ActionsType = ReturnType<typeof sendMessageActionCreator> |
+export type DialogsPageReducerActionsType = ReturnType<typeof sendMessageActionCreator> |
     ReturnType<typeof updateNewMessageTextActionCreator>
 
 export type MessageType = {
@@ -42,7 +42,7 @@ const initialState: DialogPageType = {
     newMessageText: ""
 }
 
-const dialogsPageReducer = (state: DialogPageType = initialState, action: ActionsType): DialogPageType => {
+const dialogsPageReducer = (state: DialogPageType = initialState, action: DialogsPageReducerActionsType): DialogPageType => {
 
     switch (action.type) {
         case SEND_MESSAGE:

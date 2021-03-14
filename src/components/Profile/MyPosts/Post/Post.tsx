@@ -15,7 +15,7 @@ export function Post(props: PostsPropsType) {
             {props.posts.map(p => <div className={style.postMessage} key={p.id}>
                 <img src={myAvatar}
                      alt="my_avatar"/>
-               <span> {p.post} </span>
+               <div> {p.post} </div>
                 <div className={style.like}>Like {p.likesCounter}</div>
             </div>)}
         </React.Fragment>

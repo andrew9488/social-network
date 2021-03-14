@@ -6,7 +6,7 @@ export const addPostActionCreator = () => ({type: ADD_POST}) as const
 export const updateNewPostTextActionCreator = (newText: string) =>
     ({type: UPDATE_NEW_POST_TEXT, newPostText: newText}) as const
 
-type ActionsType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator>
+export type ProfilePageReducerActionsType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator>
 
 export type PostType = {
     id: number
@@ -29,7 +29,7 @@ const initialState: ProfilePageType = {
     newPostText: ""
 }
 
-const profilePageReducer = (state: ProfilePageType = initialState, action: ActionsType): ProfilePageType => {
+const profilePageReducer = (state: ProfilePageType = initialState, action: ProfilePageReducerActionsType): ProfilePageType => {
 
     switch (action.type) {
         case ADD_POST:

@@ -1,11 +1,17 @@
 export const followActionCreator = (userId: number) => ({type: "FOLLOW", userId} as const)
 export const unFollowActionCreator = (userId: number) => ({type: "UNFOLLOW", userId} as const)
 export const setUsersActionCreator = (users: Array<UserType>) => ({type: "SET-USERS", users} as const)
+export const setCurrentPageActionCreator = (currentPage: number) => ({type: "SET-CURRENT-PAGE", currentPage} as const)
+export const setTotalCountActionCreator = (totalCount: number) => ({type: "SET-TOTAL-COUNT", totalCount} as const)
+export const setIsFetchingActionCreator = (isFetching:boolean) => ({type: "SET-IS-FETCHING", isFetching} as const)
 
 
-type ActionsType = ReturnType<typeof followActionCreator>
+export type UsersPageReducerActionsType = ReturnType<typeof followActionCreator>
     | ReturnType<typeof unFollowActionCreator>
     | ReturnType<typeof setUsersActionCreator>
+    | ReturnType<typeof setCurrentPageActionCreator>
+    | ReturnType<typeof setTotalCountActionCreator>
+    | ReturnType<typeof setIsFetchingActionCreator>
 
 
 type PhotoType = {
@@ -24,10 +30,17 @@ export type UserType = {
 
 type InitialStateType = {
     users: Array<UserType>
+    pageSize: number
+    totalCount: number
+    currentPage: number
+    isFetching: boolean
 }
 const initialState: InitialStateType = {
-    users: [
-    ],
+    users: [],
+    pageSize: 10,
+    totalCount: 0,
+    currentPage: 1,
+    isFetching: false
 }
 
 
@@ -62,7 +75,7 @@ const initialState = {
 
 //export type InitialStateType = typeof initialState
 
-const usersPageReducer = (state = initialState, action: ActionsType) => {
+const usersPageReducer = (state = initialState, action: UsersPageReducerActionsType) => {
 
     switch (action.type) {
         case "FOLLOW":
@@ -84,7 +97,13 @@ const usersPageReducer = (state = initialState, action: ActionsType) => {
                 })
             }
         case "SET-USERS":
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: action.users}
+        case "SET-CURRENT-PAGE":
+            return {...state, currentPage: action.currentPage}
+        case "SET-TOTAL-COUNT":
+            return {...state, totalCount: action.totalCount}
+        case "SET-IS-FETCHING":
+            return {...state, isFetching: action.isFetching}
         default:
             return state;
     }

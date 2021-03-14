@@ -2,10 +2,12 @@ import {Message} from "./Message";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../redux/redux-store";
 import {
+    DialogsPageReducerActionsType,
     MessageType,
     sendMessageActionCreator,
     updateNewMessageTextActionCreator
 } from "../../../redux/DialogsPageReducer";
+import {Dispatch} from "redux";
 
 type MapStateToPropsType = {
     messages: Array<MessageType>
@@ -24,7 +26,7 @@ type MapDispatchToPropsType = {
     updateNewMessageText: (newText: string) => void
 }
 
-const mapDispatchToProps = (dispatch: any): MapDispatchToPropsType => {
+const mapDispatchToProps = (dispatch: Dispatch<DialogsPageReducerActionsType>): MapDispatchToPropsType => {
     return {
         sendMessage: () => {
             dispatch(sendMessageActionCreator())

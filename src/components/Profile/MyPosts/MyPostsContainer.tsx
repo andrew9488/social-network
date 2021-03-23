@@ -6,7 +6,7 @@ import {
     PostType,
     ProfilePageReducerActionsType,
     updateNewPostTextActionCreator
-} from "../../../redux/ProfilePageReducer";
+} from "../../../redux/profilePageReducer";
 import {Dispatch} from "redux";
 
 type MapStateToPropsType = {
@@ -14,16 +14,18 @@ type MapStateToPropsType = {
     newPostText: string
 }
 
+type MapDispatchToPropsType = {
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
+}
+
+export type MyPostsPropsType = MapStateToPropsType & MapDispatchToPropsType
+
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText
     }
-}
-
-type MapDispatchToPropsType = {
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<ProfilePageReducerActionsType>): MapDispatchToPropsType => {
@@ -37,4 +39,4 @@ const mapDispatchToProps = (dispatch: Dispatch<ProfilePageReducerActionsType>): 
     }
 }
 
-export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
+export const MyPostsContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps)(MyPosts)

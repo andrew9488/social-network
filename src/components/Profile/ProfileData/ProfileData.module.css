@@ -18,17 +18,39 @@
     border-radius: 100%;
 }
 
-.data{
+.data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.data span{
-    text-align: center;
+.data .name {
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
+
+.data .aboutMe {
+    margin-bottom: 4px;
+}
+
+.data .work {
+    display: flex;
+    flex-direction: column;
+}
+
+.data .work .open {
+    color: forestgreen;
+}
+.data .work .busy {
+    color: #c10303;
+}
+
 
 .data ul {
     font-weight: bold;
 }
-.data ul li{
+
+.data ul li {
     font-weight: normal;
     color: #606060;
 }

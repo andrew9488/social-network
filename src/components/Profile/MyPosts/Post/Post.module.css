@@ -1,6 +1,5 @@
 .post {
-    max-width: 450px;
-
+    max-width: 320px;
 }
 
 .postMessage {
@@ -10,6 +9,7 @@
     padding: 3px;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .post img {
@@ -18,5 +18,12 @@
     border-radius: 100%;
     border: 2px solid #f1f5f8;
 }
+
+.post .text {
+    overflow: auto;
+    white-space: nowrap;
+
+}
+
 
 

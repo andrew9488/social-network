@@ -1,14 +1,8 @@
 import React, {ChangeEvent} from "react";
 import style from './MyPosts.module.css';
 import {Post} from "./Post/Post";
-import {PostType} from "../../../redux/ProfilePageReducer";
+import {MyPostsPropsType} from "./MyPostsContainer";
 
-type MyPostsPropsType = {
-    posts: Array<PostType>
-    newPostText: string
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
-}
 
 export function MyPosts(props: MyPostsPropsType) {
 

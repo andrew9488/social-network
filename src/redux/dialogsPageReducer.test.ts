@@ -1,10 +1,10 @@
 import dialogsPageReducer, {
-    DialogPageType,
+    InitialStateType,
     sendMessageActionCreator,
     updateNewMessageTextActionCreator
-} from "./DialogsPageReducer";
+} from "./dialogsPageReducer";
 
-let initialState: DialogPageType;
+let initialState: InitialStateType;
 
 beforeEach(() => {
 

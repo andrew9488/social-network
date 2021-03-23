@@ -1,18 +1,28 @@
-export const followActionCreator = (userId: number) => ({type: "FOLLOW", userId} as const)
-export const unFollowActionCreator = (userId: number) => ({type: "UNFOLLOW", userId} as const)
-export const setUsersActionCreator = (users: Array<UserType>) => ({type: "SET-USERS", users} as const)
-export const setCurrentPageActionCreator = (currentPage: number) => ({type: "SET-CURRENT-PAGE", currentPage} as const)
-export const setTotalCountActionCreator = (totalCount: number) => ({type: "SET-TOTAL-COUNT", totalCount} as const)
-export const setIsFetchingActionCreator = (isFetching:boolean) => ({type: "SET-IS-FETCHING", isFetching} as const)
+export const follow = (userId: number) => ({type: "FOLLOW", userId} as const)
+export const unFollow = (userId: number) => ({type: "UNFOLLOW", userId} as const)
+export const setUsers = (users: Array<UserType>) => ({type: "SET-USERS", users} as const)
+export const setCurrentPage = (currentPage: number) => ({type: "SET-CURRENT-PAGE", currentPage} as const)
+export const setTotalCount = (totalCount: number) => ({type: "SET-TOTAL-COUNT", totalCount} as const)
+export const setIsFetching = (isFetching: boolean) => ({type: "SET-IS-FETCHING", isFetching} as const)
+export const setFollowingProgress = (isFetching: boolean, userId: number) => ({
+    type: "SET-FOLLOWING-PROGRESS",
+    isFetching,
+    userId
+} as const)
 
 
-export type UsersPageReducerActionsType = ReturnType<typeof followActionCreator>
-    | ReturnType<typeof unFollowActionCreator>
-    | ReturnType<typeof setUsersActionCreator>
-    | ReturnType<typeof setCurrentPageActionCreator>
-    | ReturnType<typeof setTotalCountActionCreator>
-    | ReturnType<typeof setIsFetchingActionCreator>
+export type UsersPageReducerActionsType = ReturnType<typeof follow>
+    | ReturnType<typeof unFollow>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setTotalCount>
+    | ReturnType<typeof setIsFetching>
+    | ReturnType<typeof setFollowingProgress>
 
+type LocationType = {
+    country: string,
+    city: string
+}
 
 type PhotoType = {
     small: null | string
@@ -26,21 +36,16 @@ export type UserType = {
     photos: PhotoType
     status: null | string
     followed: boolean
+    location: LocationType
 }
 
-type InitialStateType = {
-    users: Array<UserType>
-    pageSize: number
-    totalCount: number
-    currentPage: number
-    isFetching: boolean
-}
-const initialState: InitialStateType = {
-    users: [],
+const initialState = {
+    users: [] as Array<UserType>,
     pageSize: 10,
     totalCount: 0,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    followingInProgress: [] as Array<number>
 }
 
 
@@ -71,11 +76,9 @@ const initialState = {
 }
 */
 
-//export type usersType = typeof initialState.users
+export type InitialStateType = typeof initialState
 
-//export type InitialStateType = typeof initialState
-
-const usersPageReducer = (state = initialState, action: UsersPageReducerActionsType) => {
+const usersPageReducer = (state: InitialStateType = initialState, action: UsersPageReducerActionsType): InitialStateType => {
 
     switch (action.type) {
         case "FOLLOW":
@@ -104,6 +107,13 @@ const usersPageReducer = (state = initialState, action: UsersPageReducerActionsT
             return {...state, totalCount: action.totalCount}
         case "SET-IS-FETCHING":
             return {...state, isFetching: action.isFetching}
+        case "SET-FOLLOWING-PROGRESS":
+            return {
+                ...state,
+                followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(id => id !== action.userId)
+            }
         default:
             return state;
     }

@@ -6,7 +6,7 @@ import {
     MessageType,
     sendMessageActionCreator,
     updateNewMessageTextActionCreator
-} from "../../../redux/DialogsPageReducer";
+} from "../../../redux/dialogsPageReducer";
 import {Dispatch} from "redux";
 
 type MapStateToPropsType = {
@@ -14,16 +14,18 @@ type MapStateToPropsType = {
     newMessageText: string
 }
 
+type MapDispatchToPropsType = {
+    sendMessage: () => void
+    updateNewMessageText: (newText: string) => void
+}
+
+export type MessagePropsType = MapStateToPropsType & MapDispatchToPropsType
+
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         messages: state.dialogsPage.messages,
         newMessageText: state.dialogsPage.newMessageText
     }
-}
-
-type MapDispatchToPropsType = {
-    sendMessage: () => void
-    updateNewMessageText: (newText: string) => void
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<DialogsPageReducerActionsType>): MapDispatchToPropsType => {
@@ -38,5 +40,5 @@ const mapDispatchToProps = (dispatch: Dispatch<DialogsPageReducerActionsType>): 
     }
 }
 
-export const MessageContainer = connect(mapStateToProps, mapDispatchToProps)(Message);
+export const MessageContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps)(Message);
 

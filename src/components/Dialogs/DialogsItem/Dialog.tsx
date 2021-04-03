@@ -1,7 +1,7 @@
 import style from "./Dialog.module.css";
 import {NavLink} from "react-router-dom";
 import React from "react";
-import { DialogPropsType } from "./DialogContainer";
+import {DialogPropsType} from "./DialogContainer";
 
 export function Dialog(props: DialogPropsType) {
 

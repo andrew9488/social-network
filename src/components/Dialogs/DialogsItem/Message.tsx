@@ -1,6 +1,6 @@
 import style from "./Message.module.css";
 import React, {ChangeEvent} from "react";
-import { MessagePropsType } from "./MessageContainer";
+import {MessagePropsType} from "./MessageContainer";
 
 export function Message(props: MessagePropsType) {
 

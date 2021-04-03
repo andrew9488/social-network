@@ -1,4 +1,7 @@
 import myAvatar from '../assets/images/avatars/myAvatar.jpg';
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {AppStateType} from "./redux-store";
+import {profileAPI} from "../api/api";
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
@@ -12,9 +15,32 @@ export const updateNewPostTextActionCreator = (newPostText: string) =>
 export const setUserProfileData = (profile: ProfileType) =>
     ({type: SET_USER_PROFILE_DATA, profile}) as const
 
+export const setIsFetchingProfileComponent = (isFetching: boolean) => ({
+    type: "SET-IS-FETCHING-PROFILE-COMPONENT",
+    isFetching
+} as const)
+
 export type ProfilePageReducerActionsType = ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof updateNewPostTextActionCreator>
     | ReturnType<typeof setUserProfileData>
+    | ReturnType<typeof setIsFetchingProfileComponent>
+
+
+type ThunkType = ThunkAction<void, AppStateType, unknown, ProfilePageReducerActionsType>
+
+export const getUserProfileTC = (userId: number): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ProfilePageReducerActionsType>,
+            getState: () => AppStateType) => {
+        dispatch(setIsFetchingProfileComponent(true))
+        profileAPI.getUserProfile(userId)
+            .then(data => {
+                dispatch(setUserProfileData(data));
+                dispatch(setIsFetchingProfileComponent(false))
+            })
+    }
+
+}
+
 
 export type PostType = {
     id: number
@@ -75,7 +101,8 @@ const initialState = {
             large: myAvatar
         }
     } as ProfileType,
-    newPostText: ""
+    newPostText: "",
+    isFetching: false
 }
 
 
@@ -104,6 +131,11 @@ const profilePageReducer = (state: InitialStateType = initialState, action: Prof
             return {
                 ...state,
                 profile: action.profile
+            }
+        case "SET-IS-FETCHING-PROFILE-COMPONENT":
+            return {
+                ...state,
+                isFetching: action.isFetching
             }
         default:
             return state;

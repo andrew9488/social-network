@@ -4,7 +4,6 @@ import UsersPhoto from "../../assets/images/avatars/usersAvatar.jpg";
 import Preloader from "../common/Preloader/Preloader";
 import {NavLink} from "react-router-dom";
 import {UsersPropsType} from "./UsersContainer";
-import {userAPI} from "../../api/api";
 
 export function Users(props: UsersPropsType) {
 
@@ -63,25 +62,11 @@ export function Users(props: UsersPropsType) {
                                     !u.followed
                                         ? <button disabled={props.followingInProgress.some(id => id === u.id)}
                                                   onClick={() => {
-                                                      props.setFollowingProgress(true, u.id)
-                                                      userAPI.follow(u.id)
-                                                          .then(data => {
-                                                              if (data.resultCode === 0) {
-                                                                  props.follow(u.id)
-                                                              }
-                                                              props.setFollowingProgress(false, u.id)
-                                                          })
+                                                      props.followTC(u.id)
                                                   }}>follow</button>
                                         : <button disabled={props.followingInProgress.some(id => id === u.id)}
                                                   onClick={() => {
-                                                      props.setFollowingProgress(true, u.id)
-                                                      userAPI.unFollow(u.id)
-                                                          .then(data => {
-                                                              if (data.resultCode === 0) {
-                                                                  props.unFollow(u.id)
-                                                              }
-                                                              props.setFollowingProgress(false, u.id)
-                                                          })
+                                                      props.unFollowTC(u.id)
                                                   }}>unfollow</button>
                                 }
                                 <button>message</button>

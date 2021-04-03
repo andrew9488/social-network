@@ -1,4 +1,24 @@
 import axios from "axios";
+import {UserType} from "../redux/usersPageReducer";
+import {ProfileType} from "../redux/profilePageReducer";
+
+type CommonResponseType<T> = {
+    resultCode: number
+    messages: string[]
+    data: T
+}
+
+type UserResponseType = {
+    items: Array<UserType>
+    totalCount: number
+    error: string | null
+}
+
+type AuthResponseType = {
+    id: number
+    email: string
+    login: string
+}
 
 const instance = axios.create({
     withCredentials: true,
@@ -8,38 +28,45 @@ const instance = axios.create({
     }
 })
 
-export const userAPI = {
+export const usersAPI = {
     getUsers(currentPage: number, pageSize: number) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
-            .then(response => {
-                return response.data
-            })
-    },
-    getCurrentPage(page: number, pageSize: number) {
-        return instance.get(`users?page=${page}&count=${pageSize}`)
-            .then(response => {
-                return response.data
-            })
-    },
-    follow(id: number) {
-        return instance.post(`follow/${id}`, {})
-            .then(response => {
-                return response.data
-            })
-    },
-    unFollow(id: number) {
-        return instance.delete(`follow/${id}`,)
-            .then(response => {
-                return response.data
-            })
-    },
-    getUserProfile(userId: number) {
-        return instance.get(`profile/${userId}`)
+        return instance.get<UserResponseType>(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => {
                 return response.data
             })
     }
 }
 
+export const followAPI = {
+    follow(id: number) {
+        return instance.post<CommonResponseType<{}>>(`follow/${id}`, {})
+            .then(response => {
+                return response.data
+            })
+    },
+    unFollow(id: number) {
+        return instance.delete<CommonResponseType<{}>>(`follow/${id}`,)
+            .then(response => {
+                return response.data
+            })
+    }
+}
 
+export const profileAPI = {
+    getUserProfile(userId: number) {
+        return instance.get<ProfileType>(`profile/${userId}`)
+            .then(response => {
+                return response.data
+            })
+    }
+}
+
+export const authAPI = {
+    authMe() {
+        return instance.get<CommonResponseType<AuthResponseType>>(`auth/me`)
+            .then(response => {
+                return response.data
+            })
+    }
+}
 

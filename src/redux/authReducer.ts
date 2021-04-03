@@ -1,10 +1,28 @@
-export const setUserData = (userId: number, login: string, email: string ) => ({type: "SET-USER-DATA", data:{userId, login, email}} as const)
-export const unFollow = (userId: number) => ({type: "UNFOLLOW", userId} as const)
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {AppStateType} from "./redux-store";
+import {authAPI} from "../api/api";
 
+export const setUserData = (userId: number, login: string, email: string) => ({
+    type: "SET-USER-DATA",
+    data: {userId, login, email}
+} as const)
 
-export type AuthReducerActionsType = ReturnType<typeof setUserData>
-    | ReturnType<typeof unFollow>
+type AuthReducerActionsType = ReturnType<typeof setUserData>
 
+type ThunkType = ThunkAction<void, AppStateType, unknown, AuthReducerActionsType>
+
+export const authTC = (): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, AuthReducerActionsType>,
+            getState: () => AppStateType) => {
+        authAPI.authMe()
+            .then(data => {
+                if (data.resultCode === 0) {
+                    let {id, login, email} = data.data
+                    dispatch(setUserData(id, login, email));
+                }
+            })
+    }
+}
 
 export type DataType = {
     userId: number | null

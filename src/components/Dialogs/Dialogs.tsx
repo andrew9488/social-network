@@ -1,7 +1,7 @@
 import React from "react";
 import style from './Dialogs.module.css'
-import {MessageContainer} from "./DialogsItem/MessageContainer";
-import {DialogContainer} from "./DialogsItem/DialogContainer";
+import DialogContainer from "./DialogsItem/DialogContainer";
+import MessageContainer from "./DialogsItem/MessageContainer";
 
 export function Dialogs() {
 
@@ -11,7 +11,7 @@ export function Dialogs() {
                 <DialogContainer/>
             </div>
             <div>
-               <MessageContainer/>
+                <MessageContainer/>
             </div>
         </div>
     );

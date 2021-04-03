@@ -1,32 +1,21 @@
 import {connect} from "react-redux";
-import {
-    follow,
-    setCurrentPage, setFollowingProgress,
-    setIsFetching,
-    setTotalCount,
-    setUsers,
-    unFollow,
-    UserType
-} from "../../redux/usersPageReducer";
+import {followTC, getUsersTC, unFollowTC, UserType} from "../../redux/usersPageReducer";
 import {AppStateType} from "../../redux/redux-store";
 import React from "react";
 import {Users} from "./Users";
-import {userAPI} from "../../api/api";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 type UsersClassContainerPropsType = {
     usersPage: Array<UserType>
     pageSize: number
     totalCount: number
     currentPage: number
-    follow: (userId: number) => void
-    unFollow: (userId: number) => void
-    setUsers: (users: Array<UserType>) => void
-    setCurrentPage: (currentPage: number) => void
-    setTotalCount: (totalCount: number) => void
     isFetching: boolean
-    setIsFetching: (isFetching: boolean) => void
+    disableButton: boolean
     followingInProgress: Array<number>
-    setFollowingProgress: (isFetching: boolean, userId: number) => void
+    getUsersTC: (currentPage: number, pageSize: number) => void
+    followTC: (userId: number) => void
+    unFollowTC: (userId: number) => void
 }
 
 type MapStateToPropsType = {
@@ -35,18 +24,15 @@ type MapStateToPropsType = {
     totalCount: number
     currentPage: number
     isFetching: boolean
+    disableButton: boolean
     followingInProgress: Array<number>
 }
 
 
 type MapDispatchToPropsType = {
-    follow: (UserId: number) => void
-    unFollow: (UserId: number) => void
-    setUsers: (users: Array<UserType>) => void
-    setCurrentPage: (currentPage: number) => void
-    setTotalCount: (totalCount: number) => void
-    setIsFetching: (isFetching: boolean) => void
-    setFollowingProgress: (isFetching: boolean, userId: number) => void
+    getUsersTC: (currentPage: number, pageSize: number) => void
+    followTC: (userId: number) => void
+    unFollowTC: (userId: number) => void
 }
 
 type OwnTypeProps = {
@@ -58,23 +44,11 @@ export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType & OwnT
 class UsersContainer extends React.Component<UsersClassContainerPropsType> {
 
     componentDidMount() {
-        this.props.setIsFetching(true)
-        userAPI.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(data => {
-                this.props.setIsFetching(false)
-                this.props.setUsers(data.items);
-                this.props.setTotalCount(data.totalCount);
-            })
+        this.props.getUsersTC(this.props.currentPage, this.props.pageSize)
     }
 
     onClickCurrentPage = (page: number) => {
-        this.props.setIsFetching(true)
-        this.props.setCurrentPage(page)
-        userAPI.getCurrentPage(page, this.props.pageSize)
-            .then(data => {
-                this.props.setIsFetching(false)
-                this.props.setUsers(data.items);
-            })
+        this.props.getUsersTC(page, this.props.pageSize)
     }
 
     render() {
@@ -96,10 +70,11 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
         followingInProgress: state.usersPage.followingInProgress,
+        disableButton: state.usersPage.disableButton,
     }
 }
 
-export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
+export default withAuthRedirect(connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
     {
-        follow, unFollow, setUsers, setCurrentPage, setTotalCount, setIsFetching, setFollowingProgress
-    })(UsersContainer)
+        getUsersTC, followTC, unFollowTC
+    })(UsersContainer))

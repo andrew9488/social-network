@@ -39,4 +39,5 @@ const mapDispatchToProps = (dispatch: Dispatch<ProfilePageReducerActionsType>): 
     }
 }
 
-export const MyPostsContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps)(MyPosts)
+export const MyPostsContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
+    mapDispatchToProps)(MyPosts)

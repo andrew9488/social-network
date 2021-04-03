@@ -1,23 +1,71 @@
-export const follow = (userId: number) => ({type: "FOLLOW", userId} as const)
-export const unFollow = (userId: number) => ({type: "UNFOLLOW", userId} as const)
-export const setUsers = (users: Array<UserType>) => ({type: "SET-USERS", users} as const)
-export const setCurrentPage = (currentPage: number) => ({type: "SET-CURRENT-PAGE", currentPage} as const)
-export const setTotalCount = (totalCount: number) => ({type: "SET-TOTAL-COUNT", totalCount} as const)
-export const setIsFetching = (isFetching: boolean) => ({type: "SET-IS-FETCHING", isFetching} as const)
-export const setFollowingProgress = (isFetching: boolean, userId: number) => ({
-    type: "SET-FOLLOWING-PROGRESS",
-    isFetching,
-    userId
-} as const)
-
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {AppStateType} from "./redux-store";
+import {followAPI, usersAPI} from "../api/api";
 
 export type UsersPageReducerActionsType = ReturnType<typeof follow>
     | ReturnType<typeof unFollow>
     | ReturnType<typeof setUsers>
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setTotalCount>
-    | ReturnType<typeof setIsFetching>
+    | ReturnType<typeof setIsFetchingUsersComponent>
     | ReturnType<typeof setFollowingProgress>
+
+export const follow = (userId: number) => ({type: "FOLLOW", userId} as const)
+export const unFollow = (userId: number) => ({type: "UNFOLLOW", userId} as const)
+export const setUsers = (users: Array<UserType>) => ({type: "SET-USERS", users} as const)
+export const setCurrentPage = (currentPage: number) => ({type: "SET-CURRENT-PAGE", currentPage} as const)
+export const setTotalCount = (totalCount: number) => ({type: "SET-TOTAL-COUNT", totalCount} as const)
+export const setIsFetchingUsersComponent = (isFetching: boolean) => ({type: "SET-IS-FETCHING-USERS-COMPONENT", isFetching} as const)
+export const setFollowingProgress = (disableButton: boolean, userId: number) => ({
+    type: "SET-FOLLOWING-PROGRESS",
+    disableButton,
+    userId
+} as const)
+
+type ThunkType = ThunkAction<void, AppStateType, unknown, UsersPageReducerActionsType>
+
+export const getUsersTC = (currentPage: number, pageSize: number): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, UsersPageReducerActionsType>,
+            getState: () => AppStateType) => {
+        dispatch(setIsFetchingUsersComponent(true))
+        usersAPI.getUsers(currentPage, pageSize)
+            .then(data => {
+                dispatch(setIsFetchingUsersComponent(false))
+                dispatch(setUsers(data.items));
+                dispatch(setTotalCount(data.totalCount));
+                dispatch(setCurrentPage(currentPage))
+            })
+    }
+}
+
+export const followTC = (userId: number): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, UsersPageReducerActionsType>,
+            getState: () => AppStateType) => {
+        dispatch(setFollowingProgress(true, userId))
+        followAPI.follow(userId)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(follow(userId))
+                }
+                dispatch(setFollowingProgress(false, userId))
+            })
+    }
+}
+
+export const unFollowTC = (userId: number): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, UsersPageReducerActionsType>,
+            getState: () => AppStateType) => {
+        dispatch(setFollowingProgress(true, userId))
+        followAPI.unFollow(userId)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(unFollow(userId))
+                }
+                dispatch(setFollowingProgress(false, userId))
+            })
+    }
+}
+
 
 type LocationType = {
     country: string,
@@ -45,36 +93,9 @@ const initialState = {
     totalCount: 0,
     currentPage: 1,
     isFetching: false,
+    disableButton: false,
     followingInProgress: [] as Array<number>
 }
-
-
-/*
-const initialState = {
-    users: [
-        {
-            id: 1, fullName: "Anton Borozna", status: "I am learning JAVA", followed: true,
-            img: "http://pm1.narvii.com/7066/ae35e5668d78c2a362c4b594a3aa4687e77e1062r1-1200-1207v2_uhq.jpg",
-            location: {country: "Belarus", city: "Minsk"}
-        },
-        {
-            id: 2, fullName: "Misha Dubeiko", status: "I want to grow hair", followed: false,
-            img: "https://cdn.anisearch.com/images/character/cover/full/68/68527.jpg",
-            location: {country: "Denmark", city: "Kopenhagen"}
-        },
-        {
-            id: 3, fullName: "Anna Storm", status: "I won’t take advice from Andrew", followed: true,
-            img: "https://pm1.narvii.com/6890/6c7770044db1962ef51f199fa113165478d1f69er1-1321-1080v2_hq.jpg",
-            location: {country: "Belarus", city: "Minsk"}
-        },
-        {
-            id: 4, fullName: "Dmitriy Prokopovich", status: "Why Kate don't love me?", followed: false,
-            img: "https://steamuserimages-a.akamaihd.net/ugc/840335235114018527/2BC1ABBB312428E16725B7AD99BEC0309D87B4A7/",
-            location: {country: "Belgium", city: "Antwerpen"}
-        },
-    ]
-}
-*/
 
 export type InitialStateType = typeof initialState
 
@@ -105,12 +126,12 @@ const usersPageReducer = (state: InitialStateType = initialState, action: UsersP
             return {...state, currentPage: action.currentPage}
         case "SET-TOTAL-COUNT":
             return {...state, totalCount: action.totalCount}
-        case "SET-IS-FETCHING":
+        case "SET-IS-FETCHING-USERS-COMPONENT":
             return {...state, isFetching: action.isFetching}
         case "SET-FOLLOWING-PROGRESS":
             return {
                 ...state,
-                followingInProgress: action.isFetching
+                followingInProgress: action.disableButton
                     ? [...state.followingInProgress, action.userId]
                     : state.followingInProgress.filter(id => id !== action.userId)
             }
@@ -118,5 +139,6 @@ const usersPageReducer = (state: InitialStateType = initialState, action: UsersP
             return state;
     }
 }
+
 
 export default usersPageReducer;

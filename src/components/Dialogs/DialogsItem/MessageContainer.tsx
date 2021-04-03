@@ -8,6 +8,7 @@ import {
     updateNewMessageTextActionCreator
 } from "../../../redux/dialogsPageReducer";
 import {Dispatch} from "redux";
+import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 
 type MapStateToPropsType = {
     messages: Array<MessageType>
@@ -24,7 +25,7 @@ export type MessagePropsType = MapStateToPropsType & MapDispatchToPropsType
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         messages: state.dialogsPage.messages,
-        newMessageText: state.dialogsPage.newMessageText
+        newMessageText: state.dialogsPage.newMessageText,
     }
 }
 
@@ -40,5 +41,6 @@ const mapDispatchToProps = (dispatch: Dispatch<DialogsPageReducerActionsType>): 
     }
 }
 
-export const MessageContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps)(Message);
+export default withAuthRedirect(connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(
+    mapStateToProps, mapDispatchToProps)(Message));
 

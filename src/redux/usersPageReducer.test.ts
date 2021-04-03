@@ -51,7 +51,8 @@ beforeEach(() => {
         pageSize: 10,
         totalCount: 0,
         currentPage: 1,
-        isFetching: false
+        isFetching: false,
+        followingInProgress: [] as Array<number>
     }
 })
 

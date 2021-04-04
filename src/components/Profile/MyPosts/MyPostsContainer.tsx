@@ -7,28 +7,28 @@ import {
     ProfilePageReducerActionsType,
     updateNewPostTextActionCreator
 } from "../../../redux/profilePageReducer";
-import {Dispatch} from "redux";
+import {compose, Dispatch} from "redux";
 
-type MapStateToPropsType = {
+type MapStatePropsType = {
     posts: Array<PostType>
     newPostText: string
 }
 
-type MapDispatchToPropsType = {
+type MapDispatchPropsType = {
     addPost: () => void
     updateNewPostText: (newText: string) => void
 }
 
-export type MyPostsPropsType = MapStateToPropsType & MapDispatchToPropsType
+export type MyPostsPropsType = MapStatePropsType & MapDispatchPropsType
 
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<ProfilePageReducerActionsType>): MapDispatchToPropsType => {
+const mapDispatchToProps = (dispatch: Dispatch<ProfilePageReducerActionsType>): MapDispatchPropsType => {
     return {
         addPost: () => {
             dispatch(addPostActionCreator())
@@ -39,5 +39,7 @@ const mapDispatchToProps = (dispatch: Dispatch<ProfilePageReducerActionsType>): 
     }
 }
 
-export const MyPostsContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
-    mapDispatchToProps)(MyPosts)
+
+export default compose(
+    connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps,
+        mapDispatchToProps))(MyPosts)

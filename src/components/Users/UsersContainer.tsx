@@ -1,9 +1,10 @@
 import {connect} from "react-redux";
 import {followTC, getUsersTC, unFollowTC, UserType} from "../../redux/usersPageReducer";
 import {AppStateType} from "../../redux/redux-store";
-import React from "react";
+import React, {ComponentType} from "react";
 import {Users} from "./Users";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 type UsersClassContainerPropsType = {
     usersPage: Array<UserType>
@@ -18,7 +19,7 @@ type UsersClassContainerPropsType = {
     unFollowTC: (userId: number) => void
 }
 
-type MapStateToPropsType = {
+type MapStatePropsType = {
     usersPage: Array<UserType>
     pageSize: number
     totalCount: number
@@ -29,7 +30,7 @@ type MapStateToPropsType = {
 }
 
 
-type MapDispatchToPropsType = {
+type MapDispatchPropsType = {
     getUsersTC: (currentPage: number, pageSize: number) => void
     followTC: (userId: number) => void
     unFollowTC: (userId: number) => void
@@ -39,7 +40,7 @@ type OwnTypeProps = {
     onClickCurrentPage: (page: number) => void
 }
 
-export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType & OwnTypeProps
+export type UsersPropsType = MapStatePropsType & MapDispatchPropsType & OwnTypeProps
 
 class UsersContainer extends React.Component<UsersClassContainerPropsType> {
 
@@ -62,7 +63,7 @@ class UsersContainer extends React.Component<UsersClassContainerPropsType> {
     }
 }
 
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         usersPage: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
@@ -74,7 +75,11 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-export default withAuthRedirect(connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
-    {
-        getUsersTC, followTC, unFollowTC
-    })(UsersContainer))
+// export default withAuthRedirect(connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
+//     {
+//         getUsersTC, followTC, unFollowTC
+//     })(UsersContainer))
+
+export default compose<ComponentType>(
+    connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps,
+        {getUsersTC, followTC, unFollowTC}), withAuthRedirect)(UsersContainer)

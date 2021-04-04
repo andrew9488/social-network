@@ -7,29 +7,30 @@ import {
     sendMessageActionCreator,
     updateNewMessageTextActionCreator
 } from "../../../redux/dialogsPageReducer";
-import {Dispatch} from "redux";
+import {compose, Dispatch} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
+import {ComponentType} from "react";
 
-type MapStateToPropsType = {
+type MapStatePropsType = {
     messages: Array<MessageType>
     newMessageText: string
 }
 
-type MapDispatchToPropsType = {
+type MapDispatchPropsType = {
     sendMessage: () => void
     updateNewMessageText: (newText: string) => void
 }
 
-export type MessagePropsType = MapStateToPropsType & MapDispatchToPropsType
+export type MessagePropsType = MapStatePropsType & MapDispatchPropsType
 
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         messages: state.dialogsPage.messages,
         newMessageText: state.dialogsPage.newMessageText,
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<DialogsPageReducerActionsType>): MapDispatchToPropsType => {
+const mapDispatchToProps = (dispatch: Dispatch<DialogsPageReducerActionsType>): MapDispatchPropsType => {
     return {
         sendMessage: () => {
             dispatch(sendMessageActionCreator())
@@ -41,6 +42,6 @@ const mapDispatchToProps = (dispatch: Dispatch<DialogsPageReducerActionsType>): 
     }
 }
 
-export default withAuthRedirect(connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(
-    mapStateToProps, mapDispatchToProps)(Message));
-
+export default compose<ComponentType>(
+    connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect)(Message)

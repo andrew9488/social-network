@@ -3,6 +3,7 @@ import style from './ProfileData.module.css';
 import {ProfileType} from "../../../redux/profilePageReducer";
 import userAvatar from "../../../assets/images/avatars/usersAvatar.jpg"
 import Preloader from "../../common/Preloader/Preloader";
+import ProfileStatus from "./ProfileStatus";
 
 type ProfileDataPropsType = {
     profile: ProfileType
@@ -22,11 +23,12 @@ export function ProfileData(props: ProfileDataPropsType) {
                     </div>
                     <div className={style.data}>
                         <h3 className={style.name}>{props.profile.fullName}</h3>
+                        <ProfileStatus aboutMe = {props.profile.aboutMe}/>
                         <span className={style.aboutMe}>{props.profile.aboutMe}</span>
                         <div className={style.work}>
-                    <span>Status:
-                        <span className={props.profile.lookingForAJob ? style.open : style.busy}>
-                            {props.profile.lookingForAJob ? " Open to work." : " Busy."}</span>
+                    <span>
+                        <span className={!props.profile.lookingForAJob ? style.open : style.busy}>
+                            {!props.profile.lookingForAJob ? " Open to work" : " Busy"}</span>
                         </span>
                             {props.profile.lookingForAJob && <span>{props.profile.lookingForAJobDescription}</span>}
                         </div>

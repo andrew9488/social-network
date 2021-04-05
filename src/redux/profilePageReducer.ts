@@ -60,7 +60,7 @@ type ContactsType = {
 }
 
 export type ProfileType = {
-    aboutMe: string | null,
+    aboutMe: string,
     contacts: ContactsType,
     lookingForAJob: boolean,
     lookingForAJobDescription: string | null,

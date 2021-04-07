@@ -8,6 +8,8 @@ import ProfileStatus from "./ProfileStatus";
 type ProfileDataPropsType = {
     profile: ProfileType
     isFetching: boolean
+    status: string
+    updateStatus: (status: string) => void
 }
 
 export function ProfileData(props: ProfileDataPropsType) {
@@ -23,7 +25,7 @@ export function ProfileData(props: ProfileDataPropsType) {
                     </div>
                     <div className={style.data}>
                         <h3 className={style.name}>{props.profile.fullName}</h3>
-                        <ProfileStatus aboutMe = {props.profile.aboutMe}/>
+                        <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
                         <span className={style.aboutMe}>{props.profile.aboutMe}</span>
                         <div className={style.work}>
                     <span>

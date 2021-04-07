@@ -36,7 +36,9 @@ beforeEach(() => {
                 large: null
             }
         } as ProfileType,
-        newPostText: ""
+        newPostText: "",
+        status: "",
+        isFetching: false
     }
 })
 

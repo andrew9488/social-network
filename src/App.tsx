@@ -9,7 +9,6 @@ import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from './components/Header/HeaderContainer';
 import {Login} from "./components/Login/Login";
 
-
 const App: React.FC = () => {
 
     return (

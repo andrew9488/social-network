@@ -2,7 +2,7 @@ import axios from "axios";
 import {UserType} from "../redux/usersPageReducer";
 import {ProfileType} from "../redux/profilePageReducer";
 
-type CommonResponseType<T> = {
+type CommonResponseType<T = {}> = {
     resultCode: number
     messages: string[]
     data: T
@@ -39,13 +39,13 @@ export const usersAPI = {
 
 export const followAPI = {
     follow(id: number) {
-        return instance.post<CommonResponseType<{}>>(`follow/${id}`, {})
+        return instance.post<CommonResponseType>(`follow/${id}`, {})
             .then(response => {
                 return response.data
             })
     },
     unFollow(id: number) {
-        return instance.delete<CommonResponseType<{}>>(`follow/${id}`,)
+        return instance.delete<CommonResponseType>(`follow/${id}`,)
             .then(response => {
                 return response.data
             })
@@ -55,6 +55,18 @@ export const followAPI = {
 export const profileAPI = {
     getUserProfile(userId: number) {
         return instance.get<ProfileType>(`profile/${userId}`)
+            .then(response => {
+                return response.data
+            })
+    },
+    getUserStatus(userId: number) {
+        return instance.get<string>(`profile/status/${userId}`)
+            .then(response => {
+                return response.data
+            })
+    },
+    updateStatus(status: string) {
+        return instance.put<CommonResponseType>(`profile/status`, {status: status})
             .then(response => {
                 return response.data
             })

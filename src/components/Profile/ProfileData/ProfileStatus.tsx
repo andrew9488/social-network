@@ -1,37 +1,56 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 
 type ProfileStatusPropsType = {
-    aboutMe: string
+    status: string
+    updateStatus: (status: string) => void
 }
 
 class ProfileStatus extends React.Component<ProfileStatusPropsType> {
 
     state = {
-        editableMode: false
+        editableMode: false,
+        status: this.props.status
     }
 
-    activateEditableMode() {
+    activateEditableMode = () => {
         this.setState({
                 editableMode: true
             }
         )
     }
 
-    deactivateEditableMode() {
+    deactivateEditableMode = () => {
         this.setState({
                 editableMode: false
             }
         )
+        this.props.updateStatus(this.state.status)
+    }
+
+    onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
+        this.setState({
+            status: e.currentTarget.value
+        })
+    }
+
+    componentDidUpdate(prevProps: Readonly<ProfileStatusPropsType>, prevState: Readonly<{}>) {
+        if(prevProps.status !== this.props.status){
+            this.setState({
+                status: this.props.status
+            })
+        }
     }
 
     render() {
         return (
             <div>
                 {!this.state.editableMode
-                    ? <span onDoubleClick={this.activateEditableMode.bind(this)}>About me : {this.props.aboutMe}</span>
-                    : <input onBlur={this.deactivateEditableMode.bind(this)}
+                    ? <span onDoubleClick={this.activateEditableMode}>Status :{this.props.status}</span>
+                    : <input onBlur={this.deactivateEditableMode}
                              autoFocus
-                             value={this.props.aboutMe}/>
+                             value={this.state.status}
+                             onChange={this.onStatusChange}
+                    />
                 }
             </div>
         )

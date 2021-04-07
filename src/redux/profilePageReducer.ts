@@ -20,10 +20,16 @@ export const setIsFetchingProfileComponent = (isFetching: boolean) => ({
     isFetching
 } as const)
 
+const setProfileStatus = (status: string) => ({
+    type: "SET-PROFILE-STATUS",
+    status
+} as const)
+
 export type ProfilePageReducerActionsType = ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof updateNewPostTextActionCreator>
     | ReturnType<typeof setUserProfileData>
     | ReturnType<typeof setIsFetchingProfileComponent>
+    | ReturnType<typeof setProfileStatus>
 
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, ProfilePageReducerActionsType>
@@ -41,7 +47,27 @@ export const getUserProfileTC = (userId: number): ThunkType => {
 
 }
 
+export const getUserStatusTC = (userId: number): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ProfilePageReducerActionsType>,
+            getState: () => AppStateType) => {
+        profileAPI.getUserStatus(userId)
+            .then(data => {
+                dispatch(setProfileStatus(data))
+            })
+    }
+}
 
+export const updateStatusTC = (status: string): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ProfilePageReducerActionsType>,
+            getState: () => AppStateType) => {
+        profileAPI.updateStatus(status)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(setProfileStatus(status))
+                }
+            })
+    }
+}
 export type PostType = {
     id: number
     post: string
@@ -102,7 +128,8 @@ const initialState = {
         }
     } as ProfileType,
     newPostText: "",
-    isFetching: false
+    isFetching: false,
+    status: ""
 }
 
 
@@ -136,6 +163,11 @@ const profilePageReducer = (state: InitialStateType = initialState, action: Prof
             return {
                 ...state,
                 isFetching: action.isFetching
+            }
+        case "SET-PROFILE-STATUS":
+            return {
+                ...state,
+                status: action.status
             }
         default:
             return state;

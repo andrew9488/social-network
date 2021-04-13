@@ -52,7 +52,8 @@ beforeEach(() => {
         totalCount: 0,
         currentPage: 1,
         isFetching: false,
-        followingInProgress: [] as Array<number>
+        followingInProgress: [] as Array<number>,
+        disableButton: false
     }
 })
 

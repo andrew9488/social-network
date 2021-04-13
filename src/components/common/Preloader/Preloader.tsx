@@ -1,11 +1,11 @@
 import preloader from "../../../assets/images/logo/Rolling-1s-231px.svg";
 import React from "react";
 
-function Preloader () {
+const Preloader: React.FC = () => {
     return (
-        <React.Fragment>
-            <img src={preloader} alt="preloader" />
-        </React.Fragment>
+        <>
+            <img src={preloader} alt="preloader"/>
+        </>
     )
 }
 

@@ -10,62 +10,7 @@ export type UsersPageReducerActionsType = ReturnType<typeof follow>
     | ReturnType<typeof setIsFetchingUsersComponent>
     | ReturnType<typeof setFollowingProgress>
 
-export const follow = (userId: number) => ({type: "FOLLOW", userId} as const)
-export const unFollow = (userId: number) => ({type: "UNFOLLOW", userId} as const)
-export const setUsers = (users: Array<UserType>) => ({type: "SET-USERS", users} as const)
-export const setCurrentPage = (currentPage: number) => ({type: "SET-CURRENT-PAGE", currentPage} as const)
-export const setTotalCount = (totalCount: number) => ({type: "SET-TOTAL-COUNT", totalCount} as const)
-export const setIsFetchingUsersComponent = (isFetching: boolean) => ({type: "SET-IS-FETCHING-USERS-COMPONENT", isFetching} as const)
-export const setFollowingProgress = (disableButton: boolean, userId: number) => ({
-    type: "SET-FOLLOWING-PROGRESS",
-    disableButton,
-    userId
-} as const)
-
 type ThunkType = ThunkAction<void, AppStateType, unknown, UsersPageReducerActionsType>
-
-export const getUsersTC = (currentPage: number, pageSize: number): ThunkType => {
-    return (dispatch: ThunkDispatch<AppStateType, unknown, UsersPageReducerActionsType>,
-            getState: () => AppStateType) => {
-        dispatch(setIsFetchingUsersComponent(true))
-        usersAPI.getUsers(currentPage, pageSize)
-            .then(data => {
-                dispatch(setIsFetchingUsersComponent(false))
-                dispatch(setUsers(data.items));
-                dispatch(setTotalCount(data.totalCount));
-                dispatch(setCurrentPage(currentPage))
-            })
-    }
-}
-
-export const followTC = (userId: number): ThunkType => {
-    return (dispatch: ThunkDispatch<AppStateType, unknown, UsersPageReducerActionsType>,
-            getState: () => AppStateType) => {
-        dispatch(setFollowingProgress(true, userId))
-        followAPI.follow(userId)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(follow(userId))
-                }
-                dispatch(setFollowingProgress(false, userId))
-            })
-    }
-}
-
-export const unFollowTC = (userId: number): ThunkType => {
-    return (dispatch: ThunkDispatch<AppStateType, unknown, UsersPageReducerActionsType>,
-            getState: () => AppStateType) => {
-        dispatch(setFollowingProgress(true, userId))
-        followAPI.unFollow(userId)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(unFollow(userId))
-                }
-                dispatch(setFollowingProgress(false, userId))
-            })
-    }
-}
-
 
 type LocationType = {
     country: string,
@@ -140,5 +85,58 @@ const usersPageReducer = (state: InitialStateType = initialState, action: UsersP
     }
 }
 
-
 export default usersPageReducer;
+
+export const follow = (userId: number) => ({type: "FOLLOW", userId} as const)
+export const unFollow = (userId: number) => ({type: "UNFOLLOW", userId} as const)
+export const setUsers = (users: Array<UserType>) => ({type: "SET-USERS", users} as const)
+export const setCurrentPage = (currentPage: number) => ({type: "SET-CURRENT-PAGE", currentPage} as const)
+export const setTotalCount = (totalCount: number) => ({type: "SET-TOTAL-COUNT", totalCount} as const)
+export const setIsFetchingUsersComponent = (isFetching: boolean) => ({
+    type: "SET-IS-FETCHING-USERS-COMPONENT",
+    isFetching
+} as const)
+export const setFollowingProgress = (disableButton: boolean, userId: number) => ({
+    type: "SET-FOLLOWING-PROGRESS",
+    disableButton,
+    userId
+} as const)
+
+export const getUsersTC = (currentPage: number, pageSize: number): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, UsersPageReducerActionsType>) => {
+        dispatch(setIsFetchingUsersComponent(true))
+        usersAPI.getUsers(currentPage, pageSize)
+            .then(data => {
+                dispatch(setIsFetchingUsersComponent(false))
+                dispatch(setUsers(data.items));
+                dispatch(setTotalCount(data.totalCount));
+                dispatch(setCurrentPage(currentPage))
+            })
+    }
+}
+
+export const followTC = (userId: number): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, UsersPageReducerActionsType>) => {
+        dispatch(setFollowingProgress(true, userId))
+        followAPI.follow(userId)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(follow(userId))
+                }
+                dispatch(setFollowingProgress(false, userId))
+            })
+    }
+}
+
+export const unFollowTC = (userId: number): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, UsersPageReducerActionsType>) => {
+        dispatch(setFollowingProgress(true, userId))
+        followAPI.unFollow(userId)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(unFollow(userId))
+                }
+                dispatch(setFollowingProgress(false, userId))
+            })
+    }
+}

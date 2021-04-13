@@ -1,0 +1,24 @@
+.fieldForm textarea {
+    width: 200px;
+    height: 70px;
+    outline: none;
+    border-radius: 5px;
+}
+
+.error textarea {
+    border: 2px solid #d92323;
+    border-radius: 5px;
+}
+
+.fieldForm input {
+    outline: none;
+}
+
+.error input {
+    border: 2px solid #d92323;
+
+}
+
+.error span {
+    color: #d92323;
+}

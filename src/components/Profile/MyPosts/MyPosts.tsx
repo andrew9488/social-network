@@ -1,32 +1,21 @@
-import React, {ChangeEvent} from "react";
-import style from './MyPosts.module.css';
+import React from "react";
+import style from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
 import {MyPostsPropsType} from "./MyPostsContainer";
+import {CommonForm, CommonFormType} from "../../common/Form/CommonForm";
 
 
-export function MyPosts(props: MyPostsPropsType) {
+export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
-    const addPostText = () => {
-        props.addPost()
-    }
-
-    const onChangePostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        const newText = e.currentTarget.value
-        props.updateNewPostText(newText)
+    const addPost = (text: CommonFormType) => {
+        props.addPost(text.newText)
     }
 
     return (
         <div className={style.myPosts}>
             <h2 className={style.title}>My posts</h2>
             <div className={style.container}>
-                <div className={style.field}>
-                    <textarea value={props.newPostText}
-                              onChange={onChangePostText}
-                    />
-                    <div>
-                        <button onClick={addPostText}>Add Post</button>
-                    </div>
-                </div>
+                <CommonForm onSubmit={addPost}/>
                 <Post posts={props.posts}/>
             </div>
         </div>

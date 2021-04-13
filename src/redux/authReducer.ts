@@ -2,27 +2,9 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AppStateType} from "./redux-store";
 import {authAPI} from "../api/api";
 
-export const setUserData = (userId: number, login: string, email: string) => ({
-    type: "SET-USER-DATA",
-    data: {userId, login, email}
-} as const)
-
 type AuthReducerActionsType = ReturnType<typeof setUserData>
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, AuthReducerActionsType>
-
-export const authTC = (): ThunkType => {
-    return (dispatch: ThunkDispatch<AppStateType, unknown, AuthReducerActionsType>,
-            getState: () => AppStateType) => {
-        authAPI.authMe()
-            .then(data => {
-                if (data.resultCode === 0) {
-                    let {id, login, email} = data.data
-                    dispatch(setUserData(id, login, email));
-                }
-            })
-    }
-}
 
 export type DataType = {
     userId: number | null
@@ -48,7 +30,7 @@ const authReducer = (state: InitialStateType = initialState, action: AuthReducer
             return {
                 ...state,
                 data: action.data,
-                isAuth: true
+                isAuth: action.data.isAuth
             }
         default:
             return state;
@@ -56,3 +38,42 @@ const authReducer = (state: InitialStateType = initialState, action: AuthReducer
 }
 
 export default authReducer;
+
+export const setUserData = (userId: number, login: string, email: string, isAuth: boolean) => ({
+    type: "SET-USER-DATA",
+    data: {userId, login, email, isAuth}
+} as const)
+
+export const authTC = (): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, AuthReducerActionsType>) => {
+        authAPI.authMe()
+            .then(data => {
+                if (data.resultCode === 0) {
+                    let {id, login, email} = data.data
+                    dispatch(setUserData(id, login, email, true));
+                }
+            })
+    }
+}
+
+export const logInTC = (email: string | null, password: string | null, rememberMe: boolean): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, AuthReducerActionsType>) => {
+        authAPI.logIn(email, password, rememberMe)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(authTC())
+                }
+            })
+    }
+}
+
+export const logOutTC = (): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, AuthReducerActionsType>) => {
+        authAPI.logOut()
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(logInTC(null, null, false))
+                }
+            })
+    }
+}

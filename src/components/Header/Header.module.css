@@ -29,3 +29,8 @@
     font-weight: bold;
 }
 
+.logOut {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

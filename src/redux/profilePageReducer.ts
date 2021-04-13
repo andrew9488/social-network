@@ -1,73 +1,15 @@
-import myAvatar from '../assets/images/avatars/myAvatar.jpg';
+import myAvatar from "../assets/images/avatars/myAvatar.jpg";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AppStateType} from "./redux-store";
 import {profileAPI} from "../api/api";
 
-const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
-const SET_USER_PROFILE_DATA = "SET-USER-PROFILE-DATA";
-
-export const addPostActionCreator = () => ({type: ADD_POST}) as const
-
-export const updateNewPostTextActionCreator = (newPostText: string) =>
-    ({type: UPDATE_NEW_POST_TEXT, newPostText}) as const
-
-export const setUserProfileData = (profile: ProfileType) =>
-    ({type: SET_USER_PROFILE_DATA, profile}) as const
-
-export const setIsFetchingProfileComponent = (isFetching: boolean) => ({
-    type: "SET-IS-FETCHING-PROFILE-COMPONENT",
-    isFetching
-} as const)
-
-const setProfileStatus = (status: string) => ({
-    type: "SET-PROFILE-STATUS",
-    status
-} as const)
-
 export type ProfilePageReducerActionsType = ReturnType<typeof addPostActionCreator>
-    | ReturnType<typeof updateNewPostTextActionCreator>
     | ReturnType<typeof setUserProfileData>
     | ReturnType<typeof setIsFetchingProfileComponent>
     | ReturnType<typeof setProfileStatus>
 
-
 type ThunkType = ThunkAction<void, AppStateType, unknown, ProfilePageReducerActionsType>
 
-export const getUserProfileTC = (userId: number): ThunkType => {
-    return (dispatch: ThunkDispatch<AppStateType, unknown, ProfilePageReducerActionsType>,
-            getState: () => AppStateType) => {
-        dispatch(setIsFetchingProfileComponent(true))
-        profileAPI.getUserProfile(userId)
-            .then(data => {
-                dispatch(setUserProfileData(data));
-                dispatch(setIsFetchingProfileComponent(false))
-            })
-    }
-
-}
-
-export const getUserStatusTC = (userId: number): ThunkType => {
-    return (dispatch: ThunkDispatch<AppStateType, unknown, ProfilePageReducerActionsType>,
-            getState: () => AppStateType) => {
-        profileAPI.getUserStatus(userId)
-            .then(data => {
-                dispatch(setProfileStatus(data))
-            })
-    }
-}
-
-export const updateStatusTC = (status: string): ThunkType => {
-    return (dispatch: ThunkDispatch<AppStateType, unknown, ProfilePageReducerActionsType>,
-            getState: () => AppStateType) => {
-        profileAPI.updateStatus(status)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(setProfileStatus(status))
-                }
-            })
-    }
-}
 export type PostType = {
     id: number
     post: string
@@ -98,7 +40,6 @@ export type ProfileType = {
     }
 }
 
-
 const initialState = {
     posts: [
         {id: 1, post: "Hello my dear friends.", likesCounter: 2},
@@ -127,34 +68,26 @@ const initialState = {
             large: myAvatar
         }
     } as ProfileType,
-    newPostText: "",
     isFetching: false,
     status: ""
 }
-
 
 export type InitialStateType = typeof initialState
 
 const profilePageReducer = (state: InitialStateType = initialState, action: ProfilePageReducerActionsType): InitialStateType => {
 
     switch (action.type) {
-        case ADD_POST:
+        case "ADD-POST":
             const newPost: PostType = {
                 id: new Date().getTime(),
-                post: state.newPostText,
+                post: action.postText,
                 likesCounter: 0,
             };
             return {
                 ...state,
-                newPostText: "",
                 posts: [...state.posts, newPost]
             }
-        case UPDATE_NEW_POST_TEXT:
-            return {
-                ...state,
-                newPostText: action.newPostText
-            }
-        case SET_USER_PROFILE_DATA:
+        case "SET-USER-PROFILE-DATA":
             return {
                 ...state,
                 profile: action.profile
@@ -175,3 +108,50 @@ const profilePageReducer = (state: InitialStateType = initialState, action: Prof
 }
 
 export default profilePageReducer;
+
+export const addPostActionCreator = (postText: string) => ({type: "ADD-POST", postText}) as const
+
+export const setUserProfileData = (profile: ProfileType) =>
+    ({type: "SET-USER-PROFILE-DATA", profile}) as const
+
+export const setIsFetchingProfileComponent = (isFetching: boolean) => ({
+    type: "SET-IS-FETCHING-PROFILE-COMPONENT",
+    isFetching
+} as const)
+
+const setProfileStatus = (status: string) => ({
+    type: "SET-PROFILE-STATUS",
+    status
+} as const)
+
+export const getUserProfileTC = (userId: number): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ProfilePageReducerActionsType>) => {
+        dispatch(setIsFetchingProfileComponent(true))
+        profileAPI.getUserProfile(userId)
+            .then(data => {
+                dispatch(setUserProfileData(data));
+                dispatch(setIsFetchingProfileComponent(false))
+            })
+    }
+
+}
+
+export const getUserStatusTC = (userId: number): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ProfilePageReducerActionsType>) => {
+        profileAPI.getUserStatus(userId)
+            .then(data => {
+                dispatch(setProfileStatus(data))
+            })
+    }
+}
+
+export const updateStatusTC = (status: string): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ProfilePageReducerActionsType>) => {
+        profileAPI.updateStatus(status)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(setProfileStatus(status))
+                }
+            })
+    }
+}

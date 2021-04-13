@@ -1,7 +1,6 @@
 import profilePageReducer, {
     addPostActionCreator,
     InitialStateType, PostType, ProfileType,
-    updateNewPostTextActionCreator
 } from "./profilePageReducer";
 
 let initialState: InitialStateType;
@@ -36,7 +35,6 @@ beforeEach(() => {
                 large: null
             }
         } as ProfileType,
-        newPostText: "",
         status: "",
         isFetching: false
     }
@@ -44,18 +42,10 @@ beforeEach(() => {
 
 test("new message should be send", () => {
 
-    const endState = profilePageReducer(initialState, addPostActionCreator());
+    const post = "This is a test post"
+
+    const endState = profilePageReducer(initialState, addPostActionCreator(post));
 
     expect(endState.posts.length).toBe(5)
-
-})
-
-test("new message should be update", () => {
-
-    const newText = "NewTextMessage"
-
-    const endState = profilePageReducer(initialState, updateNewPostTextActionCreator(newText))
-
-    expect(endState.newPostText).toBe(newText)
 
 })

@@ -1,5 +1,5 @@
 import React from "react";
-import style from './ProfileData.module.css';
+import style from "./ProfileData.module.css";
 import {ProfileType} from "../../../redux/profilePageReducer";
 import userAvatar from "../../../assets/images/avatars/usersAvatar.jpg"
 import Preloader from "../../common/Preloader/Preloader";
@@ -12,7 +12,7 @@ type ProfileDataPropsType = {
     updateStatus: (status: string) => void
 }
 
-export function ProfileData(props: ProfileDataPropsType) {
+export const ProfileData: React.FC<ProfileDataPropsType> = (props) => {
     return (
         <div className={style.profileData}>
             {props.isFetching

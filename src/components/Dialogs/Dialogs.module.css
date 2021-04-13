@@ -1,9 +1,9 @@
 .dialogs {
-    height: 100%;
     display: grid;
     grid-template-columns: 1.5fr 9.5fr;
     background-color: #f1f5f8;
     margin: 5px;
     border-radius: 5px;
+    height: 100%;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }

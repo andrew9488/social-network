@@ -5,7 +5,7 @@ import Preloader from "../common/Preloader/Preloader";
 import {NavLink} from "react-router-dom";
 import {UsersPropsType} from "./UsersContainer";
 
-export function Users(props: UsersPropsType) {
+export const Users: React.FC<UsersPropsType> = (props) => {
 
     const [portionNumber, setPortionNumber] = useState<number>(1)
 
@@ -75,5 +75,5 @@ export function Users(props: UsersPropsType) {
                     }
                 </div>}
         </div>
-    )
+    );
 }

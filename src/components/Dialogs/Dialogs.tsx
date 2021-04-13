@@ -1,9 +1,9 @@
 import React from "react";
-import style from './Dialogs.module.css'
+import style from "./Dialogs.module.css";
 import DialogContainer from "./DialogsItem/DialogContainer";
 import MessageContainer from "./DialogsItem/MessageContainer";
 
-export function Dialogs() {
+export const Dialogs: React.FC = () => {
 
     return (
         <div className={style.dialogs}>

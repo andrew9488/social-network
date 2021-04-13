@@ -1,15 +1,12 @@
 import style from "./Message.module.css";
-import React, {ChangeEvent} from "react";
+import React from "react";
 import {MessagePropsType} from "./MessageContainer";
+import {CommonForm, CommonFormType} from "../../common/Form/CommonForm";
 
-export function Message(props: MessagePropsType) {
+export const Message: React.FC<MessagePropsType> = (props) => {
 
-    const sendMessageText = () => {
-        props.sendMessage()
-    }
-
-    const onChangeMessageText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewMessageText(e.currentTarget.value)
+    const sendMessageText = (text: CommonFormType) => {
+        props.sendMessage(text.newText)
     }
 
     return (
@@ -17,14 +14,7 @@ export function Message(props: MessagePropsType) {
             <div className={style.messageText}>
                 {props.messages.map(m => <div key={m.id}>{m.message}</div>)}
             </div>
-            <div>
-                <textarea value={props.newMessageText}
-                          onChange={onChangeMessageText}
-                />
-            </div>
-            <div className={style.sendMessageButton}>
-                <button onClick={sendMessageText}>Send</button>
-            </div>
+            <CommonForm onSubmit={sendMessageText}/>
         </div>
     );
 }

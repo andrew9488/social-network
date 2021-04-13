@@ -1,7 +1,6 @@
 import dialogsPageReducer, {
     InitialStateType,
     sendMessageActionCreator,
-    updateNewMessageTextActionCreator
 } from "./dialogsPageReducer";
 
 let initialState: InitialStateType;
@@ -30,24 +29,15 @@ beforeEach(() => {
             {id: 3, message: "Will you go to the cinema with us?"},
             {id: 4, message: "Can i help you?"},
         ],
-        newMessageText: ""
     }
 })
 
 test("new message should be send", () => {
 
-    const endState = dialogsPageReducer(initialState, sendMessageActionCreator());
+    const newMessage = "Hello guys. How are you?"
+
+    const endState = dialogsPageReducer(initialState, sendMessageActionCreator(newMessage));
 
     expect(endState.messages.length).toBe(5)
-
-})
-
-test("new message should be update", () => {
-
-    const newText = "NewTextMessage"
-
-    const endState = dialogsPageReducer(initialState, updateNewMessageTextActionCreator(newText))
-
-    expect(endState.newMessageText).toBe(newText)
 
 })

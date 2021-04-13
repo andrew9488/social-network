@@ -59,7 +59,7 @@ class UsersContainer extends React.Component<UsersClassContainerPropsType> {
                        onClickCurrentPage={this.onClickCurrentPage}
                 />
             </React.Fragment>
-        )
+        );
     }
 }
 
@@ -74,11 +74,6 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         disableButton: state.usersPage.disableButton,
     }
 }
-
-// export default withAuthRedirect(connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
-//     {
-//         getUsersTC, followTC, unFollowTC
-//     })(UsersContainer))
 
 export default compose<ComponentType>(
     connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps,

@@ -32,7 +32,7 @@ const authReducer = (state: InitialStateType = initialState, action: AuthReducer
             return {
                 ...state,
                 data: action.data,
-                isAuth: action.data.isAuth
+                isAuth: action.isAuth
             }
         default:
             return state;
@@ -43,7 +43,8 @@ export default authReducer;
 
 export const setUserData = (userId: number, login: string, email: string, isAuth: boolean) => ({
     type: "SET-USER-DATA",
-    data: {userId, login, email, isAuth}
+    data: {userId, login, email},
+    isAuth
 } as const)
 
 export const authTC = (): ThunkType => {

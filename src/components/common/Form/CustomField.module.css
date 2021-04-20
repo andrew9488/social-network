@@ -14,9 +14,18 @@
     outline: none;
 }
 
+.error {
+    color: #d92323;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .error input {
     border: 2px solid #d92323;
-
 }
 
 .error span {

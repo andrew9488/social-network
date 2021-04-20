@@ -15,6 +15,7 @@ type MapStatePropsType = {
     profile: ProfileType
     isFetching: boolean
     status: string
+    myId: number
 }
 
 type MapDispatchPropsType = {
@@ -32,7 +33,7 @@ class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
         let userId = Number(this.props.match.params.userId)
         if (!userId) {
-            userId = 13446
+            userId = this.props.myId
         }
         this.props.getUserProfileTC(userId)
         this.props.getUserStatusTC(userId)
@@ -50,7 +51,8 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         profile: state.profilePage.profile,
         isFetching: state.profilePage.isFetching,
-        status: state.profilePage.status
+        status: state.profilePage.status,
+        myId: state.auth.data.userId
     }
 }
 

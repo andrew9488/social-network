@@ -2,34 +2,6 @@ import React from "react";
 import style from "./CustomField.module.css"
 import {WrappedFieldProps} from "redux-form";
 
-
-// export const Textarea: React.FC<WrappedFieldProps> = ({input, meta: {touched, error}, ...restProps}) => {
-//     return (
-//         <>
-//             <div className={`${style.fieldForm} ${touched && error ? style.error : ""}`}>
-//                 <textarea{...input} {...restProps}/>
-//             </div>
-//             <div className={style.error}>
-//                 {touched && error && <span>{error}</span>}
-//             </div>
-//         </>
-//     )
-// }
-//
-//
-// export const Input: React.FC<WrappedFieldProps> = ({input, meta: {touched, error}, ...restProps}) => {
-//     return (
-//         <>
-//             <div className={`${style.fieldForm} ${touched && error ? style.error : ""}`}>
-//                 <input{...input} {...restProps}/>
-//             </div>
-//             <div className={style.error}>
-//                 {touched && error && <span>{error}</span>}
-//             </div>
-//         </>
-//     )
-// }
-
 const FormControl: React.FC<WrappedFieldProps> = ({input, meta: {touched, error}, ...restProps}) => {
     return (
         <>

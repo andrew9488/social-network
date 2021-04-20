@@ -61,7 +61,7 @@ const initialState = {
         },
         lookingForAJob: true,
         lookingForAJobDescription: "Looking vacancy of Frontend Developer by React.js",
-        fullName: "Andrew Pashkevich",
+        fullName: null as "Andrew Pashkevich" | null,
         userId: 13446,
         photos: {
             small: myAvatar,
@@ -109,17 +109,17 @@ const profilePageReducer = (state: InitialStateType = initialState, action: Prof
 
 export default profilePageReducer;
 
-export const addPostActionCreator = (postText: string) => ({type: "ADD-POST", postText}) as const
+export const addPostActionCreator = (postText: string) => ({type: "ADD-POST", postText} as const)
 
 export const setUserProfileData = (profile: ProfileType) =>
-    ({type: "SET-USER-PROFILE-DATA", profile}) as const
+    ({type: "SET-USER-PROFILE-DATA", profile} as const)
 
 export const setIsFetchingProfileComponent = (isFetching: boolean) => ({
     type: "SET-IS-FETCHING-PROFILE-COMPONENT",
     isFetching
 } as const)
 
-const setProfileStatus = (status: string) => ({
+export const setProfileStatus = (status: string) => ({
     type: "SET-PROFILE-STATUS",
     status
 } as const)

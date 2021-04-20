@@ -1,6 +1,6 @@
 import profilePageReducer, {
     addPostActionCreator,
-    InitialStateType, PostType, ProfileType,
+    InitialStateType, PostType, ProfileType, setIsFetchingProfileComponent, setProfileStatus, setUserProfileData,
 } from "./profilePageReducer";
 
 let initialState: InitialStateType;
@@ -47,5 +47,43 @@ test("new message should be send", () => {
     const endState = profilePageReducer(initialState, addPostActionCreator(post));
 
     expect(endState.posts.length).toBe(5)
+
+})
+
+test("correct user profile page should be set", () => {
+
+    const profile = {
+        lookingForAJob: true,
+        lookingForAJobDescription: "Looking a job",
+        fullName: "Veronika Valerievna",
+        userId: 1,
+        photos: {
+            small: null,
+            large: null
+        }
+    } as ProfileType
+
+    const endState = profilePageReducer(initialState, setUserProfileData(profile));
+
+    expect(endState.profile.fullName).toBe("Veronika Valerievna")
+    expect(endState.profile.userId).toBe(1)
+
+})
+
+test("correct profile should be fetch", () => {
+
+    const endState = profilePageReducer(initialState, setIsFetchingProfileComponent(true))
+
+    expect(endState.isFetching).toBe(true)
+
+})
+
+test("status should be set", () => {
+
+    const status = "This is my new status"
+
+    const endState = profilePageReducer(initialState, setProfileStatus(status))
+
+    expect(endState.status).toBe("This is my new status")
 
 })

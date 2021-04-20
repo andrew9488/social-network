@@ -1,4 +1,11 @@
-import usersPageReducer, {follow, InitialStateType, unFollow} from "./usersPageReducer";
+import usersPageReducer, {
+    follow,
+    InitialStateType,
+    setCurrentPage, setFollowingProgress, setIsFetchingUsersComponent,
+    setTotalCount,
+    setUsers,
+    unFollow
+} from "./usersPageReducer";
 
 let initialState: InitialStateType;
 
@@ -72,3 +79,55 @@ test("user should be unfollowed", () => {
 
 })
 
+test("correct user should be set", () => {
+
+
+    const users = [{
+        id: 5, name: "Veronika Gorelova", status: "I am Frontend Developer", followed: true, uniqueUrlName: null,
+        photos: {
+            small: "",
+            large: null
+        },
+        location: {country: "Russia", city: "Moscow"}
+    }]
+
+    const endState = usersPageReducer(initialState, setUsers(users))
+
+    expect(endState.users.length).toBe(1)
+    expect(endState.users[0].name).toBe("Veronika Gorelova")
+
+})
+
+test("current page should be set", () => {
+
+    const page = 12
+
+    const endState = usersPageReducer(initialState, setCurrentPage(page))
+
+    expect(endState.currentPage).toBe(12)
+})
+
+test("total count should be set", () => {
+
+    const count = 5
+
+    const endState = usersPageReducer(initialState, setTotalCount(count))
+
+    expect(endState.totalCount).toBe(5)
+})
+
+test("is fetching", () => {
+
+    const endState = usersPageReducer(initialState, setIsFetchingUsersComponent(true))
+
+    expect(endState.isFetching).toBe(true)
+
+})
+
+test("button should be disable, when follow user", ()=>{
+
+    const endState = usersPageReducer(initialState, setFollowingProgress(true, 1))
+
+    expect(endState.followingInProgress).toEqual([1])
+
+})

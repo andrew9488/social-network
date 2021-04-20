@@ -49,7 +49,7 @@ export const setUserData = (userId: number, login: string, email: string, isAuth
 
 export const authTC = (): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, AuthReducerActionsType>) => {
-        authAPI.authMe()
+        return authAPI.authMe()
             .then(data => {
                 if (data.resultCode === 0) {
                     let {id, login, email} = data.data

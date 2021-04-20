@@ -1,18 +1,46 @@
-import React from "react";
+import React, {ComponentType} from "react";
 import style from "./App.module.css";
 import {Navbar} from "./components/Navbar/Navbar";
 import {Footer} from "./components/Footer/Footer";
 import {Dialogs} from "./components/Dialogs/Dialogs";
-import {BrowserRouter, Route} from "react-router-dom";
+import {Route, withRouter} from "react-router-dom";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginContainer from "./components/Login/LoginContainer";
+import {connect} from "react-redux";
+import {compose} from "redux";
+import {AppStateType} from "./redux/redux-store";
+import {appInitializeTC} from "./redux/appReducer";
+import Preloader from "./components/common/Preloader/Preloader";
 
-const App: React.FC = () => {
+type MapStatePropsType = {
+    isInitialization: boolean
+}
 
-    return (
-        <BrowserRouter>
+type MapDispatchPropsType = {
+    appInitializeTC: () => void
+}
+
+type AppPropsType = {
+    appInitializeTC: () => void
+    isInitialization: boolean
+}
+
+class App extends React.Component<AppPropsType> {
+
+    componentDidMount() {
+        this.props.appInitializeTC()
+    }
+
+
+    render() {
+
+        if (!this.props.isInitialization) {
+            return <Preloader/>
+        }
+
+        return (
             <div className={style.app}>
                 <HeaderContainer/>
                 <Navbar/>
@@ -24,9 +52,20 @@ const App: React.FC = () => {
                 </div>
                 <Footer/>
             </div>
-        </BrowserRouter>
-    );
+        );
+    }
 }
 
-export default App;
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
+    return {
+        isInitialization: state.app.isInitialization
+    }
+}
+
+
+export default compose<ComponentType>(
+    connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps,
+        {appInitializeTC}), withRouter)(App)
+
+
 

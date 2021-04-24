@@ -7,9 +7,12 @@ export const Dialog: React.FC<DialogPropsType> = (props) => {
 
     return (
         <div className={style.dialog}>
-            {props.dialogs.map(d => <div className={style.dialogItem} key={d.id}>
+            {props.dialogs.map(d => <div className={style.dialogItemContainer} key={d.id}>
                 <NavLink to={"/dialogs/" + d.id} activeClassName={style.activeLink}>
-                    <img src={d.img} alt="avatar"/>{d.name}
+                    <div className={style.dialogItem}>
+                        <img src={d.img} alt="avatar"/>
+                        <span>{d.name}</span>
+                    </div>
                 </NavLink>
             </div>)}
         </div>

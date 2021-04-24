@@ -10,14 +10,16 @@ type PostPropsType = {
 export function Post(props: PostPropsType) {
 
     const postsElement =
-        <React.Fragment>
-            {props.posts.map(p => <div className={style.postMessage} key={p.id}>
-                <img src={myAvatar}
-                     alt="my_avatar"/>
-               <div className={style.text}> {p.post} </div>
+        <>
+            {props.posts.map(p => <div className={style.postMessageContainer} key={p.id}>
+                <div className={style.postMessage}>
+                    <img src={myAvatar}
+                         alt="my_avatar"/>
+                    <div className={style.text}> {p.post} </div>
+                </div>
                 <div className={style.like}>Like {p.likesCounter}</div>
             </div>)}
-        </React.Fragment>
+        </>
 
     return (
         <div className={style.post}>

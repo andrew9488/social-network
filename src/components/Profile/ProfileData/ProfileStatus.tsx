@@ -1,60 +1,42 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 
 type ProfileStatusPropsType = {
     status: string
     updateStatus: (status: string) => void
 }
 
-class ProfileStatus extends React.Component<ProfileStatusPropsType> {
+export const ProfileStatus: React.FC<ProfileStatusPropsType> = (props) => {
 
-    state = {
-        editableMode: false,
-        status: this.props.status
+    useEffect(() => {
+        setStatus(props.status)
+    }, [props.status])
+
+    const [editableMode, setEditableMode] = useState<boolean>(false)
+    const [status, setStatus] = useState<string>(props.status)
+
+    const activateEditableMode = () => {
+        setEditableMode(true)
     }
 
-    activateEditableMode = () => {
-        this.setState({
-                editableMode: true
+    const deactivateEditableMode = () => {
+        setEditableMode(false)
+        props.updateStatus(status)
+    }
+
+    const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setStatus(e.currentTarget.value)
+    }
+
+    return (
+        <div>
+            {!editableMode
+                ? <span onDoubleClick={activateEditableMode}>Status: {props.status}</span>
+                : <input onBlur={deactivateEditableMode}
+                         autoFocus
+                         value={status}
+                         onChange={onStatusChange}
+                />
             }
-        )
-    }
-
-    deactivateEditableMode = () => {
-        this.setState({
-                editableMode: false
-            }
-        )
-        this.props.updateStatus(this.state.status)
-    }
-
-    onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
-        this.setState({
-            status: e.currentTarget.value
-        })
-    }
-
-    componentDidUpdate(prevProps: Readonly<ProfileStatusPropsType>, prevState: Readonly<{}>) {
-        if(prevProps.status !== this.props.status){
-            this.setState({
-                status: this.props.status
-            })
-        }
-    }
-
-    render() {
-        return (
-            <div>
-                {!this.state.editableMode
-                    ? <span onDoubleClick={this.activateEditableMode}>Status :{this.props.status}</span>
-                    : <input onBlur={this.deactivateEditableMode}
-                             autoFocus
-                             value={this.state.status}
-                             onChange={this.onStatusChange}
-                    />
-                }
-            </div>
-        );
-    }
+        </div>
+    );
 }
-
-export default ProfileStatus;

@@ -1,11 +1,11 @@
-.profileAvatar{
+.profileAvatar {
     display: flex;
-    justify-content: space-around;
-
+    justify-content: space-evenly;
 }
-.profileAvatar img{
-    width: 250px;
-    height: 167px;
+
+.profileAvatar img {
+    width: 350px;
+    height: 200px;
     margin-top: 20px;
     margin-bottom: 20px;
     border: 1px solid white;

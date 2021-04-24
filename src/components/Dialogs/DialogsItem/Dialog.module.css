@@ -3,7 +3,7 @@
     height: 100%;
 }
 
-.dialogItem {
+.dialogItemContainer {
     background-color: white;
     border-radius: 10px;
     margin: 3px;
@@ -12,35 +12,42 @@
     flex-direction: column;
 }
 
-.dialogItem img {
+.dialogItemContainer img {
     width: 50px;
     height: 50px;
     border-radius: 100%;
     border: 2px solid #f1f5f8;
 }
 
-.dialogItem a {
+.dialogItemContainer a {
     text-decoration: none;
     color: black;
 }
 
-.dialogItem a:hover {
+.dialogItemContainer a:hover {
     color: white;
-    border: 1px solid #1056b7;
     background-color: #1056b7;
     border-radius: 10px;
 }
 
-.dialogItem a.activeLink {
-    border: 1px solid #1056b7;
+.dialogItemContainer a.activeLink {
     background-color: #1056b7;
-    border-radius: 5px;
+    border-radius: 10px;
     color: white;
 }
 
-.dialogItem a.activeLink:hover {
-    border: 1px solid #1056b7;
+.dialogItemContainer a.activeLink:hover {
     background-color: #1056b7;
-    border-radius: 5px;
+    border-radius: 10px;
     color: white;
+}
+
+.dialogItem{
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.dialogItem span {
+    margin-left: 5px;
 }

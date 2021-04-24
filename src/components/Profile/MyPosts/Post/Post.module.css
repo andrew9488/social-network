@@ -1,15 +1,21 @@
 .post {
-    max-width: 320px;
+    width: 350px;
 }
 
-.postMessage {
+.postMessageContainer {
     background-color: white;
     border-radius: 10px;
     margin: 3px;
     padding: 3px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+}
+
+.postMessage {
+    display: flex;
+    align-items: center;
 }
 
 .post img {
@@ -23,6 +29,10 @@
     overflow: auto;
     white-space: nowrap;
 
+}
+
+.like {
+    margin-left: 5px;
 }
 
 

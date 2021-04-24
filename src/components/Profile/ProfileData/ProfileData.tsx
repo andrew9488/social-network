@@ -3,7 +3,7 @@ import style from "./ProfileData.module.css";
 import {ProfileType} from "../../../redux/profilePageReducer";
 import userAvatar from "../../../assets/images/avatars/usersAvatar.jpg"
 import Preloader from "../../common/Preloader/Preloader";
-import ProfileStatus from "./ProfileStatus";
+import {ProfileStatus} from "./ProfileStatus";
 
 type ProfileDataPropsType = {
     profile: ProfileType

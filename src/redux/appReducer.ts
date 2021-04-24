@@ -18,7 +18,7 @@ const appReducer = (state: InitialStateType = initialState, action: AppReducerAc
         case "INITIALIZE-SUCCESS":
             return {
                 ...state,
-                isInitialization: true
+                isInitialization: action.isInitialization
             }
         default:
             return state;
@@ -27,13 +27,13 @@ const appReducer = (state: InitialStateType = initialState, action: AppReducerAc
 
 export default appReducer;
 
-export const initializeSuccess = () => ({type: "INITIALIZE-SUCCESS"} as const)
+export const initializeSuccess = (isInitialization: boolean) => ({type: "INITIALIZE-SUCCESS", isInitialization} as const)
 
 export const appInitializeTC = (): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, AppReducerActionsType>) => {
         let authPromise = dispatch(authTC())
         Promise.all([authPromise]).then(() => {
-            dispatch(initializeSuccess())
+            dispatch(initializeSuccess(true))
         })
     }
 }

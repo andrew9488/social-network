@@ -9,16 +9,13 @@ export const ProfileAvatar: React.FC = () => {
     return (
         <div className={style.profileAvatar}>
             <div>
-                <img src={photo1}
-                     alt="photo"/>
+                <img src={photo1} alt="city-D"/>
             </div>
             <div>
-                <img src={photo2}
-                     alt="photo"/>
+                <img src={photo2} alt="city-A"/>
             </div>
             <div>
-                <img src={photo3}
-                     alt="photo"/>
+                <img src={photo3} alt="city-Z"/>
             </div>
         </div>
     );

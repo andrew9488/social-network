@@ -3,7 +3,7 @@ import {AppStateType} from "./redux-store";
 import {authAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 
-type AuthReducerActionsType = ReturnType<typeof setUserData>
+type AuthReducerActionsType = ReturnType<typeof setUserData> | ReturnType<typeof setIsAuth>
 type StopSubmitActionsType = ReturnType<typeof stopSubmit>
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, AuthReducerActionsType>
@@ -32,6 +32,10 @@ const authReducer = (state: InitialStateType = initialState, action: AuthReducer
             return {
                 ...state,
                 data: action.data,
+            }
+        case "SET-IS-AUTH":
+            return {
+                ...state,
                 isAuth: action.isAuth
             }
         default:
@@ -41,11 +45,10 @@ const authReducer = (state: InitialStateType = initialState, action: AuthReducer
 
 export default authReducer;
 
-export const setUserData = (userId: number, login: string, email: string, isAuth: boolean) => ({
-    type: "SET-USER-DATA",
-    data: {userId, login, email},
-    isAuth
-} as const)
+export const setUserData = (userId: number, login: string, email: string) =>
+    ({type: "SET-USER-DATA", data: {userId, login, email}} as const)
+
+export const setIsAuth = (isAuth: boolean) => ({type: "SET-IS-AUTH", isAuth} as const)
 
 export const authTC = (): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, AuthReducerActionsType>) => {
@@ -53,7 +56,8 @@ export const authTC = (): ThunkType => {
             .then(data => {
                 if (data.resultCode === 0) {
                     let {id, login, email} = data.data
-                    dispatch(setUserData(id, login, email, true));
+                    dispatch(setUserData(id, login, email));
+                    dispatch(setIsAuth(true))
                 }
             })
     }
@@ -79,6 +83,7 @@ export const logOutTC = (): ThunkType => {
             .then(data => {
                 if (data.resultCode === 0) {
                     dispatch(logInTC(null, null, false))
+                    dispatch(setIsAuth(false))
                 }
             })
     }

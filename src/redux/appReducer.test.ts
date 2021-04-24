@@ -9,7 +9,7 @@ beforeEach(() => {
 
 test("initialization should be success", () => {
 
-    const endState = appReducer(initialState, initializeSuccess())
+    const endState = appReducer(initialState, initializeSuccess(true))
 
     expect(endState.isInitialization).toBeTruthy()
 })

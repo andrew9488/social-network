@@ -17,13 +17,15 @@ export const Header: React.FC<HeaderPropsType> = (props) => {
                     <NavLink to="#">Notification</NavLink>
                 </div>
                 <div>
-                    {props.isAuth
-                        ?
-                        <div className={style.logOut}>
-                            <NavLink to="/profile/13446 ">{props.data.login}</NavLink>
-                            <button onClick={props.logOutTC}>logout</button>
-                        </div>
-                        : <NavLink to="/login">Login</NavLink>}
+                    {
+                        props.isAuth
+                            ?
+                            <div className={style.logOut}>
+                                <NavLink to="/profile/13446 ">{props.data.login}</NavLink>
+                                <button onClick={props.logOutTC}>logout</button>
+                            </div>
+                            : <NavLink to="/login">Login</NavLink>
+                    }
                 </div>
             </div>
         </header>

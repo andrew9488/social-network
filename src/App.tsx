@@ -3,7 +3,7 @@ import style from "./App.module.css";
 import {Navbar} from "./components/Navbar/Navbar";
 import {Footer} from "./components/Footer/Footer";
 import {Dialogs} from "./components/Dialogs/Dialogs";
-import {Route, withRouter} from "react-router-dom";
+import {Route, Switch, withRouter} from "react-router-dom";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
@@ -33,7 +33,6 @@ class App extends React.Component<AppPropsType> {
         this.props.appInitializeTC()
     }
 
-
     render() {
 
         if (!this.props.isInitialization) {
@@ -45,10 +44,12 @@ class App extends React.Component<AppPropsType> {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className={style.content}>
-                    <Route path="/login" render={() => <LoginContainer/>}/>
-                    <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
-                    <Route path="/users" render={() => <UsersContainer/>}/>
-                    <Route path="/dialogs" render={() => <Dialogs/>}/>
+                    <Switch>
+                        <Route path="/login" render={() => <LoginContainer/>}/>
+                        <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
+                        <Route path="/users" render={() => <UsersContainer/>}/>
+                        <Route path="/dialogs" render={() => <Dialogs/>}/>
+                    </Switch>
                 </div>
                 <Footer/>
             </div>
@@ -58,7 +59,7 @@ class App extends React.Component<AppPropsType> {
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-        isInitialization: state.app.isInitialization
+        isInitialization: state.app.isInitialization,
     }
 }
 

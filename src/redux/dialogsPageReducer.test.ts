@@ -1,6 +1,6 @@
 import dialogsPageReducer, {
     InitialStateType,
-    sendMessageActionCreator,
+    sendMessage,
 } from "./dialogsPageReducer";
 
 let initialState: InitialStateType;
@@ -36,7 +36,7 @@ test("new message should be send", () => {
 
     const newMessage = "Hello guys. How are you?"
 
-    const endState = dialogsPageReducer(initialState, sendMessageActionCreator(newMessage));
+    const endState = dialogsPageReducer(initialState, sendMessage(newMessage));
 
     expect(endState.messages.length).toBe(5)
 

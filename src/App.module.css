@@ -1,6 +1,7 @@
-body, html{
+body, html {
     margin: 0;
     background-color: #1056b7;
+    font-family: "Comic Sans", cursive;
 }
 
 .app {
@@ -20,4 +21,8 @@ body, html{
 .app .content {
     grid-area: content;
     height: 100%;
+}
+
+button {
+    font-family: "Comic Sans", cursive;
 }

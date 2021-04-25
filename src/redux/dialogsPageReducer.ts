@@ -1,4 +1,4 @@
-export type DialogsPageReducerActionsType = ReturnType<typeof sendMessageActionCreator>
+export type DialogsPageReducerActionsType = ReturnType<typeof sendMessage>
 
 export type MessageType = {
     id: number
@@ -55,4 +55,4 @@ const dialogsPageReducer = (state: InitialStateType = initialState, action: Dial
 
 export default dialogsPageReducer;
 
-export const sendMessageActionCreator = (newText: string) => ({type: "DIALOGS-PAGE/SEND-MESSAGE", newText}) as const
+export const sendMessage = (newText: string) => ({type: "DIALOGS-PAGE/SEND-MESSAGE", newText}) as const

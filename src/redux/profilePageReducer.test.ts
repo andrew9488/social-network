@@ -1,5 +1,5 @@
 import profilePageReducer, {
-    addPostActionCreator,
+    addPostAction,
     InitialStateType, PostType, ProfileType, setIsFetchingProfileComponent, setProfileStatus, setUserProfileData,
 } from "./profilePageReducer";
 
@@ -44,7 +44,7 @@ test("new message should be send", () => {
 
     const post = "This is a test post"
 
-    const endState = profilePageReducer(initialState, addPostActionCreator(post));
+    const endState = profilePageReducer(initialState, addPostAction(post));
 
     expect(endState.posts.length).toBe(5)
 

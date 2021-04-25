@@ -1,9 +1,8 @@
 import React, {useState} from "react";
 import style from "./Users.module.css";
-import UsersPhoto from "../../assets/images/avatars/usersAvatar.jpg";
 import Preloader from "../common/Preloader/Preloader";
-import {NavLink} from "react-router-dom";
 import {UsersPropsType} from "./UsersContainer";
+import {User} from "./User";
 
 export const Users: React.FC<UsersPropsType> = (props) => {
 
@@ -40,40 +39,15 @@ export const Users: React.FC<UsersPropsType> = (props) => {
             {props.isFetching ? <Preloader/>
                 : <div className={style.container}>
                     {
-                        props.usersPage.map(u => <div key={u.id} className={style.user}>
-                            <div className={style.userAvatar}>
-                                <NavLink to={"/profile/" + u.id}>
-                                    <img src={u.photos.small != null ? u.photos.small : UsersPhoto}
-                                         style={{width: "80px", height: "80px", borderRadius: "100%",}}
-                                         alt="avatar"/>
-                                </NavLink>
-                            </div>
-                            <div className={style.userData}>
-                                <span className={style.name}>{u.name}</span>
-                                <span
-                                    className={style.status}>{u.status != null ? u.status : "I have not status"}</span>
-                                {/*<div className={style.location}>*/}
-                                {/*    <span>{"u.location.city"},</span>*/}
-                                {/*    <span>{"u.location.country"}</span>*/}
-                                {/*</div>*/}
-                            </div>
-                            <div>
-                                {
-                                    !u.followed
-                                        ? <button disabled={props.followingInProgress.some(id => id === u.id)}
-                                                  onClick={() => {
-                                                      props.followTC(u.id)
-                                                  }}>follow</button>
-                                        : <button disabled={props.followingInProgress.some(id => id === u.id)}
-                                                  onClick={() => {
-                                                      props.unFollowTC(u.id)
-                                                  }}>unfollow</button>
-                                }
-                                <button>message</button>
-                            </div>
-                        </div>)
+                        props.usersPage.map(u => <User key={u.id}
+                                                       user={u}
+                                                       followingInProgress={props.followingInProgress}
+                                                       followTC={props.followTC}
+                                                       unFollowTC={props.unFollowTC}/>)
                     }
                 </div>}
         </div>
     );
 }
+
+

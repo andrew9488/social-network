@@ -1,7 +1,7 @@
 import {Message} from "./Message";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../redux/redux-store";
-import {DialogsPageReducerActionsType, MessageType, sendMessageActionCreator,} from "../../../redux/dialogsPageReducer";
+import {DialogsPageReducerActionsType, MessageType, sendMessage,} from "../../../redux/dialogsPageReducer";
 import {compose, Dispatch} from "redux";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import {ComponentType} from "react";
@@ -25,7 +25,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 const mapDispatchToProps = (dispatch: Dispatch<DialogsPageReducerActionsType>): MapDispatchPropsType => {
     return {
         sendMessage: (text: string) => {
-            dispatch(sendMessageActionCreator(text))
+            dispatch(sendMessage(text))
         },
     }
 }

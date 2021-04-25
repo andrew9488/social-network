@@ -3,7 +3,7 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AppStateType} from "./redux-store";
 import {profileAPI} from "../api/api";
 
-export type ProfilePageReducerActionsType = ReturnType<typeof addPostActionCreator>
+export type ProfilePageReducerActionsType = ReturnType<typeof addPostAction>
     | ReturnType<typeof setUserProfileData>
     | ReturnType<typeof setIsFetchingProfileComponent>
     | ReturnType<typeof setProfileStatus>
@@ -109,7 +109,7 @@ const profilePageReducer = (state: InitialStateType = initialState, action: Prof
 
 export default profilePageReducer;
 
-export const addPostActionCreator = (postText: string) => ({type: "PROFILE-PAGE/ADD-POST", postText} as const)
+export const addPostAction = (postText: string) => ({type: "PROFILE-PAGE/ADD-POST", postText} as const)
 
 export const setUserProfileData = (profile: ProfileType) =>
     ({type: "PROFILE-PAGE/SET-USER-PROFILE-DATA", profile} as const)

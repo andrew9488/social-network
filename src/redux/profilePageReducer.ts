@@ -77,7 +77,7 @@ export type InitialStateType = typeof initialState
 const profilePageReducer = (state: InitialStateType = initialState, action: ProfilePageReducerActionsType): InitialStateType => {
 
     switch (action.type) {
-        case "ADD-POST":
+        case "PROFILE-PAGE/ADD-POST":
             const newPost: PostType = {
                 id: new Date().getTime(),
                 post: action.postText,
@@ -87,17 +87,17 @@ const profilePageReducer = (state: InitialStateType = initialState, action: Prof
                 ...state,
                 posts: [...state.posts, newPost]
             }
-        case "SET-USER-PROFILE-DATA":
+        case "PROFILE-PAGE/SET-USER-PROFILE-DATA":
             return {
                 ...state,
                 profile: action.profile
             }
-        case "SET-IS-FETCHING-PROFILE-COMPONENT":
+        case "PROFILE-PAGE/SET-IS-FETCHING-PROFILE-COMPONENT":
             return {
                 ...state,
                 isFetching: action.isFetching
             }
-        case "SET-PROFILE-STATUS":
+        case "PROFILE-PAGE/SET-PROFILE-STATUS":
             return {
                 ...state,
                 status: action.status
@@ -109,20 +109,16 @@ const profilePageReducer = (state: InitialStateType = initialState, action: Prof
 
 export default profilePageReducer;
 
-export const addPostActionCreator = (postText: string) => ({type: "ADD-POST", postText} as const)
+export const addPostActionCreator = (postText: string) => ({type: "PROFILE-PAGE/ADD-POST", postText} as const)
 
 export const setUserProfileData = (profile: ProfileType) =>
-    ({type: "SET-USER-PROFILE-DATA", profile} as const)
+    ({type: "PROFILE-PAGE/SET-USER-PROFILE-DATA", profile} as const)
 
-export const setIsFetchingProfileComponent = (isFetching: boolean) => ({
-    type: "SET-IS-FETCHING-PROFILE-COMPONENT",
-    isFetching
-} as const)
+export const setIsFetchingProfileComponent = (isFetching: boolean) =>
+    ({type: "PROFILE-PAGE/SET-IS-FETCHING-PROFILE-COMPONENT", isFetching} as const)
 
-export const setProfileStatus = (status: string) => ({
-    type: "SET-PROFILE-STATUS",
-    status
-} as const)
+export const setProfileStatus = (status: string) =>
+    ({type: "PROFILE-PAGE/SET-PROFILE-STATUS", status} as const)
 
 export const getUserProfileTC = (userId: number): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ProfilePageReducerActionsType>) => {

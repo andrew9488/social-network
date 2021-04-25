@@ -28,12 +28,12 @@ export type InitialStateType = typeof initialState
 const authReducer = (state: InitialStateType = initialState, action: AuthReducerActionsType): InitialStateType => {
 
     switch (action.type) {
-        case "SET-USER-DATA":
+        case "AUTH/SET-USER-DATA":
             return {
                 ...state,
                 data: action.data,
             }
-        case "SET-IS-AUTH":
+        case "AUTH/SET-IS-AUTH":
             return {
                 ...state,
                 isAuth: action.isAuth
@@ -46,9 +46,9 @@ const authReducer = (state: InitialStateType = initialState, action: AuthReducer
 export default authReducer;
 
 export const setUserData = (userId: number, login: string, email: string) =>
-    ({type: "SET-USER-DATA", data: {userId, login, email}} as const)
+    ({type: "AUTH/SET-USER-DATA", data: {userId, login, email}} as const)
 
-export const setIsAuth = (isAuth: boolean) => ({type: "SET-IS-AUTH", isAuth} as const)
+export const setIsAuth = (isAuth: boolean) => ({type: "AUTH/SET-IS-AUTH", isAuth} as const)
 
 export const authTC = (): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, AuthReducerActionsType>) => {

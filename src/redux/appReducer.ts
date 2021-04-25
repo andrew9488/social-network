@@ -15,7 +15,7 @@ export type InitialStateType = typeof initialState
 const appReducer = (state: InitialStateType = initialState, action: AppReducerActionsType): InitialStateType => {
 
     switch (action.type) {
-        case "INITIALIZE-SUCCESS":
+        case "APP/INITIALIZE-SUCCESS":
             return {
                 ...state,
                 isInitialization: action.isInitialization
@@ -27,7 +27,7 @@ const appReducer = (state: InitialStateType = initialState, action: AppReducerAc
 
 export default appReducer;
 
-export const initializeSuccess = (isInitialization: boolean) => ({type: "INITIALIZE-SUCCESS", isInitialization} as const)
+export const initializeSuccess = (isInitialization: boolean) => ({type: "APP/INITIALIZE-SUCCESS", isInitialization} as const)
 
 export const appInitializeTC = (): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, AppReducerActionsType>) => {

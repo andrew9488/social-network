@@ -39,7 +39,7 @@ export type InitialStateType = typeof initialState
 const dialogsPageReducer = (state: InitialStateType = initialState, action: DialogsPageReducerActionsType): InitialStateType => {
 
     switch (action.type) {
-        case "SEND-MESSAGE":
+        case "DIALOGS-PAGE/SEND-MESSAGE":
             const newMessage: MessageType = {
                 id: new Date().getTime(),
                 message: action.newText,
@@ -55,4 +55,4 @@ const dialogsPageReducer = (state: InitialStateType = initialState, action: Dial
 
 export default dialogsPageReducer;
 
-export const sendMessageActionCreator = (newText: string) => ({type: "SEND-MESSAGE", newText}) as const
+export const sendMessageActionCreator = (newText: string) => ({type: "DIALOGS-PAGE/SEND-MESSAGE", newText}) as const

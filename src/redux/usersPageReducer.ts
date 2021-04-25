@@ -47,7 +47,7 @@ export type InitialStateType = typeof initialState
 const usersPageReducer = (state: InitialStateType = initialState, action: UsersPageReducerActionsType): InitialStateType => {
 
     switch (action.type) {
-        case "FOLLOW":
+        case "USERS-PAGE/FOLLOW":
             return {
                 ...state, users: state.users.map(u => {
                     if (u.id === action.userId) {
@@ -56,7 +56,7 @@ const usersPageReducer = (state: InitialStateType = initialState, action: UsersP
                     return u
                 })
             }
-        case "UNFOLLOW":
+        case "USERS-PAGE/UNFOLLOW":
             return {
                 ...state, users: state.users.map(u => {
                     if (u.id === action.userId) {
@@ -65,15 +65,15 @@ const usersPageReducer = (state: InitialStateType = initialState, action: UsersP
                     return u
                 })
             }
-        case "SET-USERS":
+        case "USERS-PAGE/SET-USERS":
             return {...state, users: action.users}
-        case "SET-CURRENT-PAGE":
+        case "USERS-PAGE/SET-CURRENT-PAGE":
             return {...state, currentPage: action.currentPage}
-        case "SET-TOTAL-COUNT":
+        case "USERS-PAGE/SET-TOTAL-COUNT":
             return {...state, totalCount: action.totalCount}
-        case "SET-IS-FETCHING-USERS-COMPONENT":
+        case "USERS-PAGE/SET-IS-FETCHING-USERS-COMPONENT":
             return {...state, isFetching: action.isFetching}
-        case "SET-FOLLOWING-PROGRESS":
+        case "USERS-PAGE/SET-FOLLOWING-PROGRESS":
             return {
                 ...state,
                 followingInProgress: action.disableButton
@@ -87,20 +87,15 @@ const usersPageReducer = (state: InitialStateType = initialState, action: UsersP
 
 export default usersPageReducer;
 
-export const follow = (userId: number) => ({type: "FOLLOW", userId} as const)
-export const unFollow = (userId: number) => ({type: "UNFOLLOW", userId} as const)
-export const setUsers = (users: Array<UserType>) => ({type: "SET-USERS", users} as const)
-export const setCurrentPage = (currentPage: number) => ({type: "SET-CURRENT-PAGE", currentPage} as const)
-export const setTotalCount = (totalCount: number) => ({type: "SET-TOTAL-COUNT", totalCount} as const)
-export const setIsFetchingUsersComponent = (isFetching: boolean) => ({
-    type: "SET-IS-FETCHING-USERS-COMPONENT",
-    isFetching
-} as const)
-export const setFollowingProgress = (disableButton: boolean, userId: number) => ({
-    type: "SET-FOLLOWING-PROGRESS",
-    disableButton,
-    userId
-} as const)
+export const follow = (userId: number) => ({type: "USERS-PAGE/FOLLOW", userId} as const)
+export const unFollow = (userId: number) => ({type: "USERS-PAGE/UNFOLLOW", userId} as const)
+export const setUsers = (users: Array<UserType>) => ({type: "USERS-PAGE/SET-USERS", users} as const)
+export const setCurrentPage = (currentPage: number) => ({type: "USERS-PAGE/SET-CURRENT-PAGE", currentPage} as const)
+export const setTotalCount = (totalCount: number) => ({type: "USERS-PAGE/SET-TOTAL-COUNT", totalCount} as const)
+export const setIsFetchingUsersComponent = (isFetching: boolean) =>
+    ({type: "USERS-PAGE/SET-IS-FETCHING-USERS-COMPONENT", isFetching} as const)
+export const setFollowingProgress = (disableButton: boolean, userId: number) =>
+    ({type: "USERS-PAGE/SET-FOLLOWING-PROGRESS", disableButton, userId} as const)
 
 export const getUsersTC = (currentPage: number, pageSize: number): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, UsersPageReducerActionsType>) => {

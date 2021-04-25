@@ -45,8 +45,8 @@ class App extends React.Component<AppPropsType> {
                 <Navbar/>
                 <div className={style.content}>
                     <Switch>
-                        <Route path="/login" render={() => <LoginContainer/>}/>
                         <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
+                        <Route path="/login" render={() => <LoginContainer/>}/>
                         <Route path="/users" render={() => <UsersContainer/>}/>
                         <Route path="/dialogs" render={() => <Dialogs/>}/>
                     </Switch>

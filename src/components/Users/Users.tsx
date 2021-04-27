@@ -4,7 +4,7 @@ import Preloader from "../common/Preloader/Preloader";
 import {UsersPropsType} from "./UsersContainer";
 import {User} from "./User";
 
-export const Users: React.FC<UsersPropsType> = (props) => {
+export const Users: React.FC<UsersPropsType> = React.memo((props) => {
 
     const [portionNumber, setPortionNumber] = useState<number>(1)
 
@@ -48,6 +48,6 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                 </div>}
         </div>
     );
-}
+})
 
 

@@ -12,7 +12,7 @@ type ProfileDataPropsType = {
     updateStatus: (status: string) => void
 }
 
-export const ProfileData: React.FC<ProfileDataPropsType> = (props) => {
+export const ProfileData: React.FC<ProfileDataPropsType> = React.memo((props) => {
     return (
         <div className={style.profileData}>
             {props.isFetching
@@ -48,5 +48,5 @@ export const ProfileData: React.FC<ProfileDataPropsType> = (props) => {
                 </>}
         </div>
     );
-}
+})
 

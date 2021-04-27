@@ -110,13 +110,10 @@ const profilePageReducer = (state: InitialStateType = initialState, action: Prof
 export default profilePageReducer;
 
 export const addPostAction = (postText: string) => ({type: "PROFILE-PAGE/ADD-POST", postText} as const)
-
 export const setUserProfileData = (profile: ProfileType) =>
     ({type: "PROFILE-PAGE/SET-USER-PROFILE-DATA", profile} as const)
-
 export const setIsFetchingProfileComponent = (isFetching: boolean) =>
     ({type: "PROFILE-PAGE/SET-IS-FETCHING-PROFILE-COMPONENT", isFetching} as const)
-
 export const setProfileStatus = (status: string) =>
     ({type: "PROFILE-PAGE/SET-PROFILE-STATUS", status} as const)
 

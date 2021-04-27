@@ -2,7 +2,7 @@ import React from "react";
 import style from "./Footer.module.css";
 
 
-export const Footer: React.FC = () => {
+export const Footer: React.FC = React.memo(() => {
     return (
         <footer className={style.footer}>
             <div className={style.footerText}>
@@ -11,5 +11,5 @@ export const Footer: React.FC = () => {
             </div>
         </footer>
     );
-}
+})
 

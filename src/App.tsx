@@ -27,7 +27,7 @@ type AppPropsType = {
     isInitialization: boolean
 }
 
-class App extends React.Component<AppPropsType> {
+class App extends React.PureComponent<AppPropsType> {
 
     componentDidMount() {
         this.props.appInitializeTC()

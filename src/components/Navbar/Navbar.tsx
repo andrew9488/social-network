@@ -2,8 +2,7 @@ import React from "react";
 import {NavLink} from "react-router-dom";
 import style from "./Navbar.module.css";
 
-
-export const Navbar: React.FC = () => {
+export const Navbar: React.FC = React.memo(() => {
     return (
         <nav className={style.navbar}>
             <div className={style.items}>
@@ -28,5 +27,5 @@ export const Navbar: React.FC = () => {
             </div>
         </nav>
     );
-}
+})
 

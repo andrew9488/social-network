@@ -4,7 +4,7 @@ import logo from "../../assets/images/logo/logo.png";
 import {NavLink} from "react-router-dom";
 import {HeaderPropsType} from "./HeaderContainer";
 
-export const Header: React.FC<HeaderPropsType> = (props) => {
+export const Header: React.FC<HeaderPropsType> = React.memo((props) => {
 
     return (
         <header className={style.header}>
@@ -30,5 +30,5 @@ export const Header: React.FC<HeaderPropsType> = (props) => {
             </div>
         </header>
     );
-}
+})
 

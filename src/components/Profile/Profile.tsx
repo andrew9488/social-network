@@ -6,7 +6,7 @@ import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import {ProfilePropsType} from "./ProfileContainer";
 
 
-export function Profile(props: ProfilePropsType) {
+export const Profile: React.FC<ProfilePropsType> = React.memo((props) => {
     return (
         <div className={style.profile}>
             <ProfileAvatar/>
@@ -21,5 +21,5 @@ export function Profile(props: ProfilePropsType) {
             </div>
         </div>
     );
-}
+})
 

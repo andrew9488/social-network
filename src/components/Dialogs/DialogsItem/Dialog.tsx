@@ -3,7 +3,7 @@ import {NavLink} from "react-router-dom";
 import React from "react";
 import {DialogPropsType} from "./DialogContainer";
 
-export const Dialog: React.FC<DialogPropsType> = (props) => {
+export const Dialog: React.FC<DialogPropsType> = React.memo((props) => {
 
     return (
         <div className={style.dialog}>
@@ -17,4 +17,4 @@ export const Dialog: React.FC<DialogPropsType> = (props) => {
             </div>)}
         </div>
     );
-}
+})

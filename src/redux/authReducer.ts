@@ -47,7 +47,6 @@ export default authReducer;
 
 export const setUserData = (userId: number, login: string, email: string) =>
     ({type: "AUTH/SET-USER-DATA", data: {userId, login, email}} as const)
-
 export const setIsAuth = (isAuth: boolean) => ({type: "AUTH/SET-IS-AUTH", isAuth} as const)
 
 export const authTC = (): ThunkType => {

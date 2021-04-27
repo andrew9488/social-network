@@ -10,7 +10,8 @@ type UserPropsType = {
     followTC: (userId: number) => void
     unFollowTC: (userId: number) => void
 }
-export const User: React.FC<UserPropsType> = (props) => {
+export const User: React.FC<UserPropsType> = React.memo((props) => {
+
     return (
         <div className={style.user}>
             <div className={style.userAvatar}>
@@ -40,4 +41,4 @@ export const User: React.FC<UserPropsType> = (props) => {
             </div>
         </div>
     )
-}
+})

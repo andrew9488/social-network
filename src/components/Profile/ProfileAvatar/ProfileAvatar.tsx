@@ -5,7 +5,7 @@ import photo2 from "./../../../assets/images/avatars/city-A.png";
 import photo3 from "./../../../assets/images/avatars/city-Z.png";
 
 
-export const ProfileAvatar: React.FC = () => {
+export const ProfileAvatar: React.FC = React.memo(() => {
     return (
         <div className={style.profileAvatar}>
             <div>
@@ -19,5 +19,5 @@ export const ProfileAvatar: React.FC = () => {
             </div>
         </div>
     );
-}
+})
 

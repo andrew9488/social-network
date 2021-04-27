@@ -9,7 +9,7 @@ export type CommonFormType = {
 
 const max = maxLength(100)
 
-const Form: React.FC<InjectedFormProps<CommonFormType>> = (props) => {
+const Form: React.FC<InjectedFormProps<CommonFormType>> = React.memo((props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
@@ -19,10 +19,9 @@ const Form: React.FC<InjectedFormProps<CommonFormType>> = (props) => {
                 <button type="submit">Send</button>
             </div>
 
-
         </form>
     );
-}
+})
 export const CommonForm = reduxForm<CommonFormType>({
     form: "formForSendNewText"
 })(Form)

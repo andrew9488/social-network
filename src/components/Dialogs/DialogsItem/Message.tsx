@@ -1,13 +1,13 @@
 import style from "./Message.module.css";
-import React from "react";
+import React, {useCallback} from "react";
 import {MessagePropsType} from "./MessageContainer";
 import {CommonForm, CommonFormType} from "../../common/Form/CommonForm";
 
-export const Message: React.FC<MessagePropsType> = (props) => {
+export const Message: React.FC<MessagePropsType> = React.memo((props) => {
 
-    const sendMessageText = (text: CommonFormType) => {
+    const sendMessageText = useCallback((text: CommonFormType) => {
         props.sendMessage(text.newText)
-    }
+    }, [props])
 
     return (
         <div className={style.message}>
@@ -17,4 +17,4 @@ export const Message: React.FC<MessagePropsType> = (props) => {
             <CommonForm onSubmit={sendMessageText}/>
         </div>
     );
-}
+})

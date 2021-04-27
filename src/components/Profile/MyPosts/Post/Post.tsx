@@ -7,7 +7,7 @@ type PostPropsType = {
     posts: Array<PostType>
 }
 
-export function Post(props: PostPropsType) {
+export const Post = React.memo((props: PostPropsType) => {
 
     const postsElement =
         <>
@@ -26,5 +26,5 @@ export function Post(props: PostPropsType) {
             {postsElement}
         </div>
     );
-}
+})
 

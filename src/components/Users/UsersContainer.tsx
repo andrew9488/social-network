@@ -42,7 +42,7 @@ type OwnTypeProps = {
 
 export type UsersPropsType = MapStatePropsType & MapDispatchPropsType & OwnTypeProps
 
-class UsersContainer extends React.Component<UsersClassContainerPropsType> {
+class UsersContainer extends React.PureComponent<UsersClassContainerPropsType> {
 
     componentDidMount() {
         this.props.getUsersTC(this.props.currentPage, this.props.pageSize)

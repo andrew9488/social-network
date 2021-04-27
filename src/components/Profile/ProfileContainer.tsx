@@ -28,7 +28,7 @@ export type ProfilePropsType = MapStatePropsType & MapDispatchPropsType
 
 type PropsType = RouteComponentProps<PathParamsType> & ProfilePropsType
 
-class ProfileContainer extends React.Component<PropsType> {
+class ProfileContainer extends React.PureComponent<PropsType> {
 
     componentDidMount() {
         let userId = Number(this.props.match.params.userId)

@@ -1,4 +1,27 @@
-# Getting Started with Create React App
+# Social Network (Cats Notes)
+
+This project is a single page application, which contains base functionality of modern social networks.
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Application features
+
+1. after entering the password and login on the authorization page and after confirmation from the server,
+  you can use the social network as an authorized user;
+
+
+2. on profile page user can:
+
++ upload photo for his profile;
++ update status;
++ edit profile information;
++ add new post;
+
+3. on users page:
+
+* follow or unfollow another network user;
+* switch between pages with users;
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

@@ -27,13 +27,18 @@ const appReducer = (state: InitialStateType = initialState, action: AppReducerAc
 
 export default appReducer;
 
-export const initializeSuccess = (isInitialization: boolean) => ({type: "APP/INITIALIZE-SUCCESS", isInitialization} as const)
+export const initializeSuccess = (isInitialization: boolean) =>
+    ({type: "APP/INITIALIZE-SUCCESS", isInitialization} as const)
 
 export const appInitializeTC = (): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, AppReducerActionsType>) => {
         let authPromise = dispatch(authTC())
-        Promise.all([authPromise]).then(() => {
-            dispatch(initializeSuccess(true))
-        })
+        Promise.all([authPromise])
+            .then(() => {
+                dispatch(initializeSuccess(true))
+            })
+            .catch(error => {
+                console.warn(error)
+            })
     }
 }

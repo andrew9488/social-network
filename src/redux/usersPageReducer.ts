@@ -1,6 +1,7 @@
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AppStateType} from "./redux-store";
 import {followAPI, usersAPI} from "../api/api";
+import {objectHelpers} from "../utils/objectHelpers";
 
 export type UsersPageReducerActionsType = ReturnType<typeof follow>
     | ReturnType<typeof unFollow>
@@ -49,21 +50,13 @@ const usersPageReducer = (state: InitialStateType = initialState, action: UsersP
     switch (action.type) {
         case "USERS-PAGE/FOLLOW":
             return {
-                ...state, users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: true}
-                    }
-                    return u
-                })
+                ...state,
+                users: objectHelpers(state.users, action.userId, "id", {followed: true})
             }
         case "USERS-PAGE/UNFOLLOW":
             return {
-                ...state, users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: false}
-                    }
-                    return u
-                })
+                ...state,
+                users: objectHelpers(state.users, action.userId, "id", {followed: false})
             }
         case "USERS-PAGE/SET-USERS":
             return {...state, users: action.users}
@@ -107,6 +100,9 @@ export const getUsersTC = (currentPage: number, pageSize: number): ThunkType => 
                 dispatch(setTotalCount(data.totalCount));
                 dispatch(setCurrentPage(currentPage))
             })
+            .catch(error => {
+                console.warn(error)
+            })
     }
 }
 
@@ -117,8 +113,15 @@ export const followTC = (userId: number): ThunkType => {
             .then(data => {
                 if (data.resultCode === 0) {
                     dispatch(follow(userId))
+                } else {
+                    if (data.messages.length > 0) {
+                        console.warn(data.messages[0])
+                    }
                 }
                 dispatch(setFollowingProgress(false, userId))
+            })
+            .catch(error => {
+                console.warn(error)
             })
     }
 }
@@ -130,8 +133,15 @@ export const unFollowTC = (userId: number): ThunkType => {
             .then(data => {
                 if (data.resultCode === 0) {
                     dispatch(unFollow(userId))
+                } else {
+                    if (data.messages.length > 0) {
+                        console.warn(data.messages[0])
+                    }
                 }
                 dispatch(setFollowingProgress(false, userId))
+            })
+            .catch(error => {
+                console.warn(error)
             })
     }
 }

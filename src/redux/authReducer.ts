@@ -58,7 +58,14 @@ export const authTC = (): ThunkType => {
                     let {id, login, email} = data.data
                     dispatch(setUserData(id, login, email));
                     dispatch(setIsAuth(true))
+                } else {
+                    if (data.messages.length > 0) {
+                        console.warn(data.messages[0])
+                    }
                 }
+            })
+            .catch(error => {
+                console.warn(error)
             })
     }
 }
@@ -72,7 +79,14 @@ export const logInTC = (email: string | null, password: string | null, rememberM
                 } else if (data.resultCode === 1) {
                     const error = data.messages[0]
                     dispatch(stopSubmit("login", {_error: error}))
+                } else {
+                    if (data.messages.length > 0) {
+                        console.warn(data.messages[0])
+                    }
                 }
+            })
+            .catch(error => {
+                console.warn(error)
             })
     }
 }
@@ -84,7 +98,14 @@ export const logOutTC = (): ThunkType => {
                 if (data.resultCode === 0) {
                     dispatch(logInTC(null, null, false))
                     dispatch(setIsAuth(false))
+                } else {
+                    if (data.messages.length > 0) {
+                        console.warn(data.messages[0])
+                    }
                 }
+            })
+            .catch(error => {
+                console.warn(error)
             })
     }
 }

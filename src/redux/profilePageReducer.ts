@@ -128,8 +128,10 @@ export const getUserProfileTC = (userId: number): ThunkType => {
                 dispatch(setUserProfileData(data));
                 dispatch(setIsFetchingProfileComponent(false))
             })
+            .catch(error => {
+                console.warn(error)
+            })
     }
-
 }
 
 export const getUserStatusTC = (userId: number): ThunkType => {
@@ -137,6 +139,9 @@ export const getUserStatusTC = (userId: number): ThunkType => {
         profileAPI.getUserStatus(userId)
             .then(data => {
                 dispatch(setProfileStatus(data))
+            })
+            .catch(error => {
+                console.warn(error)
             })
     }
 }
@@ -147,7 +152,14 @@ export const updateStatusTC = (status: string): ThunkType => {
             .then(data => {
                 if (data.resultCode === 0) {
                     dispatch(setProfileStatus(status))
+                } else {
+                    if (data.messages.length > 0) {
+                        console.warn(data.messages[0])
+                    }
                 }
+            })
+            .catch(error => {
+                console.warn(error)
             })
     }
 }

@@ -106,7 +106,7 @@ const profilePageReducer = (state: InitialStateType = initialState, action: Prof
         case "PROFILE-PAGE/INCREASE-LIKE": {
             return {
                 ...state,
-                posts: state.posts.map(p => p.id === action.postId ? {...p, likesCounter: action.like + 1} : p)
+                posts: state.posts.map(p => p.id === action.postId ? {...p, likesCounter: p.likesCounter + 1} : p)
             }
         }
         default:
@@ -123,8 +123,8 @@ export const setIsFetchingProfileComponent = (isFetching: boolean) =>
     ({type: "PROFILE-PAGE/SET-IS-FETCHING-PROFILE-COMPONENT", isFetching} as const)
 export const setProfileStatus = (status: string) =>
     ({type: "PROFILE-PAGE/SET-PROFILE-STATUS", status} as const)
-export const increaseLike = (postId: number, like: number) =>
-    ({type: "PROFILE-PAGE/INCREASE-LIKE", postId, like} as const)
+export const increaseLike = (postId: number) =>
+    ({type: "PROFILE-PAGE/INCREASE-LIKE", postId} as const)
 
 export const getUserProfileTC = (userId: number): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ProfilePageReducerActionsType>) => {

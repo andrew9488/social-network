@@ -8,30 +8,6 @@
     align-items: center;
 }
 
-.paginator {
-    display: flex;
-    align-items: center;
-    margin-top: 5px;
-}
-
-.paginator span{
-    border: 1px solid #f1f5f8;
-    padding: 2px;
-    background-color: white;
-}
-
-.paginator span:hover{
-    background-color: #1056b7;
-    color: #f1f5f8;
-}
-
-.paginator .currentPage{
-    background-color: #1056b7;
-    font-weight: bold;
-    color: #f1f5f8;
-    border: 1px solid #1056b7;
-}
-
 .container{
     display: flex;
     flex-wrap: wrap;

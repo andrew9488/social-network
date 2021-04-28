@@ -1,5 +1,5 @@
 import profilePageReducer, {
-    addPost,
+    addPost, increaseLike,
     InitialStateType, PostType, ProfileType, setIsFetchingProfileComponent, setProfileStatus, setUserProfileData,
 } from "./profilePageReducer";
 
@@ -85,5 +85,13 @@ test("status should be set", () => {
     const endState = profilePageReducer(initialState, setProfileStatus(status))
 
     expect(endState.status).toBe("This is my new status")
+
+})
+
+test("correct post like should increase", () => {
+
+    const endState = profilePageReducer(initialState, increaseLike(2))
+
+    expect(endState.posts[1].likesCounter).toBe(6)
 
 })

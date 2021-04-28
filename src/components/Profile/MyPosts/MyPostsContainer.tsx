@@ -10,7 +10,7 @@ type MapStatePropsType = {
 
 type MapDispatchPropsType = {
     addPost: (text: string) => void
-    increase:(id:number, like: number)=>void
+    increase:(id:number)=>void
 }
 
 export type MyPostsPropsType = MapStatePropsType & MapDispatchPropsType
@@ -26,8 +26,8 @@ const mapDispatchToProps = (dispatch: Dispatch<ProfilePageReducerActionsType>): 
         addPost: (text: string) => {
             dispatch(addPost(text))
         },
-        increase:(id:number, like: number)=>{
-            dispatch(increaseLike(id, like))
+        increase:(id:number)=>{
+            dispatch(increaseLike(id))
         }
     }
 }

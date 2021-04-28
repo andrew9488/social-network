@@ -5,13 +5,13 @@ import myAvatar from '../../../../assets/images/avatars/myAvatar.jpg'
 
 type PostPropsType = {
     posts: Array<PostType>
-    increase: (id: number, like: number) => void
+    increase: (id: number) => void
 }
 
 export const Post = React.memo((props: PostPropsType) => {
 
-    const increase = (id: number, like: number) => {
-        props.increase(id, like)
+    const increase = (id: number) => {
+        props.increase(id)
     }
 
     const postsElement =
@@ -24,7 +24,7 @@ export const Post = React.memo((props: PostPropsType) => {
                         <div className={style.text}> {p.post} </div>
                     </div>
                     <div className={style.like}
-                         onClick={() => increase(p.id,p.likesCounter)}> Like {p.likesCounter}</div>
+                         onClick={() => increase(p.id)}> Like {p.likesCounter}</div>
                 </div>)
             }
         </>

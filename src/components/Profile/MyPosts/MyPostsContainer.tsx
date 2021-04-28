@@ -1,7 +1,7 @@
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../redux/redux-store";
-import {addPostAction, PostType, ProfilePageReducerActionsType} from "../../../redux/profilePageReducer";
+import {addPost, increaseLike, PostType, ProfilePageReducerActionsType} from "../../../redux/profilePageReducer";
 import {compose, Dispatch} from "redux";
 
 type MapStatePropsType = {
@@ -10,6 +10,7 @@ type MapStatePropsType = {
 
 type MapDispatchPropsType = {
     addPost: (text: string) => void
+    increase:(id:number, like: number)=>void
 }
 
 export type MyPostsPropsType = MapStatePropsType & MapDispatchPropsType
@@ -23,8 +24,11 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 const mapDispatchToProps = (dispatch: Dispatch<ProfilePageReducerActionsType>): MapDispatchPropsType => {
     return {
         addPost: (text: string) => {
-            dispatch(addPostAction(text))
+            dispatch(addPost(text))
         },
+        increase:(id:number, like: number)=>{
+            dispatch(increaseLike(id, like))
+        }
     }
 }
 

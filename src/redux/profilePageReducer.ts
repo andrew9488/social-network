@@ -3,10 +3,11 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AppStateType} from "./redux-store";
 import {profileAPI} from "../api/api";
 
-export type ProfilePageReducerActionsType = ReturnType<typeof addPostAction>
+export type ProfilePageReducerActionsType = ReturnType<typeof addPost>
     | ReturnType<typeof setUserProfileData>
     | ReturnType<typeof setIsFetchingProfileComponent>
     | ReturnType<typeof setProfileStatus>
+    | ReturnType<typeof increaseLike>
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, ProfilePageReducerActionsType>
 
@@ -102,6 +103,12 @@ const profilePageReducer = (state: InitialStateType = initialState, action: Prof
                 ...state,
                 status: action.status
             }
+        case "PROFILE-PAGE/INCREASE-LIKE": {
+            return {
+                ...state,
+                posts: state.posts.map(p => p.id === action.postId ? {...p, likesCounter: action.like + 1} : p)
+            }
+        }
         default:
             return state;
     }
@@ -109,13 +116,15 @@ const profilePageReducer = (state: InitialStateType = initialState, action: Prof
 
 export default profilePageReducer;
 
-export const addPostAction = (postText: string) => ({type: "PROFILE-PAGE/ADD-POST", postText} as const)
+export const addPost = (postText: string) => ({type: "PROFILE-PAGE/ADD-POST", postText} as const)
 export const setUserProfileData = (profile: ProfileType) =>
     ({type: "PROFILE-PAGE/SET-USER-PROFILE-DATA", profile} as const)
 export const setIsFetchingProfileComponent = (isFetching: boolean) =>
     ({type: "PROFILE-PAGE/SET-IS-FETCHING-PROFILE-COMPONENT", isFetching} as const)
 export const setProfileStatus = (status: string) =>
     ({type: "PROFILE-PAGE/SET-PROFILE-STATUS", status} as const)
+export const increaseLike = (postId: number, like: number) =>
+    ({type: "PROFILE-PAGE/INCREASE-LIKE", postId, like} as const)
 
 export const getUserProfileTC = (userId: number): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ProfilePageReducerActionsType>) => {

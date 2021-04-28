@@ -16,7 +16,9 @@ export const MyPosts: React.FC<MyPostsPropsType> = React.memo((props) => {
             <h2 className={style.title}>My posts</h2>
             <div className={style.container}>
                 <CommonForm onSubmit={addPost}/>
-                <Post posts={props.posts}/>
+                <Post posts={props.posts}
+                      increase={props.increase}
+                />
             </div>
         </div>
     );

@@ -14,24 +14,37 @@ export type FormDataType = {
 
 const Form: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
-        <form onSubmit={props.handleSubmit} className={style.loginForm}>
-            <div>
-                <Field name="email" type="text" placeholder="login" component={Input} validate={[required]}/>
+        <>
+            <div style={{textAlign: "center"}}>
+                <p>To log in get registered
+                    <a href={'https://social-network.samuraijs.com/'}
+                       target={'_blank'}> here
+                    </a>
+                </p>
+                <p>or use common test account credentials:</p>
+                <p>Email: free@samuraijs.com</p>
+                <p>Password: free</p>
             </div>
-            <div>
-                <Field name="password" type="password" placeholder="password" component={Input} validate={[required]}/>
-            </div>
-            <div className={style.error}>
-                {props.error}
-            </div>
-            <div style={{display: "flex"}}>
-                <Field name="rememberMe" type="checkbox" component={Input}/><span>remember me</span>
-            </div>
-            <div>
-                <button type="submit">Submit</button>
-            </div>
+            <form onSubmit={props.handleSubmit} className={style.loginForm}>
+                <div>
+                    <Field name="email" type="text" placeholder="login" component={Input} validate={[required]}/>
+                </div>
+                <div>
+                    <Field name="password" type="password" placeholder="password" component={Input}
+                           validate={[required]}/>
+                </div>
+                <div className={style.error}>
+                    {props.error}
+                </div>
+                <div style={{display: "flex"}}>
+                    <Field name="rememberMe" type="checkbox" component={Input}/><span>remember me</span>
+                </div>
+                <div>
+                    <button type="submit">Submit</button>
+                </div>
 
-        </form>
+            </form>
+        </>
     );
 }
 export const LoginForm = reduxForm<FormDataType>({

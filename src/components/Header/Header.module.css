@@ -13,10 +13,10 @@
     margin: 2px 0 2px 30px;
 }
 .headUser{
-    width: 300px;
+    width: 200px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .headUser a {

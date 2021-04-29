@@ -3,7 +3,7 @@ import style from "./Dialogs.module.css";
 import DialogContainer from "./DialogsItem/DialogContainer";
 import MessageContainer from "./DialogsItem/MessageContainer";
 
-export const Dialogs: React.FC = React.memo(() => {
+const Dialogs: React.FC = React.memo(() => {
 
     return (
         <div className={style.dialogs}>
@@ -16,3 +16,5 @@ export const Dialogs: React.FC = React.memo(() => {
         </div>
     );
 })
+
+export default Dialogs;

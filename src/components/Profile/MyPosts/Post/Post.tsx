@@ -1,7 +1,10 @@
 import React from "react";
-import style from './Post.module.css';
+import style from "./Post.module.css";
 import {PostType} from "../../../../redux/profilePageReducer";
-import myAvatar from '../../../../assets/images/avatars/myAvatar.jpg'
+import myAvatar from "../../../../assets/images/avatars/myAvatar.jpg";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faHeart} from '@fortawesome/free-solid-svg-icons';
+
 
 type PostPropsType = {
     posts: Array<PostType>
@@ -24,7 +27,9 @@ export const Post = React.memo((props: PostPropsType) => {
                         <div className={style.text}> {p.post} </div>
                     </div>
                     <div className={style.like}
-                         onClick={() => increase(p.id)}> Like {p.likesCounter}</div>
+                         onClick={() => increase(p.id)}>
+                        <FontAwesomeIcon icon={faHeart}/> {p.likesCounter}
+                    </div>
                 </div>)
             }
         </>

@@ -186,9 +186,9 @@ export const updateStatusTC = (status: string): ThunkType => {
     }
 }
 
-export const loadPhotoTC = (photos: Blob): ThunkType => {
+export const uploadPhotoTC = (photos: Blob): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ProfilePageReducerActionsType>) => {
-        profileAPI.loadPhoto(photos)
+        profileAPI.uploadPhoto(photos)
             .then(data => {
                 if (data.resultCode === 0) {
                     dispatch(setProfileImage(data.data.photos.large))

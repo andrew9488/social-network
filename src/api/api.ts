@@ -78,7 +78,7 @@ export const profileAPI = {
                 return response.data
             })
     },
-    loadPhoto(data: Blob) {
+    uploadPhoto(data: Blob) {
         const formData = new FormData()
         formData.append(`image`, data)
         return instance.put<CommonResponseType<PhotoType>>(`profile/photo`, formData, {

@@ -13,15 +13,15 @@ type ProfileDataPropsType = {
     isFetching: boolean
     status: string
     updateStatus: (status: string) => void
-    loadPhoto: (photos: Blob) => void
+    uploadPhoto: (photos: Blob) => void
     isOwner: boolean
 }
 
 export const ProfileData: React.FC<ProfileDataPropsType> = React.memo((props) => {
 
-        const onLoadPhoto = (e: ChangeEvent<HTMLInputElement>) => {
+        const onUploadPhoto = (e: ChangeEvent<HTMLInputElement>) => {
             if (e.target.files) {
-                props.loadPhoto(e.target.files[0])
+                props.uploadPhoto(e.target.files[0])
             }
         }
 
@@ -37,7 +37,7 @@ export const ProfileData: React.FC<ProfileDataPropsType> = React.memo((props) =>
                             {props.isOwner
                                 ? <label>
                                     <FontAwesomeIcon icon={faFileImage} className={style.buttonLoad}/>
-                                    <input type="file" onChange={onLoadPhoto}/>
+                                    <input type="file" onChange={onUploadPhoto}/>
                                 </label>
                                 : ""
                             }

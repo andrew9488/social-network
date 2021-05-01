@@ -1,6 +1,13 @@
 import profilePageReducer, {
-    addPost, increaseLike,
-    InitialStateType, PostType, ProfileType, setIsFetchingProfileComponent, setProfileStatus, setUserProfileData,
+    addPost,
+    increaseLike,
+    InitialStateType,
+    PostType,
+    ProfileType,
+    setIsFetchingProfileComponent,
+    setProfileImage,
+    setProfileStatus,
+    setUserProfileData,
 } from "./profilePageReducer";
 
 let initialState: InitialStateType;
@@ -93,5 +100,14 @@ test("correct post like should increase", () => {
     const endState = profilePageReducer(initialState, increaseLike(2))
 
     expect(endState.posts[1].likesCounter).toBe(6)
+
+})
+test("new photo should be uploading", () => {
+
+    const newPhoto = "http://pm1.narvii.com/7066/ae35e5668d78c2a362c4b594a3aa4687e77e1062r1-1200-1207v2_uhq.jpg"
+
+    const endState = profilePageReducer(initialState, setProfileImage(newPhoto))
+
+    expect(endState.profile.photos.large).toBe(newPhoto)
 
 })

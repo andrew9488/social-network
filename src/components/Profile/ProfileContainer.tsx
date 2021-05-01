@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {
     getUserProfileTC,
     getUserStatusTC,
-    loadPhotoTC,
+    uploadPhotoTC,
     ProfileType,
     updateStatusTC
 } from "../../redux/profilePageReducer";
@@ -29,7 +29,7 @@ type MapDispatchPropsType = {
     getUserProfileTC: (userId: number) => void
     getUserStatusTC: (userId: number) => void
     updateStatusTC: (status: string) => void
-    loadPhotoTC: (photos: Blob) => void
+    uploadPhotoTC: (photos: Blob) => void
 }
 
 export type ProfilePropsType = MapStatePropsType & MapDispatchPropsType
@@ -81,5 +81,5 @@ export default compose<ComponentType>(
             getUserProfileTC,
             getUserStatusTC,
             updateStatusTC,
-            loadPhotoTC
+            uploadPhotoTC
         }), withRouter, withAuthRedirect)(ProfileContainer)

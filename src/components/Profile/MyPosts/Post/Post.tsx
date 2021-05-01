@@ -1,14 +1,15 @@
 import React from "react";
 import style from "./Post.module.css";
 import {PostType} from "../../../../redux/profilePageReducer";
-import myAvatar from "../../../../assets/images/avatars/myAvatar.jpg";
+import myAvatar from "../../../../assets/images/avatars/usersAvatar.jpg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHeart} from '@fortawesome/free-solid-svg-icons';
+import {faHeart} from "@fortawesome/free-solid-svg-icons";
 
 
 type PostPropsType = {
     posts: Array<PostType>
     increase: (id: number) => void
+    smallImage: string | null
 }
 
 export const Post = React.memo((props: PostPropsType) => {
@@ -22,7 +23,7 @@ export const Post = React.memo((props: PostPropsType) => {
             {
                 props.posts.map(p => <div className={style.postMessageContainer} key={p.id}>
                     <div className={style.postMessage}>
-                        <img src={myAvatar}
+                        <img src={props.smallImage ? props.smallImage : myAvatar}
                              alt="my_avatar"/>
                         <div className={style.text}> {p.post} </div>
                     </div>

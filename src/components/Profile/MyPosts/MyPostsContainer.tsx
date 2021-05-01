@@ -6,11 +6,12 @@ import {compose, Dispatch} from "redux";
 
 type MapStatePropsType = {
     posts: Array<PostType>
+    smallImage: string | null
 }
 
 type MapDispatchPropsType = {
     addPost: (text: string) => void
-    increase:(id:number)=>void
+    increase: (id: number) => void
 }
 
 export type MyPostsPropsType = MapStatePropsType & MapDispatchPropsType
@@ -18,6 +19,7 @@ export type MyPostsPropsType = MapStatePropsType & MapDispatchPropsType
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         posts: state.profilePage.posts,
+        smallImage: state.profilePage.profile.photos.small
     }
 }
 
@@ -26,7 +28,7 @@ const mapDispatchToProps = (dispatch: Dispatch<ProfilePageReducerActionsType>): 
         addPost: (text: string) => {
             dispatch(addPost(text))
         },
-        increase:(id:number)=>{
+        increase: (id: number) => {
             dispatch(increaseLike(id))
         }
     }

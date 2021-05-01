@@ -1,4 +1,4 @@
-import myAvatar from "../assets/images/avatars/myAvatar.jpg";
+import myAvatar from "../assets/images/my-photo/my-photo1.png";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AppStateType} from "./redux-store";
 import {profileAPI} from "../api/api";
@@ -8,6 +8,7 @@ export type ProfilePageReducerActionsType = ReturnType<typeof addPost>
     | ReturnType<typeof setIsFetchingProfileComponent>
     | ReturnType<typeof setProfileStatus>
     | ReturnType<typeof increaseLike>
+    | ReturnType<typeof setProfileImage>
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, ProfilePageReducerActionsType>
 
@@ -22,9 +23,9 @@ type ContactsType = {
     website: string | null,
     vk: string | null,
     twitter: string | null,
-    instagram: "https://www.instagram.com/__pashkevich_/" | null,
+    instagram: string | null,
     youtube: string | null,
-    github: "https://github.com/andrew9488" | null,
+    github: string | null,
     mainLink: string | null
 }
 
@@ -36,7 +37,7 @@ export type ProfileType = {
     fullName: string | null,
     userId: number,
     photos: {
-        small: string | null,
+        small: string | null
         large: string | null
     }
 }
@@ -49,21 +50,21 @@ const initialState = {
         {id: 4, post: "I am going to change my future.", likesCounter: 7},
     ] as Array<PostType>,
     profile: {
-        aboutMe: "Student of IT-Incubator",
+        aboutMe: "Hero class-C",
         contacts: {
             facebook: null,
-            website: null,
+            website: "saitama_hero.com",
             vk: null,
             twitter: null,
-            instagram: "https://www.instagram.com/__pashkevich_/",
+            instagram: "https://www.saitama.com/__hero_saitama/",
             youtube: null,
-            github: "https://github.com/andrew9488",
+            github: "https://github.com/saitama_hero",
             mainLink: null
         },
         lookingForAJob: true,
-        lookingForAJobDescription: "Looking vacancy of Frontend Developer by React.js",
-        fullName: null as "Andrew Pashkevich" | null,
-        userId: 13446,
+        lookingForAJobDescription: "Hero class-S",
+        fullName: null as "Saitama" | null,
+        userId: 1,
         photos: {
             small: myAvatar,
             large: myAvatar
@@ -109,6 +110,19 @@ const profilePageReducer = (state: InitialStateType = initialState, action: Prof
                 posts: state.posts.map(p => p.id === action.postId ? {...p, likesCounter: p.likesCounter + 1} : p)
             }
         }
+        case "PROFILE-PAGE/SET-PROFILE-IMAGE": {
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    photos: {
+                        ...state.profile.photos,
+                        large: action.photo,
+                        small: action.photo
+                    }
+                }
+            }
+        }
         default:
             return state;
     }
@@ -125,6 +139,8 @@ export const setProfileStatus = (status: string) =>
     ({type: "PROFILE-PAGE/SET-PROFILE-STATUS", status} as const)
 export const increaseLike = (postId: number) =>
     ({type: "PROFILE-PAGE/INCREASE-LIKE", postId} as const)
+export const setProfileImage = (photo: string) =>
+    ({type: "PROFILE-PAGE/SET-PROFILE-IMAGE", photo} as const)
 
 export const getUserProfileTC = (userId: number): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ProfilePageReducerActionsType>) => {
@@ -158,6 +174,24 @@ export const updateStatusTC = (status: string): ThunkType => {
             .then(data => {
                 if (data.resultCode === 0) {
                     dispatch(setProfileStatus(status))
+                } else {
+                    if (data.messages.length > 0) {
+                        console.warn(data.messages[0])
+                    }
+                }
+            })
+            .catch(error => {
+                console.warn(error)
+            })
+    }
+}
+
+export const loadPhotoTC = (photos: Blob): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ProfilePageReducerActionsType>) => {
+        profileAPI.loadPhoto(photos)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(setProfileImage(data.data.photos.large))
                 } else {
                     if (data.messages.length > 0) {
                         console.warn(data.messages[0])

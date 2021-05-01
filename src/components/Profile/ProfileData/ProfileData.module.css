@@ -18,6 +18,15 @@
     border-radius: 100%;
 }
 
+.avatar input[type="file"] {
+    display: none;
+}
+
+.avatar .buttonLoad {
+    width: 25px;
+    height: 25px;
+}
+
 .data {
     display: flex;
     flex-direction: column;
@@ -41,6 +50,7 @@
 .data .work .open {
     color: forestgreen;
 }
+
 .data .work .busy {
     color: #c10303;
 }

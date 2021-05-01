@@ -20,6 +20,13 @@ type AuthResponseType = {
     login: string
 }
 
+export type PhotoType = {
+    photos: {
+        large: string
+        small: string
+    }
+}
+
 const instance = axios.create({
     withCredentials: true,
     baseURL: "https://social-network.samuraijs.com/api/1.0/",
@@ -67,6 +74,18 @@ export const profileAPI = {
     },
     updateStatus(status: string) {
         return instance.put<CommonResponseType>(`profile/status`, {status: status})
+            .then(response => {
+                return response.data
+            })
+    },
+    loadPhoto(data: Blob) {
+        const formData = new FormData()
+        formData.append(`image`, data)
+        return instance.put<CommonResponseType<PhotoType>>(`profile/photo`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
             .then(response => {
                 return response.data
             })

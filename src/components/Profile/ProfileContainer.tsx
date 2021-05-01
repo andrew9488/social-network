@@ -30,13 +30,23 @@ type PropsType = RouteComponentProps<PathParamsType> & ProfilePropsType
 
 class ProfileContainer extends React.PureComponent<PropsType> {
 
-    componentDidMount() {
+    refresh() {
         let userId = Number(this.props.match.params.userId)
         if (!userId) {
             userId = this.props.myId
         }
         this.props.getUserProfileTC(userId)
         this.props.getUserStatusTC(userId)
+    }
+
+    componentDidMount() {
+        this.refresh()
+    }
+
+    componentDidUpdate(prevProps: Readonly<PropsType>, prevState: Readonly<{}>) {
+        if (this.props.match.params.userId !== prevProps.match.params.userId) {
+            this.refresh()
+        }
     }
 
     render() {

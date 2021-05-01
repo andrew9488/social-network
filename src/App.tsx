@@ -2,7 +2,7 @@ import React, {ComponentType} from "react";
 import style from "./App.module.css";
 import {Navbar} from "./components/Navbar/Navbar";
 import {Footer} from "./components/Footer/Footer";
-import {Redirect, Route, Switch, withRouter} from "react-router-dom";
+import {Route, Switch, withRouter} from "react-router-dom";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {connect} from "react-redux";
@@ -47,7 +47,7 @@ class App extends React.PureComponent<AppPropsType> {
                 <Navbar/>
                 <div className={style.content}>
                     <Switch>
-                        <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
+                        <Route exact path="/profile/:userId?" render={() => <ProfileContainer/>}/>
                         <Route path="/login" component={withSuspense(LoginContainer)}/>
                         <Route path="/users" component={withSuspense(UsersContainer)}/>
                         <Route path="/dialogs" component={withSuspense(Dialogs)}/>

@@ -1,11 +1,13 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useCallback, useState} from "react";
 import style from "./ProfileData.module.css";
-import {ProfileType} from "../../../redux/profilePageReducer";
+import {ContactsType, ProfileType} from "../../../redux/profilePageReducer";
 import userAvatar from "../../../assets/images/avatars/usersAvatar.jpg"
 import Preloader from "../../common/Preloader/Preloader";
-import {ProfileStatus} from "./ProfileStatus";
 import {faFileImage} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Contacts} from "./Contacts";
+import {ProfileInfo} from "./ProfileInfo";
+import {ProfileForm, ProfileFormPropsType} from "./ProfileForm";
 
 
 type ProfileDataPropsType = {
@@ -15,15 +17,32 @@ type ProfileDataPropsType = {
     updateStatus: (status: string) => void
     uploadPhoto: (photos: Blob) => void
     isOwner: boolean
+    changeProfileInfo: (profile: ProfileType) => void
 }
 
 export const ProfileData: React.FC<ProfileDataPropsType> = React.memo((props) => {
+
+
+        const [editMode, setEditMode] = useState<boolean>(false)
 
         const onUploadPhoto = (e: ChangeEvent<HTMLInputElement>) => {
             if (e.target.files) {
                 props.uploadPhoto(e.target.files[0])
             }
         }
+
+        const onActivateEditMode = () => {
+            setEditMode(true)
+        }
+        const deactivateEditMode = () => {
+            setEditMode(false)
+        }
+
+        const onSubmit = useCallback((formData: ProfileFormPropsType) => {
+            // @ts-ignore
+            props.changeProfileInfo(formData)
+            setEditMode(false)
+        }, [props])
 
         return (
             <div className={style.profileData}>
@@ -43,26 +62,26 @@ export const ProfileData: React.FC<ProfileDataPropsType> = React.memo((props) =>
                             }
                         </div>
                         <div className={style.data}>
-                            <h3 className={style.name}>{props.profile.fullName}</h3>
-                            <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
-                            <span className={style.aboutMe}>{props.profile.aboutMe}</span>
-                            <div className={style.work}>
-                    <span>
-                        <span className={!props.profile.lookingForAJob ? style.open : style.busy}>
-                            {!props.profile.lookingForAJob ? " Open to work" : " Busy"}</span>
-                        </span>
-                                {props.profile.lookingForAJob && <span>{props.profile.lookingForAJobDescription}</span>}
+                            {editMode
+                                ? <ProfileForm onSubmit={onSubmit} initialValues={props.profile}
+                                               profile={props.profile}
+                                               deactivateEditMode={deactivateEditMode}/>
+                                : < ProfileInfo fullName={props.profile.fullName}
+                                                aboutMe={props.profile.aboutMe}
+                                                lookingForAJob={props.profile.lookingForAJob}
+                                                lookingForAJobDescription={props.profile.lookingForAJobDescription}
+                                                isOwner={props.isOwner}
+                                                status={props.status}
+                                                updateStatus={props.updateStatus}
+                                                onActivateEditMode={onActivateEditMode}
+                                />
+                            }
+                            <div>
+                                <b>Contacts: </b>{(Object.keys(props.profile.contacts) as Array<keyof ContactsType>).map((key, index) => {
+                                return <Contacts key={index} contactsKey={key} contactsValue={props.profile.contacts[key]}/>
+                            })}
                             </div>
-                            <ul>Contacts:
-                                {props.profile.contacts.facebook && <li>{props.profile.contacts.facebook}</li>}
-                                {props.profile.contacts.website && <li>{props.profile.contacts.website}</li>}
-                                {props.profile.contacts.vk && <li>{props.profile.contacts.vk}</li>}
-                                {props.profile.contacts.twitter && <li>{props.profile.contacts.twitter}</li>}
-                                {props.profile.contacts.instagram && <li>{props.profile.contacts.instagram}</li>}
-                                {props.profile.contacts.youtube && <li>{props.profile.contacts.youtube}</li>}
-                                {props.profile.contacts.github && <li>{props.profile.contacts.github}</li>}
-                                {props.profile.contacts.mainLink && <li>{props.profile.contacts.mainLink}</li>}
-                            </ul>
+
                         </div>
                     </>}
             </div>

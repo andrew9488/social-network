@@ -2,13 +2,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 400px;
+    width: 500px;
     padding-top: 5px;
     border-left: 2px solid #1056b7;
 }
 
 .avatar {
     border: 1px #f1f5f8;
+    display: flex;
+    align-items: center;
 }
 
 .avatarImg {
@@ -33,37 +35,6 @@
     align-items: center;
 }
 
-.data .name {
-    margin-top: 2px;
-    margin-bottom: 2px;
-}
-
-.data .aboutMe {
-    margin-bottom: 4px;
-}
-
-.data .work {
-    display: flex;
-    flex-direction: column;
-}
-
-.data .work .open {
-    color: forestgreen;
-}
-
-.data .work .busy {
-    color: #c10303;
-}
-
-
-.data ul {
-    font-weight: bold;
-}
-
-.data ul li {
-    font-weight: normal;
-    color: #606060;
-}
 
 
 

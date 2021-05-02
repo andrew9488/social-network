@@ -89,6 +89,12 @@ export const profileAPI = {
             .then(response => {
                 return response.data
             })
+    },
+    updateProfileInfo(profile: ProfileType) {
+        return instance.put<CommonResponseType>(`profile`, profile)
+            .then(response => {
+                return response.data
+            })
     }
 }
 

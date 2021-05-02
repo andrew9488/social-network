@@ -1,0 +1,30 @@
+
+.name {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.aboutMe {
+    margin-bottom: 4px;
+}
+
+.work {
+    display: flex;
+    flex-direction: column;
+}
+
+.work .open {
+    color: forestgreen;
+}
+
+.work .busy {
+    color: #c10303;
+}
+
+.descriptionInfo {
+    color: black;
+    font-weight: bold;
+}
+
+
+

@@ -17,6 +17,7 @@ export const Profile: React.FC<ProfilePropsType> = React.memo((props) => {
                     status={props.status}
                     updateStatus={props.updateStatusTC}
                     uploadPhoto={props.uploadPhotoTC}
+                    changeProfileInfo={props.changeProfileInfoTC}
                     isOwner={props.isOwner ? props.isOwner : false}
                 />
                 <MyPostsContainer/>

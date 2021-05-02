@@ -1,0 +1,33 @@
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 3px;
+}
+
+.formContainer span {
+    font-weight: bold;
+}
+
+.formButton {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.formButton .cancel {
+    font-weight: bolder;
+}
+
+.checkboxField {
+    display: flex;
+    justify-content: center;
+}
+
+.contactFields {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+
+

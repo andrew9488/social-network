@@ -1,7 +1,7 @@
-import myAvatar from "../assets/images/my-photo/my-photo1.png";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AppStateType} from "./redux-store";
 import {profileAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 export type ProfilePageReducerActionsType = ReturnType<typeof addPost>
     | ReturnType<typeof setUserProfileData>
@@ -9,6 +9,8 @@ export type ProfilePageReducerActionsType = ReturnType<typeof addPost>
     | ReturnType<typeof setProfileStatus>
     | ReturnType<typeof increaseLike>
     | ReturnType<typeof setProfileImage>
+
+type StopSubmitActionsType = ReturnType<typeof stopSubmit>
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, ProfilePageReducerActionsType>
 
@@ -18,7 +20,7 @@ export type PostType = {
     likesCounter: number
 };
 
-type ContactsType = {
+export type ContactsType = {
     facebook: string | null,
     website: string | null,
     vk: string | null,
@@ -30,7 +32,7 @@ type ContactsType = {
 }
 
 export type ProfileType = {
-    aboutMe: string,
+    aboutMe: string | null,
     contacts: ContactsType,
     lookingForAJob: boolean,
     lookingForAJobDescription: string | null,
@@ -50,24 +52,24 @@ const initialState = {
         {id: 4, post: "I am going to change my future.", likesCounter: 7},
     ] as Array<PostType>,
     profile: {
-        aboutMe: "Hero class-C",
+        aboutMe: null,
         contacts: {
             facebook: null,
-            website: "saitama_hero.com",
+            website: null,
             vk: null,
             twitter: null,
-            instagram: "https://www.saitama.com/__hero_saitama/",
+            instagram: null,
             youtube: null,
-            github: "https://github.com/saitama_hero",
+            github: null,
             mainLink: null
         },
         lookingForAJob: true,
-        lookingForAJobDescription: "Hero class-S",
-        fullName: null as "Saitama" | null,
+        lookingForAJobDescription: null,
+        fullName: null as string | null,
         userId: 1,
         photos: {
-            small: myAvatar,
-            large: myAvatar
+            small: null,
+            large: null
         }
     } as ProfileType,
     isFetching: false,
@@ -198,6 +200,28 @@ export const uploadPhotoTC = (photos: Blob): ThunkType => {
                     }
                 }
             })
+            .catch(error => {
+                console.warn(error)
+            })
+    }
+}
+
+export const changeProfileInfoTC = (profile: ProfileType): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, ProfilePageReducerActionsType | StopSubmitActionsType>, getState: () => AppStateType) => {
+        const userId = getState().auth.data.userId
+        profileAPI.updateProfileInfo(profile)
+            .then().then(data => {
+            if (data.resultCode === 0) {
+                dispatch(getUserProfileTC(userId))
+            } else if (data.resultCode === 1) {
+                const error = data.messages[0]
+                dispatch(stopSubmit("profileInfo", {_error: error}))
+            } else {
+                if (data.messages.length > 0) {
+                    console.warn(data.messages[0])
+                }
+            }
+        })
             .catch(error => {
                 console.warn(error)
             })

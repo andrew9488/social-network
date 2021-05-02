@@ -1,4 +1,4 @@
-import React, {ComponentType} from "react"
+import {ComponentType} from "react"
 import {AppStateType} from "../../redux/redux-store";
 import {compose} from "redux";
 import {connect} from "react-redux";

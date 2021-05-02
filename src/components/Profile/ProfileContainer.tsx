@@ -6,7 +6,7 @@ import {
     getUserStatusTC,
     uploadPhotoTC,
     ProfileType,
-    updateStatusTC
+    updateStatusTC, changeProfileInfoTC
 } from "../../redux/profilePageReducer";
 import {AppStateType} from "../../redux/redux-store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
@@ -30,6 +30,7 @@ type MapDispatchPropsType = {
     getUserStatusTC: (userId: number) => void
     updateStatusTC: (status: string) => void
     uploadPhotoTC: (photos: Blob) => void
+    changeProfileInfoTC: (profile: ProfileType) => void
 }
 
 export type ProfilePropsType = MapStatePropsType & MapDispatchPropsType
@@ -60,8 +61,7 @@ class ProfileContainer extends React.PureComponent<PropsType> {
     render() {
 
         return (
-            <Profile isOwner={!this.props.match.params.userId}
-                     {...this.props}/>
+            <Profile isOwner={!this.props.match.params.userId}{...this.props}/>
         );
     }
 }
@@ -81,5 +81,6 @@ export default compose<ComponentType>(
             getUserProfileTC,
             getUserStatusTC,
             updateStatusTC,
-            uploadPhotoTC
+            uploadPhotoTC,
+            changeProfileInfoTC
         }), withRouter, withAuthRedirect)(ProfileContainer)

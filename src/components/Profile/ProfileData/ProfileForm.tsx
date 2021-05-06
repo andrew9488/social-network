@@ -42,12 +42,13 @@ const Form: React.FC<InjectedFormProps<ProfileFormPropsType, FormType> & FormTyp
                 <Field name="lookingForAJobDescription" type="text" component={Textarea} validate={[]}/>
             </div>
             <div>
-                <span>Contacts:</span> {(Object.keys(props.profile.contacts) as Array<keyof ContactsType>).map((key) => {
-                return <div key={key} className={style.contactFields}>
-                    <span>{key}: </span><Field name={"contacts." + key} type="text" component={Input}
-                                               validate={[]}/>
-                </div>
-            })}
+                <span>Contacts:</span>
+                {(Object.keys(props.profile.contacts) as Array<keyof ContactsType>).map((key) => {
+                    return <div key={key} className={style.contactFields}>
+                        <span>{key}: </span><Field name={"contacts." + key} type="text" component={Input}
+                                                   validate={[]}/>
+                    </div>
+                })}
             </div>
         </form>
     )

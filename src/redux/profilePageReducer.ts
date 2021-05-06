@@ -210,18 +210,18 @@ export const changeProfileInfoTC = (profile: ProfileType): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ProfilePageReducerActionsType | StopSubmitActionsType>, getState: () => AppStateType) => {
         const userId = getState().auth.data.userId
         profileAPI.updateProfileInfo(profile)
-            .then().then(data => {
-            if (data.resultCode === 0) {
-                dispatch(getUserProfileTC(userId))
-            } else if (data.resultCode === 1) {
-                const error = data.messages[0]
-                dispatch(stopSubmit("profileInfo", {_error: error}))
-            } else {
-                if (data.messages.length > 0) {
-                    console.warn(data.messages[0])
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(getUserProfileTC(userId))
+                } else if (data.resultCode === 1) {
+                    const error = data.messages[0]
+                    dispatch(stopSubmit("profileInfo", {_error: error}))
+                } else {
+                    if (data.messages.length > 0) {
+                        console.warn(data.messages[0])
+                    }
                 }
-            }
-        })
+            })
             .catch(error => {
                 console.warn(error)
             })

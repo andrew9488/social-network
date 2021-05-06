@@ -76,11 +76,15 @@ export const ProfileData: React.FC<ProfileDataPropsType> = React.memo((props) =>
                                                 onActivateEditMode={onActivateEditMode}
                                 />
                             }
-                            <div>
-                                <b>Contacts: </b>{(Object.keys(props.profile.contacts) as Array<keyof ContactsType>).map((key, index) => {
-                                return <Contacts key={index} contactsKey={key} contactsValue={props.profile.contacts[key]}/>
-                            })}
-                            </div>
+                            {
+                                editMode ? null
+                                    : <div>
+                                        <b>Contacts: </b>{(Object.keys(props.profile.contacts) as Array<keyof ContactsType>).map((key, index) => {
+                                        return <Contacts key={index} contactsKey={key}
+                                                         contactsValue={props.profile.contacts[key]}/>
+                                    })}
+                                    </div>
+                            }
 
                         </div>
                     </>}

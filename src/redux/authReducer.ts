@@ -1,9 +1,13 @@
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AppStateType} from "./redux-store";
-import {authAPI} from "../api/api";
+import {authAPI, captchaAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 
-type AuthReducerActionsType = ReturnType<typeof setUserData> | ReturnType<typeof setIsAuth>
+type AuthReducerActionsType =
+    ReturnType<typeof setUserData>
+    | ReturnType<typeof setIsAuth>
+    | ReturnType<typeof setCaptcha>
+
 type StopSubmitActionsType = ReturnType<typeof stopSubmit>
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, AuthReducerActionsType>
@@ -20,7 +24,8 @@ const initialState = {
         login: null,
         email: null
     } as DataType,
-    isAuth: false
+    isAuth: false,
+    captcha: null as string | null
 }
 
 export type InitialStateType = typeof initialState
@@ -38,6 +43,11 @@ const authReducer = (state: InitialStateType = initialState, action: AuthReducer
                 ...state,
                 isAuth: action.isAuth
             }
+        case "AUTH/SET-CAPTCHA":
+            return {
+                ...state,
+                captcha: action.captcha
+            }
         default:
             return state;
     }
@@ -48,6 +58,7 @@ export default authReducer;
 export const setUserData = (userId: number, login: string, email: string) =>
     ({type: "AUTH/SET-USER-DATA", data: {userId, login, email}} as const)
 export const setIsAuth = (isAuth: boolean) => ({type: "AUTH/SET-IS-AUTH", isAuth} as const)
+export const setCaptcha = (captcha: null | string) => ({type: "AUTH/SET-CAPTCHA", captcha} as const)
 
 export const authTC = (): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, AuthReducerActionsType>) => {
@@ -105,6 +116,15 @@ export const logOutTC = (): ThunkType => {
             })
             .catch(error => {
                 console.warn(error)
+            })
+    }
+}
+
+export const getCaptchaTC = (): ThunkType => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, AuthReducerActionsType>) => {
+        captchaAPI.getCaptcha()
+            .then(response => {
+                dispatch(setCaptcha(response.data.url))
             })
     }
 }

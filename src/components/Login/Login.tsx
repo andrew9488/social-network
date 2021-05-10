@@ -7,8 +7,8 @@ import {Redirect} from "react-router-dom";
 export const Login: React.FC<LoginPropsType> = React.memo((props) => {
 
     const onSubmit = useCallback((formData: FormDataType) => {
-        const {email, password, rememberMe} = formData
-        props.logInTC(email, password, rememberMe)
+        const {email, password, rememberMe, captcha} = formData
+        props.logInTC(email, password, rememberMe, captcha)
     }, [props])
 
     if (props.isAuth) {
@@ -18,7 +18,7 @@ export const Login: React.FC<LoginPropsType> = React.memo((props) => {
     return (
         <div className={style.loginPage}>
             <h2>login</h2>
-            <LoginForm onSubmit={onSubmit}/>
+            <LoginForm onSubmit={onSubmit} captcha={props.captcha}/>
         </div>
     );
 })

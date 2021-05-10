@@ -216,10 +216,8 @@ export const changeProfileInfoTC = (profile: ProfileType): ThunkType => {
                 } else if (data.resultCode === 1) {
                     const error = data.messages[0]
                     dispatch(stopSubmit("profileInfo", {_error: error}))
-                } else {
-                    if (data.messages.length > 0) {
-                        console.warn(data.messages[0])
-                    }
+                } else if (data.messages.length > 0) {
+                    console.warn(data.messages[0])
                 }
             })
             .catch(error => {

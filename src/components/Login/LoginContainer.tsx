@@ -7,15 +7,17 @@ import {logInTC} from "../../redux/authReducer";
 
 type MapStatePropsType = {
     isAuth: boolean
+    captcha: string | null
 }
 
 type MapDispatchPropsType = {
-    logInTC: (email: string | null, password: string | null, rememberMe: boolean) => void
+    logInTC: (email: string | null, password: string | null, rememberMe: boolean, captcha: string | null) => void
 }
 
-const MapStateToProps = (state: AppStateType)=>{
+const MapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        captcha: state.auth.captcha
     }
 }
 

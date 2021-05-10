@@ -80,21 +80,22 @@ export const authTC = (): ThunkType => {
     }
 }
 
-export const logInTC = (email: string | null, password: string | null, rememberMe: boolean): ThunkType => {
+export const logInTC = (email: string | null, password: string | null, rememberMe: boolean, captcha: string | null): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, AuthReducerActionsType | StopSubmitActionsType>) => {
-        authAPI.logIn(email, password, rememberMe)
+        authAPI.logIn(email, password, rememberMe, captcha)
             .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(authTC())
-                } else if (data.resultCode === 1) {
-                    const error = data.messages[0]
-                    dispatch(stopSubmit("login", {_error: error}))
-                } else {
-                    if (data.messages.length > 0) {
+                    if (data.resultCode === 0) {
+                        dispatch(authTC())
+                    } else if (data.resultCode === 10) {
+                        dispatch(getCaptchaTC())
+                    } else if (data.resultCode === 1) {
+                        const error = data.messages[0]
+                        dispatch(stopSubmit("login", {_error: error}))
+                    } else if (data.messages.length > 0) {
                         console.warn(data.messages[0])
                     }
                 }
-            })
+            )
             .catch(error => {
                 console.warn(error)
             })
@@ -106,7 +107,7 @@ export const logOutTC = (): ThunkType => {
         authAPI.logOut()
             .then(data => {
                 if (data.resultCode === 0) {
-                    dispatch(logInTC(null, null, false))
+                    dispatch(logInTC(null, null, false, null))
                     dispatch(setIsAuth(false))
                 } else {
                     if (data.messages.length > 0) {

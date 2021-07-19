@@ -10,6 +10,7 @@ export type UsersPageReducerActionsType = ReturnType<typeof follow>
     | ReturnType<typeof setTotalCount>
     | ReturnType<typeof setIsFetchingUsersComponent>
     | ReturnType<typeof setFollowingProgress>
+    | ReturnType<typeof setSearchFilter>
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, UsersPageReducerActionsType>
 
@@ -77,6 +78,15 @@ const usersPageReducer = (state: InitialStateType = initialState, action: UsersP
                     ? [...state.followingInProgress, action.userId]
                     : state.followingInProgress.filter(id => id !== action.userId)
             }
+        case "USERS-PAGE/SET-SEARCH-FILTER":
+            return {
+                ...state,
+                filter: {
+                    ...state.filter,
+                    term: action.term,
+                    friend: action.friend
+                }
+            }
         default:
             return state;
     }
@@ -93,15 +103,18 @@ export const setIsFetchingUsersComponent = (isFetching: boolean) =>
     ({type: "USERS-PAGE/SET-IS-FETCHING-USERS-COMPONENT", isFetching} as const)
 export const setFollowingProgress = (disableButton: boolean, userId: number) =>
     ({type: "USERS-PAGE/SET-FOLLOWING-PROGRESS", disableButton, userId} as const)
+export const setSearchFilter = (term: string | null, friend: boolean | null) =>
+    ({type: "USERS-PAGE/SET-SEARCH-FILTER", term, friend} as const)
 
-export const getUsersTC = (currentPage: number, pageSize: number): ThunkType => {
+export const getUsersTC = (currentPage: number, pageSize: number, term: string | null , friend: null | boolean): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, UsersPageReducerActionsType>) => {
         dispatch(setIsFetchingUsersComponent(true))
-        usersAPI.getUsers(currentPage, pageSize)
+        usersAPI.getUsers(currentPage, pageSize, term, friend)
             .then(data => {
                 dispatch(setIsFetchingUsersComponent(false))
                 dispatch(setUsers(data.items));
-                dispatch(setTotalCount(data.totalCount));
+                dispatch(setTotalCount(data.totalCount))
+                dispatch(setSearchFilter(term, friend))
                 dispatch(setCurrentPage(currentPage))
             })
             .catch(error => {

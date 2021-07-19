@@ -14,9 +14,11 @@ type UsersClassContainerPropsType = {
     isFetching: boolean
     disableButton: boolean
     followingInProgress: Array<number>
-    getUsersTC: (currentPage: number, pageSize: number) => void
+    getUsersTC: (currentPage: number, pageSize: number, term: string |  null, friend: null | boolean) => void
     followTC: (userId: number) => void
-    unFollowTC: (userId: number) => void
+    unFollowTC: (userId: number) => void,
+    term: null | string
+    friend: null | boolean
 }
 
 type MapStatePropsType = {
@@ -27,11 +29,13 @@ type MapStatePropsType = {
     isFetching: boolean
     disableButton: boolean
     followingInProgress: Array<number>
+    term: null | string
+    friend: null | boolean
 }
 
 
 type MapDispatchPropsType = {
-    getUsersTC: (currentPage: number, pageSize: number) => void
+    getUsersTC: (currentPage: number, pageSize: number, term: string | null, friend: null | boolean) => void
     followTC: (userId: number) => void
     unFollowTC: (userId: number) => void
 }
@@ -45,12 +49,13 @@ export type UsersPropsType = MapStatePropsType & MapDispatchPropsType & OwnTypeP
 class UsersContainer extends React.PureComponent<UsersClassContainerPropsType> {
 
     componentDidMount() {
-        this.props.getUsersTC(this.props.currentPage, this.props.pageSize)
+        this.props.getUsersTC(this.props.currentPage, this.props.pageSize, "", null)
     }
 
     onClickCurrentPage = (page: number) => {
-        this.props.getUsersTC(page, this.props.pageSize)
+        this.props.getUsersTC(page, this.props.pageSize, this.props.term, this.props.friend)
     }
+
 
     render() {
         return (
@@ -72,6 +77,8 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         isFetching: state.usersPage.isFetching,
         followingInProgress: state.usersPage.followingInProgress,
         disableButton: state.usersPage.disableButton,
+        term: state.usersPage.filter.term,
+        friend: state.usersPage.filter.friend
     }
 }
 

@@ -10,7 +10,9 @@ export const Users: React.FC<UsersPropsType> = React.memo((props) => {
 
     return (
         <div className={style.usersPage}>
-            <SearchField/>
+            <SearchField getUsers={props.getUsersTC}
+                         pageSize={props.pageSize}
+            />
             <Paginator totalCount={props.totalCount}
                        pageSize={props.pageSize}
                        onClickCurrentPage={props.onClickCurrentPage}

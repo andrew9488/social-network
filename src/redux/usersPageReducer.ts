@@ -40,7 +40,11 @@ const initialState = {
     currentPage: 1,
     isFetching: false,
     disableButton: false,
-    followingInProgress: [] as Array<number>
+    followingInProgress: [] as Array<number>,
+    filter: {
+        term: null as string | null,
+        friend: null as boolean | null
+    }
 }
 
 export type InitialStateType = typeof initialState

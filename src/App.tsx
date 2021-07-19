@@ -2,15 +2,13 @@ import React, {ComponentType} from "react";
 import style from "./App.module.css";
 import {Navbar} from "./components/Navbar/Navbar";
 import {Footer} from "./components/Footer/Footer";
-import {Route, Switch, withRouter} from "react-router-dom";
-import ProfileContainer from "./components/Profile/ProfileContainer";
+import {withRouter} from "react-router-dom";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {AppStateType} from "./redux/redux-store";
 import {appInitializeTC} from "./redux/appReducer";
 import Preloader from "./components/common/Preloader/Preloader";
-import {withSuspense} from "./hoc/withSuspense";
 import {Routes} from "./components/Routes";
 
 
@@ -48,7 +46,7 @@ class App extends React.PureComponent<AppPropsType> {
                 </div>
                 <Footer/>
             </div>
-        );
+        )
     }
 }
 

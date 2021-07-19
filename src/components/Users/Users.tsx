@@ -4,11 +4,13 @@ import Preloader from "../common/Preloader/Preloader";
 import {UsersPropsType} from "./UsersContainer";
 import {User} from "./User";
 import {Paginator} from "../common/Paginator/Paginator";
+import {SearchField} from "../common/SearchField/SearchField";
 
 export const Users: React.FC<UsersPropsType> = React.memo((props) => {
 
     return (
         <div className={style.usersPage}>
+            <SearchField/>
             <Paginator totalCount={props.totalCount}
                        pageSize={props.pageSize}
                        onClickCurrentPage={props.onClickCurrentPage}

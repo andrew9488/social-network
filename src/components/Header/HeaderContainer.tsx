@@ -26,7 +26,7 @@ class HeaderContainer extends React.PureComponent<HeaderContainerPropsType> {
     render() {
         return (
             <Header {...this.props}/>
-        );
+        )
     }
 }
 

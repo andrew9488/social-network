@@ -9,7 +9,7 @@ import {
     updateStatusTC, changeProfileInfoTC
 } from "../../redux/profilePageReducer";
 import {AppStateType} from "../../redux/redux-store";
-import {RouteComponentProps, withRouter} from "react-router-dom";
+import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 
@@ -23,6 +23,7 @@ type MapStatePropsType = {
     status: string
     myId: number
     isOwner?: boolean
+    isAuth: boolean
 }
 
 type MapDispatchPropsType = {
@@ -59,10 +60,9 @@ class ProfileContainer extends React.PureComponent<PropsType> {
     }
 
     render() {
-
         return (
             <Profile isOwner={!this.props.match.params.userId}{...this.props}/>
-        );
+        )
     }
 }
 
@@ -71,7 +71,8 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         profile: state.profilePage.profile,
         isFetching: state.profilePage.isFetching,
         status: state.profilePage.status,
-        myId: state.auth.data.userId
+        myId: state.auth.data.userId,
+        isAuth: state.auth.isAuth
     }
 }
 

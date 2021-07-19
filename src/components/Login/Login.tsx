@@ -3,6 +3,7 @@ import {FormDataType, LoginForm} from "./LoginForm";
 import style from "./Login.module.css"
 import {LoginPropsType} from "./LoginContainer";
 import {Redirect} from "react-router-dom";
+import {PATH} from "../Routes";
 
 export const Login: React.FC<LoginPropsType> = React.memo((props) => {
 
@@ -12,7 +13,7 @@ export const Login: React.FC<LoginPropsType> = React.memo((props) => {
     }, [props])
 
     if (props.isAuth) {
-        return <Redirect to="/profile/:userId?"/>
+        return <Redirect to={`${PATH.PROFILE}/:userId?`}/>
     }
 
     return (
@@ -20,5 +21,5 @@ export const Login: React.FC<LoginPropsType> = React.memo((props) => {
             <h2>login</h2>
             <LoginForm onSubmit={onSubmit} captcha={props.captcha}/>
         </div>
-    );
+    )
 })

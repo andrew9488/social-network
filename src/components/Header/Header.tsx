@@ -24,10 +24,10 @@ export const Header: React.FC<HeaderPropsType> = React.memo((props) => {
                         props.isAuth
                             ?
                             <div className={style.logOut}>
-                                <NavLink to="/profile/13446 ">{props.data.login}</NavLink>
+                                <NavLink to="/profile/:userId?">{props.data.login}</NavLink>
                                 <button onClick={props.logOutTC}>logout</button>
                             </div>
-                            : <NavLink to="/login">Login</NavLink>
+                            : <NavLink to="/">Login</NavLink>
                     }
                 </div>
             </div>

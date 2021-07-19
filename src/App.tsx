@@ -11,10 +11,8 @@ import {AppStateType} from "./redux/redux-store";
 import {appInitializeTC} from "./redux/appReducer";
 import Preloader from "./components/common/Preloader/Preloader";
 import {withSuspense} from "./hoc/withSuspense";
+import {Routes} from "./components/Routes";
 
-const Dialogs = React.lazy(() => import("./components/Dialogs/Dialogs"))
-const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"))
-const LoginContainer = React.lazy(() => import("./components/Login/LoginContainer"))
 
 type MapStatePropsType = {
     isInitialization: boolean
@@ -46,12 +44,7 @@ class App extends React.PureComponent<AppPropsType> {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className={style.content}>
-                    <Switch>
-                        <Route exact path="/profile/:userId?" render={() => <ProfileContainer/>}/>
-                        <Route path="/login" component={withSuspense(LoginContainer)}/>
-                        <Route path="/users" component={withSuspense(UsersContainer)}/>
-                        <Route path="/dialogs" component={withSuspense(Dialogs)}/>
-                    </Switch>
+                    <Routes/>
                 </div>
                 <Footer/>
             </div>

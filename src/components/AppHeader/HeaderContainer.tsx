@@ -1,5 +1,5 @@
 import React from "react";
-import {Header} from "./Header";
+import {AppHeader} from "./AppHeader";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {DataType, logOutTC} from "../../redux/authReducer";
@@ -25,7 +25,7 @@ class HeaderContainer extends React.PureComponent<HeaderContainerPropsType> {
 
     render() {
         return (
-            <Header {...this.props}/>
+            <AppHeader {...this.props}/>
         )
     }
 }

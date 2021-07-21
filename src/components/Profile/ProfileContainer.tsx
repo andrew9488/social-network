@@ -2,14 +2,15 @@ import React, {ComponentType} from "react";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
 import {
+    changeProfileInfoTC,
     getUserProfileTC,
     getUserStatusTC,
-    uploadPhotoTC,
     ProfileType,
-    updateStatusTC, changeProfileInfoTC
+    updateStatusTC,
+    uploadPhotoTC
 } from "../../redux/profilePageReducer";
 import {AppStateType} from "../../redux/redux-store";
-import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 

@@ -8,7 +8,9 @@ import {faEnvelope} from '@fortawesome/free-solid-svg-icons';
 import {faBell} from '@fortawesome/free-solid-svg-icons';
 import {PATH} from "../Routes";
 
-export const Header: React.FC<HeaderPropsType> = React.memo((props) => {
+
+export const AppHeader: React.FC<HeaderPropsType> = React.memo((props) => {
+
 
     return (
         <header className={style.header}>

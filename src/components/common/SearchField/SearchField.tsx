@@ -15,7 +15,7 @@ export const SearchField: React.FC<SearchFieldPropsType> = React.memo((props) =>
             }}
         >
             <Form>
-                <Field type="text" name="term"/>
+                <Field type="text" name="term" autocomplete="off"/>
                 <Field as="select" name="friend">
                     <option value="null">All</option>
                     <option value="true">Followed</option>

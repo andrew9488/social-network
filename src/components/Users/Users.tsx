@@ -9,7 +9,7 @@ import {useHistory} from "react-router-dom";
 import {PATH} from "../Routes/Routes";
 import * as querystring from "querystring";
 
-type QueryObjType = { term?: string, friend?: string, page?: string };
+type QueryObjType = { term?: string, friend?: string, page?: string }
 export const Users: React.FC<UsersPropsType> = React.memo((props) => {
 
     const history = useHistory()

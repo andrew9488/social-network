@@ -31,12 +31,15 @@ const Form: React.FC<InjectedFormProps<FormDataType, FormPropsType> & FormPropsT
                 <p>Password: free</p>
             </div>
             <form onSubmit={props.handleSubmit} className={style.loginForm}>
-                <div>
-                    <Field name="email" type="text" placeholder="login" component={Input} validate={[required]}/>
+                <div style={{display: "flex", alignItems: "center", justifyContent: "flex-end", width:"250px"}}>
+                    <label htmlFor="email">Email</label>
+                    <Field name="email" type="text" placeholder="login" component={Input} validate={[required]}
+                           id="email"/>
                 </div>
-                <div>
+                <div style={{display: "flex", alignItems: "center", justifyContent: "flex-end", width:"250px"}}>
+                    <label htmlFor="password">Password</label>
                     <Field name="password" type="password" placeholder="password" component={Input}
-                           validate={[required]}/>
+                           validate={[required]} id="password"/>
                 </div>
                 <div className={style.error}>
                     {props.error}

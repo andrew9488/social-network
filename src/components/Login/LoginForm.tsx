@@ -2,7 +2,7 @@ import React from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input} from "../common/Form/CustomField";
 import {required} from "../../utils/validator";
-import style from "../common/Form/CustomField.module.css"
+import style from "../common/Form/CustomField.module.css";
 
 type FormPropsType = {
     captcha: string | null

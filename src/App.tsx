@@ -1,13 +1,13 @@
 import React, {ComponentType} from "react";
 import {Navbar} from "./components/Navbar/Navbar";
 import {withRouter} from "react-router-dom";
-import HeaderContainer from "./components/AppHeader/HeaderContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {AppStateType} from "./redux/redux-store";
 import {appInitializeTC} from "./redux/appReducer";
 import Preloader from "./components/common/Preloader/Preloader";
-import {Routes} from "./components/Routes";
+import {Routes} from "./components/Routes/Routes";
 import style from "./App.module.css"
 import {Footer} from "./components/Footer/Footer";
 

@@ -1,11 +1,11 @@
 import React from "react";
 import {Route, Switch} from "react-router-dom";
-import {withSuspense} from "../hoc/withSuspense";
-import ProfileContainer from "./Profile/ProfileContainer";
+import {withSuspense} from "../../hoc/withSuspense";
+import ProfileContainer from "../Profile/ProfileContainer";
 
-const Dialogs = React.lazy(() => import("../components/Dialogs/Dialogs"))
-const UsersContainer = React.lazy(() => import("../components/Users/UsersContainer"))
-const LoginContainer = React.lazy(() => import("../components/Login/LoginContainer"))
+const Dialogs = React.lazy(() => import("../Dialogs/Dialogs"))
+const UsersContainer = React.lazy(() => import("../Users/UsersContainer"))
+const LoginContainer = React.lazy(() => import("../Login/LoginContainer"))
 
 export const PATH = {
     LOGIN: "/",

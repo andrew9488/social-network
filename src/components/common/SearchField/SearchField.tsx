@@ -4,18 +4,21 @@ import React from "react";
 type SearchFieldPropsType = {
     getUsers: (currentPage: number, pageSize: number, term: string | null, friend: null | boolean) => void
     pageSize: number
+    term: null | string
+    friend: null | boolean
 }
 
 export const SearchField: React.FC<SearchFieldPropsType> = React.memo((props) => {
     return (
         <Formik
-            initialValues={{term: '', friend: null}}
+            enableReinitialize
+            initialValues={{term: props.term, friend: props.friend}}
             onSubmit={(values) => {
                 props.getUsers(1, props.pageSize, values.term, values.friend)
             }}
         >
             <Form>
-                <Field type="text" name="term" autocomplete="off"/>
+                <Field type="text" name="term" autoComplete="off"/>
                 <Field as="select" name="friend">
                     <option value="null">All</option>
                     <option value="true">Followed</option>

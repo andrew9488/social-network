@@ -6,7 +6,7 @@ import {HeaderPropsType} from "./HeaderContainer";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelope} from '@fortawesome/free-solid-svg-icons';
 import {faBell} from '@fortawesome/free-solid-svg-icons';
-import {PATH} from "../Routes";
+import {PATH} from "../Routes/Routes";
 
 
 export const AppHeader: React.FC<HeaderPropsType> = React.memo((props) => {

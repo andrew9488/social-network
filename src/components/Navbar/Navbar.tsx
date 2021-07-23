@@ -1,7 +1,7 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
 import style from "./Navbar.module.css";
-import {PATH} from "../Routes";
+import {PATH} from "../Routes/Routes";
 
 export const Navbar: React.FC = React.memo(() => {
     return (

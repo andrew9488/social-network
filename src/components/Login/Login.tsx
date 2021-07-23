@@ -3,7 +3,7 @@ import {FormDataType, LoginForm} from "./LoginForm";
 import style from "./Login.module.css"
 import {LoginPropsType} from "./LoginContainer";
 import {Redirect} from "react-router-dom";
-import {PATH} from "../Routes";
+import {PATH} from "../Routes/Routes";
 
 export const Login: React.FC<LoginPropsType> = React.memo((props) => {
 

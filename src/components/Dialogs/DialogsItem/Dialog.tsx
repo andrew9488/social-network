@@ -3,6 +3,7 @@ import {NavLink} from "react-router-dom";
 import React from "react";
 import {DialogPropsType} from "./DialogContainer";
 import {PATH} from "../../Routes/Routes";
+import photo from "./../../../assets/images/avatars/city-Z.png";
 
 export const Dialog: React.FC<DialogPropsType> = React.memo((props) => {
 
@@ -19,6 +20,7 @@ export const Dialog: React.FC<DialogPropsType> = React.memo((props) => {
             <div className={style.dialogItemContainer}>
                 <NavLink to={`${PATH.DIALOGS}${PATH.CHAT}`} activeClassName={style.activeLink}>
                     <div className={style.dialogItem}>
+                        <img src={photo} alt="city-Z"/>
                         <span>Polesye National Republic</span>
                     </div>
                 </NavLink>

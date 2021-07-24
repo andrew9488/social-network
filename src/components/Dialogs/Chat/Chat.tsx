@@ -13,7 +13,6 @@ type ChatMessageType = {
 const wsChat = new WebSocket("wss://social-network.samuraijs.com/handlers/ChatHandler.ashx")
 
 export const Chat: React.FC = React.memo(() => {
-    debugger
 
     const [messages, setMessages] = useState<Array<ChatMessageType>>([])
     useEffect(() => {

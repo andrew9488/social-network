@@ -2,12 +2,13 @@ import React, {useCallback} from "react";
 import style from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
 import {MyPostsPropsType} from "./MyPostsContainer";
-import {CommonForm, CommonFormType} from "../../common/Form/CommonForm";
+import {CommonForm, CommonFormPropsType} from "../../common/Form/CommonForm";
 
 
 export const MyPosts: React.FC<MyPostsPropsType> = React.memo((props) => {
 
-    const addPost = useCallback((text: CommonFormType) => {
+    const addPost = useCallback((text: CommonFormPropsType) => {
+        debugger
         props.addPost(text.newText)
     }, [props])
 

@@ -1,11 +1,11 @@
 import style from "./Message.module.css";
 import React, {useCallback} from "react";
 import {MessagePropsType} from "./MessageContainer";
-import {CommonForm, CommonFormType} from "../../common/Form/CommonForm";
+import {CommonForm, CommonFormPropsType} from "../../common/Form/CommonForm";
 
 export const Message: React.FC<MessagePropsType> = React.memo((props) => {
 
-    const sendMessageText = useCallback((text: CommonFormType) => {
+    const sendMessageText = useCallback((text: CommonFormPropsType) => {
         props.sendMessage(text.newText)
     }, [props])
 

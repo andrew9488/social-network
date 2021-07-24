@@ -3,13 +3,13 @@ import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {maxLength, required} from "../../../utils/validator";
 import {Textarea} from "./CustomField";
 
-export type CommonFormType = {
+export type CommonFormPropsType = {
     newText: string
 }
 
 const max = maxLength(100)
 
-const Form: React.FC<InjectedFormProps<CommonFormType>> = React.memo((props) => {
+const Form: React.FC<InjectedFormProps<CommonFormPropsType>> = React.memo((props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
@@ -22,6 +22,6 @@ const Form: React.FC<InjectedFormProps<CommonFormType>> = React.memo((props) => 
         </form>
     );
 })
-export const CommonForm = reduxForm<CommonFormType>({
+export const CommonForm = reduxForm<CommonFormPropsType>({
     form: "formForSendNewText"
 })(Form)

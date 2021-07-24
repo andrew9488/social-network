@@ -1,0 +1,10 @@
+.chatContainer {
+    max-height: 500px;
+    margin: 5px;
+}
+
+.chatBlock {
+    height: 95%;
+    overflow: auto;
+    overflow-y: scroll;
+}

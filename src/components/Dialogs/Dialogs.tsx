@@ -14,11 +14,9 @@ const Dialogs: React.FC = React.memo(() => {
             <div>
                 <DialogContainer/>
             </div>
-            <div>
-                {history.location.pathname === `${PATH.DIALOGS}${PATH.CHAT}`
-                    ? <Chat/>
-                    : <MessageContainer/>}
-            </div>
+            {history.location.pathname === `${PATH.DIALOGS}${PATH.CHAT}`
+                ? <Chat/>
+                : <MessageContainer/>}
         </div>
     );
 })

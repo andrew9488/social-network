@@ -3,6 +3,7 @@ import React from "react";
 import style from "./User.module.css";
 import {NavLink} from "react-router-dom";
 import UsersPhoto from "../../assets/images/avatars/usersAvatar.jpg";
+import {PATH} from "../Routes/Routes";
 
 type UserPropsType = {
     user: UserType
@@ -15,7 +16,7 @@ export const User: React.FC<UserPropsType> = React.memo((props) => {
     return (
         <div className={style.user}>
             <div className={style.userAvatar}>
-                <NavLink to={"/profile/" + props.user.id}>
+                <NavLink to={`${PATH.PROFILE}/${props.user.id}`}>
                     <img src={props.user.photos.small !== null ? props.user.photos.small : UsersPhoto}
                          alt="avatar"/>
                 </NavLink>

@@ -14,7 +14,8 @@ export const PATH = {
     DIALOGS: "/dialogs",
     NEWS: "/news",
     MUSIC: "/music",
-    SETTINGS: "/settings"
+    SETTINGS: "/settings",
+    CHAT: "/chat"
 }
 
 export const Routes: React.FC = React.memo(() => {
@@ -22,6 +23,7 @@ export const Routes: React.FC = React.memo(() => {
         <Switch>
             <Route exact path={PATH.LOGIN} component={withSuspense(LoginContainer)}/>
             <Route path={`${PATH.PROFILE}/:userId?`} render={() => <ProfileContainer/>}/>
+            {/*<Route path={`${PATH.DIALOGS}${PATH.CHAT}`} render={() => <h1>common chat</h1>}/>*/}
             <Route path={PATH.USERS} component={withSuspense(UsersContainer)}/>
             <Route path={PATH.DIALOGS} component={withSuspense(Dialogs)}/>
         </Switch>

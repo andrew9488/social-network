@@ -3,13 +3,17 @@ import style from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
 import {MyPostsPropsType} from "./MyPostsContainer";
 import {CommonForm, CommonFormPropsType} from "../../common/Form/CommonForm";
+import {useDispatch} from "react-redux";
+import {reset} from "redux-form";
 
 
 export const MyPosts: React.FC<MyPostsPropsType> = React.memo((props) => {
 
+    const dispatch = useDispatch()
+
     const addPost = useCallback((text: CommonFormPropsType) => {
-        debugger
         props.addPost(text.newText)
+        dispatch(reset("formForSendNewText"))
     }, [props])
 
     return (

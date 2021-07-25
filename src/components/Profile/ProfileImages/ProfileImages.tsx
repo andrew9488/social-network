@@ -1,11 +1,11 @@
 import React from "react";
-import style from "./ProfileAvatar.module.css";
+import style from "./ProfileImages.module.css";
 import photo1 from "./../../../assets/images/avatars/city-D.png";
 import photo2 from "./../../../assets/images/avatars/city-A.png";
 import photo3 from "./../../../assets/images/avatars/city-Z.png";
 
 
-export const ProfileAvatar: React.FC = React.memo(() => {
+export const ProfileImages: React.FC = React.memo(() => {
     return (
         <div className={style.profileAvatar}>
             <div>

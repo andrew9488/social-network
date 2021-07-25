@@ -7,21 +7,25 @@ export type CommonFormPropsType = {
     newText: string
 }
 
+type FormType = {
+    disable?: boolean
+}
+
 const max = maxLength(100)
 
-const Form: React.FC<InjectedFormProps<CommonFormPropsType>> = React.memo((props) => {
+const Form: React.FC<InjectedFormProps<CommonFormPropsType, FormType> & FormType> = React.memo((props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
                 <Field name="newText" type="text" component={Textarea} validate={[required, max]}/>
             </div>
             <div>
-                <button type="submit">Send</button>
+                <button disabled={props.disable} type="submit">Send</button>
             </div>
 
         </form>
     );
 })
-export const CommonForm = reduxForm<CommonFormPropsType>({
+export const CommonForm = reduxForm<CommonFormPropsType, FormType>({
     form: "formForSendNewText"
 })(Form)

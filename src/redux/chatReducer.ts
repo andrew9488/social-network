@@ -36,11 +36,17 @@ let newMessageHandlerCreator = (dispatch: Dispatch) => {
     return _newMessageHandler
 }
 
-export const startMessagesListening = (): ThunkType =>
+export const startMessagesListeningTC = (): ThunkType =>
     (dispatch: ThunkDispatch<AppStateType, unknown, ChatReducerActionsType>) => {
+        chatApi.start()
         chatApi.subscribe(newMessageHandlerCreator(dispatch))
     }
-export const stopMessagesListening = (): ThunkType =>
+export const stopMessagesListeningTC = (): ThunkType =>
     (dispatch: ThunkDispatch<AppStateType, unknown, ChatReducerActionsType>) => {
+        chatApi.stop()
         chatApi.unsubscribe(newMessageHandlerCreator(dispatch))
+    }
+export const sendMessageChatTC = (message: string): ThunkType =>
+    (dispatch: ThunkDispatch<AppStateType, unknown, ChatReducerActionsType>) => {
+        chatApi.sendMessage(message)
     }

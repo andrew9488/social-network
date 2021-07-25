@@ -1,8 +1,8 @@
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AppStateType} from "./redux-store";
-import {profileAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 import {ProfileFormPropsType} from "../components/Profile/ProfileData/ProfileForm";
+import {profileAPI} from "../api/profile-api";
 
 export type ProfilePageReducerActionsType = ReturnType<typeof addPost>
     | ReturnType<typeof setUserProfileData>

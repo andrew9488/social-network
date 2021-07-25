@@ -1,7 +1,8 @@
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AppStateType} from "./redux-store";
-import {authAPI, captchaAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
+import {authAPI} from "../api/auth-api";
+import {captchaAPI} from "../api/captcha-api";
 
 type AuthReducerActionsType =
     ReturnType<typeof setUserData>

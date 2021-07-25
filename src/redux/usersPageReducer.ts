@@ -1,7 +1,8 @@
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AppStateType} from "./redux-store";
-import {followAPI, usersAPI} from "../api/api";
 import {objectHelpers} from "../utils/objectHelpers";
+import {usersAPI} from "../api/users-api";
+import {followAPI} from "../api/follow-api";
 
 export type UsersPageReducerActionsType = ReturnType<typeof follow>
     | ReturnType<typeof unFollow>

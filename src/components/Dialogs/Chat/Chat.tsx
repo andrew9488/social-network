@@ -18,7 +18,7 @@ export const Chat: React.FC = React.memo(() => {
     const [wsChannel, setWsChannel] = useState<WebSocket | null>(null)
     const [messages, setMessages] = useState<Array<ChatMessageType>>([])
     const [status, setStatus] = useState<StatusType>("pending")
-    const messagesEndRef = useRef(null)
+    const messagesEndRef = useRef<null | HTMLDivElement>(null)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -70,7 +70,6 @@ export const Chat: React.FC = React.memo(() => {
 
 
     useEffect(() => {
-        // @ts-ignore
         messagesEndRef.current?.scrollIntoView({behavior: 'smooth'});
     }, [messages])
 

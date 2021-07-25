@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {CommonForm, CommonFormPropsType} from "../../common/Form/CommonForm";
 import style from "./Chat.module.css"
 import {useDispatch} from "react-redux";
@@ -18,6 +18,7 @@ export const Chat: React.FC = React.memo(() => {
     const [wsChannel, setWsChannel] = useState<WebSocket | null>(null)
     const [messages, setMessages] = useState<Array<ChatMessageType>>([])
     const [status, setStatus] = useState<StatusType>("pending")
+    const messagesEndRef = useRef(null)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -67,12 +68,20 @@ export const Chat: React.FC = React.memo(() => {
         dispatch(reset("formForSendNewText"))
     }, [wsChannel])
 
+
+    useEffect(() => {
+        // @ts-ignore
+        messagesEndRef.current?.scrollIntoView({behavior: 'smooth'});
+    }, [messages])
+
+
     return (
         <div className={style.chatContainer}>
             <div className={style.chatBlock}>
                 {messages.map((mes, index) => {
                     return <ChatMessages key={index + mes.userId} message={mes}/>
                 })}
+                <div ref={messagesEndRef}/>
             </div>
             <CommonForm disable={wsChannel === null || status !== "ready"} onSubmit={sendChatMessage}/>
         </div>
@@ -80,6 +89,7 @@ export const Chat: React.FC = React.memo(() => {
 })
 
 const ChatMessages: React.FC<{ message: ChatMessageType }> = ({message}) => {
+
     return (
         <div>
             <img src={message.photo} alt="userPhoto" style={{width: "30px"}}/> <b>{message.userName}</b>

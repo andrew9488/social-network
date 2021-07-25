@@ -9,7 +9,7 @@ import {faBell} from '@fortawesome/free-solid-svg-icons';
 import {PATH} from "../Routes/Routes";
 
 
-export const AppHeader: React.FC<HeaderPropsType> = React.memo((props) => {
+export const Header: React.FC<HeaderPropsType> = React.memo((props) => {
 
 
     return (

@@ -17,7 +17,7 @@ type ProfileDataPropsType = {
     updateStatus: (status: string) => void
     uploadPhoto: (photos: Blob) => void
     isOwner: boolean
-    changeProfileInfo: (profile: ProfileType) => void
+    changeProfileInfo: (profile: ProfileFormPropsType) => void
 }
 
 export const ProfileData: React.FC<ProfileDataPropsType> = React.memo((props) => {
@@ -25,21 +25,20 @@ export const ProfileData: React.FC<ProfileDataPropsType> = React.memo((props) =>
 
         const [editMode, setEditMode] = useState<boolean>(false)
 
-        const onUploadPhoto = (e: ChangeEvent<HTMLInputElement>) => {
+        const onUploadPhoto = useCallback((e: ChangeEvent<HTMLInputElement>) => {
             if (e.target.files) {
                 props.uploadPhoto(e.target.files[0])
             }
-        }
+        }, [props.uploadPhoto])
 
-        const onActivateEditMode = () => {
+        const onActivateEditMode = useCallback(() => {
             setEditMode(true)
-        }
-        const deactivateEditMode = () => {
+        }, [])
+        const deactivateEditMode = useCallback(() => {
             setEditMode(false)
-        }
+        }, [])
 
         const onSubmit = useCallback((formData: ProfileFormPropsType) => {
-            // @ts-ignore
             props.changeProfileInfo(formData)
             setEditMode(false)
         }, [props])

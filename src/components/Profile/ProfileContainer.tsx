@@ -13,6 +13,7 @@ import {AppStateType} from "../../redux/redux-store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {ProfileFormPropsType} from "./ProfileData/ProfileForm";
 
 type PathParamsType = {
     userId: string
@@ -32,7 +33,7 @@ type MapDispatchPropsType = {
     getUserStatusTC: (userId: number) => void
     updateStatusTC: (status: string) => void
     uploadPhotoTC: (photos: Blob) => void
-    changeProfileInfoTC: (profile: ProfileType) => void
+    changeProfileInfoTC: (profile: ProfileFormPropsType) => void
 }
 
 export type ProfilePropsType = MapStatePropsType & MapDispatchPropsType
@@ -62,7 +63,7 @@ class ProfileContainer extends React.PureComponent<PropsType> {
 
     render() {
         return (
-            <Profile isOwner={!this.props.match.params.userId}{...this.props}/>
+            <Profile isOwner={this.props.match.params.userId === ":userId"}{...this.props}/>
         )
     }
 }

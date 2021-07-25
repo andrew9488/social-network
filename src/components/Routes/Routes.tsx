@@ -19,6 +19,7 @@ export const PATH = {
 }
 
 export const Routes: React.FC = React.memo(() => {
+
     return (
         <Switch>
             <Route exact path={PATH.LOGIN} component={withSuspense(LoginContainer)}/>

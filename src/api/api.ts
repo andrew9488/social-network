@@ -1,6 +1,7 @@
 import axios from "axios";
 import {UserType} from "../redux/usersPageReducer";
 import {ProfileType} from "../redux/profilePageReducer";
+import {ProfileFormPropsType} from "../components/Profile/ProfileData/ProfileForm";
 
 type CommonResponseType<T = {}> = {
     resultCode: number
@@ -90,7 +91,7 @@ export const profileAPI = {
                 return response.data
             })
     },
-    updateProfileInfo(profile: ProfileType) {
+    updateProfileInfo(profile: ProfileFormPropsType) {
         return instance.put<CommonResponseType>(`profile`, profile)
             .then(response => {
                 return response.data

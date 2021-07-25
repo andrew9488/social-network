@@ -2,6 +2,7 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AppStateType} from "./redux-store";
 import {profileAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
+import {ProfileFormPropsType} from "../components/Profile/ProfileData/ProfileForm";
 
 export type ProfilePageReducerActionsType = ReturnType<typeof addPost>
     | ReturnType<typeof setUserProfileData>
@@ -206,7 +207,7 @@ export const uploadPhotoTC = (photos: Blob): ThunkType => {
     }
 }
 
-export const changeProfileInfoTC = (profile: ProfileType): ThunkType => {
+export const changeProfileInfoTC = (profile: ProfileFormPropsType): ThunkType => {
     return (dispatch: ThunkDispatch<AppStateType, unknown, ProfilePageReducerActionsType | StopSubmitActionsType>, getState: () => AppStateType) => {
         const userId = getState().auth.data.userId
         profileAPI.updateProfileInfo(profile)

@@ -1,7 +1,8 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {CommonForm, CommonFormPropsType} from "../../common/Form/CommonForm";
 import style from "./Chat.module.css"
-
+import {useDispatch} from "react-redux";
+import {reset} from "redux-form";
 
 type ChatMessageType = {
     message: string
@@ -10,21 +11,61 @@ type ChatMessageType = {
     userName: string
 }
 
-const wsChat = new WebSocket("wss://social-network.samuraijs.com/handlers/ChatHandler.ashx")
+type StatusType = "pending" | "ready"
 
 export const Chat: React.FC = React.memo(() => {
 
+    const [wsChannel, setWsChannel] = useState<WebSocket | null>(null)
     const [messages, setMessages] = useState<Array<ChatMessageType>>([])
+    const [status, setStatus] = useState<StatusType>("pending")
+    const dispatch = useDispatch()
+
     useEffect(() => {
-        wsChat.addEventListener("message", (e: MessageEvent) => {
-            const newMessages = JSON.parse(e.data)
-            setMessages((prevState => [...prevState, ...newMessages]))
-        })
+        let ws: WebSocket
+        const closeWebSocket = () => {
+            setTimeout(openWebSocket, 3000)
+        }
+
+        function openWebSocket() {
+            ws?.removeEventListener("close", closeWebSocket)
+            ws?.close()
+            ws = new WebSocket("wss://social-network.samuraijs.com/handlers/ChatHandler.ashx")
+            ws.addEventListener("close", closeWebSocket)
+            setWsChannel(ws)
+        }
+
+        openWebSocket()
+        return () => {
+            ws.removeEventListener("close", closeWebSocket)
+            ws.close()
+        }
     }, [])
 
+    useEffect(() => {
+        const messageHandler = (e: MessageEvent) => {
+            const newMessages = JSON.parse(e.data)
+            setMessages((prevState => [...prevState, ...newMessages]))
+        }
+        wsChannel?.addEventListener("message", messageHandler)
+        return () => {
+            wsChannel?.removeEventListener("message", messageHandler)
+        }
+    }, [wsChannel])
+
+    useEffect(() => {
+        const statusHandler = () => {
+            setStatus("ready")
+        }
+        wsChannel?.addEventListener("open", statusHandler)
+        return () => {
+            wsChannel?.removeEventListener("open", statusHandler)
+        }
+    }, [wsChannel])
+
     const sendChatMessage = useCallback((text: CommonFormPropsType) => {
-        wsChat.send(text.newText)
-    }, [])
+        wsChannel?.send(text.newText)
+        dispatch(reset("formForSendNewText"))
+    }, [wsChannel])
 
     return (
         <div className={style.chatContainer}>
@@ -33,7 +74,7 @@ export const Chat: React.FC = React.memo(() => {
                     return <ChatMessages key={index + mes.userId} message={mes}/>
                 })}
             </div>
-            <CommonForm onSubmit={sendChatMessage}/>
+            <CommonForm disable={wsChannel === null || status !== "ready"} onSubmit={sendChatMessage}/>
         </div>
     );
 })

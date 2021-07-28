@@ -1,20 +1,19 @@
-import React, {useCallback, useEffect, useRef} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {CommonForm, CommonFormPropsType} from "../../common/Form/CommonForm";
 import style from "./Chat.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import {reset} from "redux-form";
-import {ChatMessageType} from "../../../api/chat-api";
+import {ChatMessageType, StatusType} from "../../../api/chat-api";
 import {AppStateType} from "../../../redux/redux-store";
 import {sendMessageChatTC, startMessagesListeningTC, stopMessagesListeningTC} from "../../../redux/chatReducer";
 
-type StatusType = "pending" | "ready"
-
 export const Chat: React.FC = React.memo(() => {
-
     const messages = useSelector<AppStateType, Array<ChatMessageType>>(state => state.chat.messages)
-    // const [status, setStatus] = useState<StatusType>("pending")
+    const status = useSelector<AppStateType, StatusType>(state => state.chat.status)
     const messagesEndRef = useRef<null | HTMLDivElement>(null)
     const dispatch = useDispatch()
+
+    const [isAutoScroll, setIsAutoScroll] = useState(true)
 
     useEffect(() => {
         dispatch(startMessagesListeningTC())
@@ -22,9 +21,11 @@ export const Chat: React.FC = React.memo(() => {
             dispatch(stopMessagesListeningTC())
         }
     }, [])
-    
+
     useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({behavior: 'smooth'});
+        if (isAutoScroll) {
+            messagesEndRef.current?.scrollIntoView({behavior: 'smooth'})
+        }
     }, [messages])
 
 
@@ -33,15 +34,25 @@ export const Chat: React.FC = React.memo(() => {
         dispatch(reset("formForSendNewText"))
     }, [])
 
+    const scrollHandler = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+        let element = e.currentTarget
+        if ((Math.abs(element.scrollHeight - element.scrollTop) - element.clientHeight) < 350) {
+            !isAutoScroll && setIsAutoScroll(true)
+        } else {
+            isAutoScroll && setIsAutoScroll(false)
+        }
+    }
+
     return (
         <div className={style.chatContainer}>
-            <div className={style.chatBlock}>
+            <div className={style.chatBlock} onScroll={scrollHandler}>
                 {messages.map((mes, index) => {
                     return <ChatMessages key={index + mes.userId} message={mes}/>
                 })}
                 <div ref={messagesEndRef}/>
             </div>
-            <CommonForm disable={false} onSubmit={sendChatMessage}/>
+            {status === "error" && <span style={{color: "red"}}>some error</span>}
+            <CommonForm disable={status !== "ready"} onSubmit={sendChatMessage}/>
         </div>
     );
 })

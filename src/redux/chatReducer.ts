@@ -18,7 +18,7 @@ export const chatReducer = (state: InitialStateType = initialState, action: Chat
         case "CHAT/GET-MESSAGES":
             return {
                 ...state,
-                messages: [...state.messages, ...action.messages]
+                messages: [...state.messages, ...action.messages].filter((m, ind, arr) => ind >= arr.length - 100)
             }
         case "CHAT/CHANGE-STATUS":
             return {
@@ -58,16 +58,17 @@ let statusHandlerCreator = (dispatch: Dispatch) => {
 export const startMessagesListeningTC = (): ThunkType =>
     (dispatch: ThunkDispatch<AppStateType, unknown, ChatReducerActionsType>) => {
         chatApi.start()
-        chatApi.subscribe("message-received", newMessageHandlerCreator(dispatch))
+        chatApi.subscribe("messages-received", newMessageHandlerCreator(dispatch))
         chatApi.subscribe("status-changed", statusHandlerCreator(dispatch))
     }
 export const stopMessagesListeningTC = (): ThunkType =>
     (dispatch: ThunkDispatch<AppStateType, unknown, ChatReducerActionsType>) => {
         chatApi.stop()
-        chatApi.unsubscribe("message-received", newMessageHandlerCreator(dispatch))
+        chatApi.unsubscribe("messages-received", newMessageHandlerCreator(dispatch))
         chatApi.unsubscribe("status-changed", statusHandlerCreator(dispatch))
     }
 export const sendMessageChatTC = (message: string): ThunkType =>
     (dispatch: ThunkDispatch<AppStateType, unknown, ChatReducerActionsType>) => {
+        debugger
         chatApi.sendMessage(message)
     }

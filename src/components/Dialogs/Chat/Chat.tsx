@@ -8,6 +8,7 @@ import {AppStateType} from "../../../redux/redux-store";
 import {sendMessageChatTC, startMessagesListeningTC, stopMessagesListeningTC} from "../../../redux/chatReducer";
 
 export const Chat: React.FC = React.memo(() => {
+
     const messages = useSelector<AppStateType, Array<ChatMessageType>>(state => state.chat.messages)
     const status = useSelector<AppStateType, StatusType>(state => state.chat.status)
     const messagesEndRef = useRef<null | HTMLDivElement>(null)

@@ -3,7 +3,10 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AppStateType} from "./redux-store";
 import {Dispatch} from "redux";
 
-export type ChatReducerActionsType = ReturnType<typeof getMessages> | ReturnType<typeof changeStatus>
+export type ChatReducerActionsType =
+    ReturnType<typeof getMessages>
+    | ReturnType<typeof changeStatus>
+    | ReturnType<typeof cleanMessages>
 type ThunkType = ThunkAction<void, AppStateType, unknown, ChatReducerActionsType>
 
 
@@ -16,10 +19,18 @@ type InitialStateType = typeof initialState
 export const chatReducer = (state: InitialStateType = initialState, action: ChatReducerActionsType): InitialStateType => {
     switch (action.type) {
         case "CHAT/GET-MESSAGES":
+            debugger
             return {
                 ...state,
-                messages: [...state.messages, ...action.messages].filter((m, ind, arr) => ind >= arr.length - 100)
+                messages: [...state.messages, ...action.messages]
+                    .filter((m, ind, arr) => ind >= arr.length - 100)
             }
+        case "CHAT/CLEAN-MESSAGES": {
+            return {
+                ...state,
+                messages: []
+            }
+        }
         case "CHAT/CHANGE-STATUS":
             return {
                 ...state,
@@ -32,6 +43,8 @@ export const chatReducer = (state: InitialStateType = initialState, action: Chat
 
 export const getMessages = (messages: Array<ChatMessageType>) =>
     ({type: "CHAT/GET-MESSAGES", messages} as const)
+export const cleanMessages = () =>
+    ({type: "CHAT/CLEAN-MESSAGES"} as const)
 export const changeStatus = (status: StatusType) =>
     ({type: "CHAT/CHANGE-STATUS", status} as const)
 
@@ -66,9 +79,9 @@ export const stopMessagesListeningTC = (): ThunkType =>
         chatApi.stop()
         chatApi.unsubscribe("messages-received", newMessageHandlerCreator(dispatch))
         chatApi.unsubscribe("status-changed", statusHandlerCreator(dispatch))
+        dispatch(cleanMessages())
     }
 export const sendMessageChatTC = (message: string): ThunkType =>
     (dispatch: ThunkDispatch<AppStateType, unknown, ChatReducerActionsType>) => {
-        debugger
         chatApi.sendMessage(message)
     }

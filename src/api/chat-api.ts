@@ -9,10 +9,14 @@ type MessagesSubscribeType = (message: Array<ChatMessageType>) => void
 type StatusSubscribeType = (status: StatusType) => void
 type EventNameType = "messages-received" | "status-changed"
 
-let subscribers = {
-    "messages-received": [] as Array<MessagesSubscribeType>,
-    "status-changed": [] as Array<StatusSubscribeType>
-} as { [key in EventNameType]: Array<MessagesSubscribeType & StatusSubscribeType> }
+type SubscribersType = {
+    [key in EventNameType]: Array<MessagesSubscribeType & StatusSubscribeType>
+}
+
+let subscribers: SubscribersType = {
+    "messages-received": [],
+    "status-changed": []
+}
 
 let ws: WebSocket | null = null
 const closeHandler = () => {
@@ -47,15 +51,15 @@ const openWebSocket = () => {
     ws.addEventListener("error", errorHandler)
 }
 
-export const chatApi = {
+export const  chatApi = {
     start() {
         openWebSocket()
     },
     stop() {
-        cleanUpListener()
         ws?.close()
         subscribers["messages-received"] = []
         subscribers["status-changed"] = []
+        cleanUpListener()
     },
     subscribe(eventName: EventNameType, callback: MessagesSubscribeType | StatusSubscribeType) {
         // @ts-ignore

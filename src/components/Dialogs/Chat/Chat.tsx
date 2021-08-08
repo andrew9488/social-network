@@ -37,7 +37,7 @@ export const Chat: React.FC = React.memo(() => {
 
     const scrollHandler = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
         let element = e.currentTarget
-        if ((Math.abs(element.scrollHeight - element.scrollTop) - element.clientHeight) < 350) {
+        if ((Math.abs(element.scrollHeight - element.scrollTop) - element.clientHeight) < 10) {
             !isAutoScroll && setIsAutoScroll(true)
         } else {
             isAutoScroll && setIsAutoScroll(false)
